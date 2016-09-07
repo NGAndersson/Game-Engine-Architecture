@@ -110,17 +110,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Allocator.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="MemoryManager.cpp" />
-    <ClCompile Include="PoolAllocator.cpp" />
-    <ClCompile Include="StackAllocator.cpp" />
+    <ClCompile Include="Source\Allocator.cpp" />
+    <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\MemoryManager.cpp" />
+    <ClCompile Include="Source\PoolAllocator.cpp" />
+    <ClCompile Include="Source\StackAllocator.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Allocator.h" />
-    <ClInclude Include="MemoryManager.h" />
-    <ClInclude Include="PoolAllocator.h" />
-    <ClInclude Include="StackAllocator.h" />
+    <ClInclude Include="Header\Allocator.h" />
+    <ClInclude Include="Header\MemoryManager.h" />
+    <ClInclude Include="Header\PoolAllocator.h" />
+    <ClInclude Include="Header\StackAllocator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
