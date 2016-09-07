@@ -1,7 +1,7 @@
-#include "Allocator.h"
-#include "MemoryManager.h"
-#include "PoolAllocator.h"
-#include "StackAllocator.h"
+//#include "Allocator.h"
+//#include "MemoryManager.h"
+//#include "PoolAllocator.h"
+//#include "StackAllocator.h"
 
 #include <iostream>
 #include <iomanip>
