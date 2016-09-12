@@ -11,7 +11,8 @@ class PoolAllocator : public Allocator
 //Attributes
 private:
 	void* _memoryBlock;
-
+	int _size;
+	void** _nextBlock;
 
 public:
 
@@ -21,9 +22,9 @@ private:
 
 
 public:
-	void setupPool(int size); //Gets chunk of memory and creates a linked list
+	void setupPool(int size,int nrObj,void* memory); //Gets chunk of memory and creates a linked list
 	void remove(void* ptr); //Used for removing a block
-	void* getSome(void); //Returns block of memory
+	void* allocate(void); //Returns block of memory
 
 };
 
