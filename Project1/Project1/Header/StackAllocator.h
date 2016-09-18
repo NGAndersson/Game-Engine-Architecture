@@ -1,18 +1,20 @@
 #pragma once
 #include "Allocator.h"
+#include <stdint.h>
 
 class StackAllocator {
 public:
-	typedef unsigned int Marker;
-	StackAllocator();
-	StackAllocator(unsigned int byteSize);
+	typedef uint32_t Marker;
+	explicit StackAllocator(uint32_t stackByteSize);
 	~StackAllocator();
-	void* Alloc(unsigned int byteSize);
+	void* Alloc(uint32_t byteSize);
 	Marker GetMarker();
 	void FreeToMarker();
 	void ClearStack();
 
 private:
-	void* topPtr;
-	void* botPtr;
+	void* startPtr;
+	void* endPtr;
+	Marker currentTop;
+	uint32_t totalStackSize;
 };

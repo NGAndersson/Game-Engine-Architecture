@@ -1,24 +1,27 @@
 #include "../Header/StackAllocator.h"
 
-StackAllocator::StackAllocator() {
-	topPtr = nullptr;
-	botPtr = nullptr;
-}
+StackAllocator::StackAllocator(uint32_t stackByteSize) {
+	startPtr = nullptr;
+	endPtr = nullptr;
+	totalStackSize = stackByteSize;
 
-StackAllocator::StackAllocator(unsigned int byteSize) {
-	StackAllocator();
+	startPtr = ::operator new(stackByteSize);
+	endPtr = startPtr;
+	currentTop = (Marker)startPtr;
 }
 
 StackAllocator::~StackAllocator() {
 
 }
 
-void* StackAllocator::Alloc(unsigned int byteSize) {
-
+void* StackAllocator::Alloc(uint32_t byteSize) {
+	currentTop += byteSize;
 };
 
 void StackAllocator::ClearStack() {
-
+	startPtr = nullptr;
+	endPtr = nullptr;
+	currentTop = (Marker)startPtr;
 };
 
 void StackAllocator::FreeToMarker(){
@@ -26,5 +29,5 @@ void StackAllocator::FreeToMarker(){
 };
 
 StackAllocator::Marker StackAllocator::GetMarker(){
-
+	return currentTop;
 };
