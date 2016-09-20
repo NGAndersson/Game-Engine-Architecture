@@ -2,17 +2,16 @@
 #define POOLALLOCATOR_H
 #include <stdio.h>
 #include <string.h>
-#include "Allocator.h"
 
 using namespace std; 
 
-class PoolAllocator : public Allocator
+class PoolAllocator
 {
 //Attributes
 private:
 	void* _memoryBlock;
 	int _size;
-	void** _nextBlock;
+	void* _nextBlock;
 
 public:
 
@@ -22,6 +21,10 @@ private:
 
 
 public:
+	PoolAllocator()
+	{
+
+	}
 	void setupPool(int size,int nrObj,void* memory); //Gets chunk of memory and creates a linked list
 	void remove(void* ptr); //Used for removing a block
 	void* allocate(void); //Returns block of memory

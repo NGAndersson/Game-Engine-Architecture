@@ -3,6 +3,7 @@
 MemoryManager::MemoryManager()
 {
 	freeMemPtr = ::operator new(1000000);
+	sizeleft = 1000000;
 }
 
 MemoryManager::~MemoryManager()
