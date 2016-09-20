@@ -1,7 +1,7 @@
-//#include "Allocator.h"
-//#include "MemoryManager.h"
-//#include "PoolAllocator.h"
-//#include "StackAllocator.h"
+#include "../Header/Allocator.h"
+#include "../Header/MemoryManager.h"
+#include "../Header/PoolAllocator.h"
+#include "../Header/StackAllocator.h"
 
 #include <iostream>
 #include <iomanip>
@@ -15,10 +15,10 @@ int main()
 {
 	int i = 0, j = 64;
 	std::clock_t c_start, c_end;
-	/*Allocator _Allocator;
-	MemoryManager _MManager;
+	Allocator _Allocator;
+	//MemoryManager _MManager;
 	PoolAllocator _PAllocator;
-	StackAllocator _SAllocator;*/
+	StackAllocator _SAllocator;
 
 
 	if (MEMORY_OS == false)
