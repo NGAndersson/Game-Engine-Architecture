@@ -15,13 +15,6 @@
 #define MEMORY_OS true
 #define Scenario 1
 
-
-struct FLOAT3 {
-	float x;
-	float y;
-	float z;
-};
-
 struct Particle{
 	int x = 1;
 	int y = 1;
