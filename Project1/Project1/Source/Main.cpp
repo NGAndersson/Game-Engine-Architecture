@@ -1,4 +1,3 @@
-#include "../Header/Allocator.h"
 #include "../Header/MemoryManager.h"
 #include "../Header/PoolAllocator.h"
 #include "../Header/StackAllocator.h"
@@ -27,18 +26,18 @@ struct Particle{
 	int x = 1;
 	int y = 1;
 	int z = 1;
-	float TimeToLive = rand() % 1000;
+	int TimeToLive = rand() / 1000;
 };
 
 int main()
 {
 	srand(time(NULL));
-	int i = 0, j = 64;
+	int i = 0, j = 64, k = 0;
 	std::clock_t c_start, c_end;
-	Allocator _Allocator;
-	MemoryManager _MManager;
+
+	/*MemoryManager _MManager;
 	PoolAllocator _PAllocator;
-	StackAllocator _SAllocator;
+	StackAllocator _SAllocator;*/
 
 
 	if (MEMORY_OS == false && Scenario == 1)
@@ -83,18 +82,27 @@ int main()
 		auto t_start = std::chrono::high_resolution_clock::now();
 		vector<Particle*> PartSys;
 		
-		while (i < 50)
+		while (i < 500)
 		{
 			PartSys.push_back( new Particle);
 			i++;
 		}
 		
-		while (i < 100)
+		while (i < 10000)
 		{
-			int PartSize = PartSys.size();
-			int ObjID = rand() % PartSize;
-			PartSys.erase(PartSys.begin() + ObjID);
-			PartSys.push_back( new Particle);
+			while (k < 100)
+			{
+				int PartSize = PartSys.size();
+				int ObjID = rand() % PartSize;
+				PartSys.erase(PartSys.begin() + ObjID);	
+				k++;
+			}
+			k = 0;
+			while (k < 100)
+			{
+				PartSys.push_back(new Particle);
+				k++;
+			}
 			i++;
 		}
 
