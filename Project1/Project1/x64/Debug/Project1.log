@@ -1,0 +1,4 @@
+﻿  StackAllocator.cpp
+  Main.cpp
+  Generating Code...
+c:\users\gis-2\source\repos\game-engine-architecture\project1\project1\source\stackallocator.cpp(23): error C4716: 'StackAllocator::GetMarker': must return a value
