@@ -19,7 +19,7 @@ struct Particle{
 	int x = 1;
 	int y = 1;
 	int z = 1;
-	int TimeToLive = rand() / 1000;
+	int TimeToLive = 1;
 };
 
 int main()
