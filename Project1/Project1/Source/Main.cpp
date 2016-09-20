@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <time.h> 
 
-#define MEMORY_OS true
+#define MEMORY_OS false
 #define Scenario 1
 
 struct Particle{
@@ -28,18 +28,40 @@ int main()
 	int i = 0, j = 64, k = 0;
 	std::clock_t c_start, c_end;
 
-	/*MemoryManager _MManager;
-	PoolAllocator _PAllocator;
-	StackAllocator _SAllocator;*/
+	MemoryManager* _MManager = new MemoryManager();
+	PoolAllocator* _PAllocator = new PoolAllocator();
+	//StackAllocator _SAllocator;*/
 
 
 	if (MEMORY_OS == false && Scenario == 1)
 	{
+		_PAllocator->setupPool(sizeof(Particle) * 500, sizeof(Particle), _MManager->GetMemory(sizeof(Particle) * 500));
 		c_start = std::clock();
 		auto t_start = std::chrono::high_resolution_clock::now();
+		vector<Particle*> PartSys;
 		while (i < 500)
 		{
+			PartSys.push_back(new(_PAllocator->allocate())Particle);
+			i++;
+		}
 
+		while (i < 10000)
+		{
+			k = 0;
+			while (k < 100)
+			{
+				int PartSize = PartSys.size();
+				int ObjID = rand() % PartSize;
+				_PAllocator->remove(static_cast<void*>(PartSys.at(ObjID)));
+				PartSys.erase(PartSys.begin() + ObjID);
+				k++;
+			}
+			k = 0;
+			while (k < 100)
+			{
+				PartSys.push_back(new(_PAllocator->allocate())Particle);
+				k++;
+			}
 			i++;
 		}
 		c_end = std::clock();
@@ -83,6 +105,7 @@ int main()
 		
 		while (i < 10000)
 		{
+			k = 0;
 			while (k < 100)
 			{
 				int PartSize = PartSys.size();
