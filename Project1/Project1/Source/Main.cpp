@@ -110,6 +110,7 @@ int main()
 			{
 				int PartSize = PartSys.size();
 				int ObjID = rand() % PartSize;
+				delete PartSys[ObjID];
 				PartSys.erase(PartSys.begin() + ObjID);	
 				k++;
 			}
