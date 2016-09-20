@@ -127,7 +127,26 @@ int main()
 			<< " ms\n";
 	}
 
-	
+	//TESTCASE FOR POOLALLOCATOR DO NOT REMOVE
+	//MemoryManager* test = new MemoryManager();
+
+	//PoolAllocator* mtest = new PoolAllocator();
+
+	//mtest->setupPool(256, 64, test->GetMemory(256));
+	//void* testmem[4];
+	//string* pt[4];
+	//for (int i = 0; i < 4; i++)
+	//	testmem[i] = mtest->allocate();
+
+	//for (int i = 0; i < 4; i++)
+	//{
+	//	pt[i] = new(testmem[i])string("Hello World");
+	//}
+
+	//mtest->remove(static_cast<void*>(pt[0]));
+
+	//string* tp = new(mtest->allocate())string("Oscar gillar Man");
+
 	getchar();
 
 	return 0;

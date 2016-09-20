@@ -1,20 +1,21 @@
 #include "../Header/PoolAllocator.h"
 
-
-void PoolAllocator::setupPool(int size,int nrObj,void* memory)
+void PoolAllocator::setupPool(int size,int blocksize,void* memory)
 {
 	_memoryBlock = memory;
 	_size = size;
+	int nrObj = _size / blocksize;
 
-	void** fesk =(void**) _memoryBlock;
+	void* fesk = _memoryBlock;
 	_nextBlock = fesk; 
+	*((void**)fesk) = static_cast<void*>(static_cast<char*>(fesk) + blocksize);
+
 	for (int i = 0; i < nrObj-1;i++)
 	{
-		*fesk = reinterpret_cast<void*>(reinterpret_cast<int>(fesk) + size);//KAKAKAKAKAK fuling
-		fesk = (void**) *fesk;
+		fesk = static_cast<void*>(static_cast<char*>(fesk) + blocksize);//KAKAKAKAKAK fuling
+		*((void**)fesk) = static_cast<void*>(static_cast<char*>(fesk) + blocksize);
 	}
-
-	*fesk = nullptr; //Last pointer points to null
+	fesk = nullptr; //Last pointer points to null
 
 }
 
@@ -24,7 +25,7 @@ void PoolAllocator::remove(void* ptr)
 	*((void**)ptr) = _nextBlock;
 
 	//Make the nextblock point to the newly freed block
-	_nextBlock = (void**)ptr;
+	_nextBlock = ptr;
 
 }
 
@@ -36,7 +37,7 @@ void* PoolAllocator::allocate(void)
 	
 	void* retBlock = _nextBlock;
 
-	_nextBlock = (void**)*_nextBlock; // fucking weird ass titts but i understand :)
+	_nextBlock = *((void**)_nextBlock); // fucking weird ass titts but i understand :)
 
 	return retBlock;
 }
