@@ -1,0 +1,2 @@
+﻿  Main.cpp
+c:\users\gis-2\source\repos\game-engine-architecture\project1\project1\source\main.cpp : fatal error C1041: cannot open program database 'C:\Users\GiS-2\Source\Repos\Game-Engine-Architecture\Project1\Project1\Debug\vc140.pdb'; if multiple CL.EXE write to the same .PDB file, please use /FS
