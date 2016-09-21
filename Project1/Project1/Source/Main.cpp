@@ -35,7 +35,7 @@ int main()
 	//StackAllocator _SAllocator;*/
 
 
-	if (MEMORY_OS == false && Scenario == 1)
+	if (MEMORY_OS == false && Scenario == 1 && AP == 1)
 	{
 		vector<Particle*> PartSys;
 		int PartSize, ObjID;
@@ -104,7 +104,7 @@ int main()
 			<< std::chrono::duration<double, std::milli>(t_end - t_start).count()
 			<< " ms\n";
 	}
-	else if (MEMORY_OS == true && Scenario == 1)
+	else if (MEMORY_OS == true && Scenario == 1 && AP == 1)
 	{
 		vector<Particle*> PartSys;
 		Particle* Party[50000];
@@ -178,23 +178,23 @@ int main()
 	{
 		Particle* Party[50000];
 		int Remove[10000];
+		int ToDelete[10000];
 		list<int> free;
 		vector<int> used;
 		_PAllocator->setupPool(sizeof(Particle) * 50000, sizeof(Particle), _MManager->GetMemory(sizeof(Particle) * 50000));
 		c_time = std::clock();
 		auto t_time = std::chrono::high_resolution_clock::now();
 
-		cout << "hej";
 		for (int i = 0; i < 50000; i++)	// Add 50000 particle objects
 		{
 			Party[i] = new(_PAllocator->allocate())Particle;
 		}
 
-		_PAllocator->remove(static_cast<void*>(Party[2500]));
-		for (i = 1; i < 25000; i++)	//Removes all the objects
+		//_PAllocator->remove(static_cast<void*>(Party[2500]));
+		for (i = 0; i < 25000; i++)	//Removes all the objects
 		{
 			_PAllocator->remove(static_cast<void*>(Party[i + 25000]));
-			_PAllocator->remove(static_cast<void*>(Party[25000 - 1]));
+			_PAllocator->remove(static_cast<void*>(Party[24999 - i]));
 		}
 
 		for (i = 0; i < 50000; i++)	// Adds them again
@@ -212,15 +212,81 @@ int main()
 
 		for (i = 0; i < 10000; i++)	//Randoms the objects that should be removed
 		{
-			Remove[i] = rand() % 50000;
+			Remove[i] = rand() % used.size();
+			ToDelete[i] = used.at(Remove[i]);
+			used.erase(used.begin() + Remove[i]);
 		}
 
 		c_time = std::clock();		//restarts time
 		t_time = std::chrono::high_resolution_clock::now();		//restarts time
 
+		for (i = 0; i < 10000; i++)	//Removes the objects that should be removed
+		{
+			_PAllocator->remove(static_cast<void*>(Party[ToDelete[i]]));
+		}
+
+		t_TotTime += std::chrono::high_resolution_clock::now() - t_time;		//stops time
+		c_TotTime += std::clock() - c_time;		//stops time
+
+		for (i = 0; i < 10000; i++)	
+		{
+			free.push_back(used.at(Remove[i]));
+		}
+
+		std::cout << std::fixed << std::setprecision(2) << "CPU time used: "
+			<< 1000.0 * c_TotTime / CLOCKS_PER_SEC << " ms\n"
+			<< "Wall clock time passed: "
+			<< std::chrono::duration<double, std::milli>(t_TotTime).count()
+			<< " ms\n";
+	}
+	else if (MEMORY_OS == true && Scenario == 1 && AP == 0)
+	{
+		Particle* Party[50000];
+		int Remove[10000];
+		int ToDelete[10000];
+		list<int> free;
+		vector<int> used;
+		
+		c_time = std::clock();
+		auto t_time = std::chrono::high_resolution_clock::now();
+
+		for (int i = 0; i < 50000; i++)	// Add 50000 particle objects
+		{
+			Party[i] = new Particle;
+		}
+
+		for (i = 0; i < 25000; i++)	//Removes all the objects
+		{
+			delete Party[i + 25000];
+			delete Party[24999 - i];
+		}
+
+		for (i = 0; i < 50000; i++)	// Adds them again
+		{
+			Party[i] = new Particle;
+		}
+
+		auto t_TotTime = std::chrono::high_resolution_clock::now() - t_time;		//stops time
+		c_TotTime = std::clock() - c_time;		//stops time
+
+		for (i = 0; i < 50000; i++)	//pushes used pointer indexes to a vector
+		{
+			used.push_back(i);
+		}
+
 		for (i = 0; i < 10000; i++)	//Randoms the objects that should be removed
 		{
-			_PAllocator->remove(static_cast<void*>(Party[Remove[i]]));
+			Remove[i] = rand() % used.size();
+			ToDelete[i] = used.at(Remove[i]);
+			used.erase(used.begin() + Remove[i]);
+		}
+
+		c_time = std::clock();		//restarts time
+		t_time = std::chrono::high_resolution_clock::now();		//restarts time
+
+		for (i = 0; i < 10000; i++)	//Removes the objects that should be removed
+		{
+			delete Party[ToDelete[i]];
 		}
 
 		t_TotTime += std::chrono::high_resolution_clock::now() - t_time;		//stops time
@@ -228,13 +294,12 @@ int main()
 
 		for (i = 0; i < 10000; i++)
 		{
-			free.push_back(Remove[i]);
-			used.erase(used.begin() + Remove[i]);
+			free.push_back(used.at(Remove[i]));
 		}
 
 
 		std::cout << std::fixed << std::setprecision(2) << "CPU time used: "
-			<< 1000.0 * c_TotTime / CLOCKS_PER_SEC << " ms\n"
+			<< 1000.0 * (c_TotTime) / CLOCKS_PER_SEC << " ms\n"
 			<< "Wall clock time passed: "
 			<< std::chrono::duration<double, std::milli>(t_TotTime).count()
 			<< " ms\n";
