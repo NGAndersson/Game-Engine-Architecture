@@ -11,9 +11,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h> 
+#include <list>
 
 #define MEMORY_OS false
 #define Scenario 1
+#define AP 0
 
 struct Particle{
 	int x = 1;
@@ -26,7 +28,7 @@ int main()
 {
 	srand(time(NULL));
 	int i = 0, j = 64, k = 0;
-	std::clock_t c_start, c_end;
+	std::clock_t c_start, c_end, c_time, c_TotTime;
 
 	MemoryManager* _MManager = new MemoryManager();
 	PoolAllocator* _PAllocator = new PoolAllocator();
@@ -35,25 +37,36 @@ int main()
 
 	if (MEMORY_OS == false && Scenario == 1)
 	{
-		_PAllocator->setupPool(sizeof(Particle) * 500, sizeof(Particle), _MManager->GetMemory(sizeof(Particle) * 500));
+		vector<Particle*> PartSys;
+		int PartSize, ObjID;
+		Particle* Party[50000];
+		_PAllocator->setupPool(sizeof(Particle) * 50000, sizeof(Particle), _MManager->GetMemory(sizeof(Particle) * 50000));
 		c_start = std::clock();
 		auto t_start = std::chrono::high_resolution_clock::now();
-		vector<Particle*> PartSys;
-		while (i < 500)
+		while (i < 50000)
 		{
-			PartSys.push_back(new(_PAllocator->allocate())Particle);
+			Party[i] = new(_PAllocator->allocate())Particle;
+			//PartSys.push_back(new(_PAllocator->allocate())Particle);
+			i++;
+		}
+		i = 1;
+		_PAllocator->remove(static_cast<void*>(Party[2500]));
+		while (i < 25000)
+		{
+			_PAllocator->remove(static_cast<void*>(Party[i + 25000]));
+			_PAllocator->remove(static_cast<void*>(Party[25000 - 1]));
 			i++;
 		}
 
-		while (i < 10000)
+		/*while (i < 10000)
 		{
 			k = 0;
 			while (k < 100)
 			{
-				int PartSize = PartSys.size();
-				int ObjID = rand() % PartSize;
+				PartSize = PartSys.size();
+				ObjID = rand() % PartSize;
 				_PAllocator->remove(static_cast<void*>(PartSys.at(ObjID)));
-				PartSys.erase(PartSys.begin() + ObjID);
+				PartSys.erase(PartSys.begin() + ObjID);	
 				k++;
 			}
 			k = 0;
@@ -63,7 +76,7 @@ int main()
 				k++;
 			}
 			i++;
-		}
+		}*/
 		c_end = std::clock();
 		auto t_end = std::chrono::high_resolution_clock::now();
 
@@ -93,35 +106,46 @@ int main()
 	}
 	else if (MEMORY_OS == true && Scenario == 1)
 	{
+		vector<Particle*> PartSys;
+		Particle* Party[50000];
+		int PartSize, ObjID;
 		c_start = std::clock();
 		auto t_start = std::chrono::high_resolution_clock::now();
-		vector<Particle*> PartSys;
 		
-		while (i < 500)
+		while (i < 50000)
 		{
-			PartSys.push_back( new Particle);
+			Party[i] = new Particle;
+			//PartSys.push_back( new Particle);
 			i++;
 		}
-		
-		while (i < 10000)
+		i = 1;
+		delete Party[25000];
+		while (i < 25000)
 		{
-			k = 0;
-			while (k < 100)
-			{
-				int PartSize = PartSys.size();
-				int ObjID = rand() % PartSize;
-				delete PartSys[ObjID];
-				PartSys.erase(PartSys.begin() + ObjID);	
-				k++;
-			}
-			k = 0;
-			while (k < 100)
-			{
-				PartSys.push_back(new Particle);
-				k++;
-			}
+			delete Party[i + 25000];
+			delete Party[25000 - i];
+			//PartSys.push_back( new Particle);
 			i++;
 		}
+		//while (i < 10000)
+		//{
+		//	k = 0;
+		//	while (k < 100)
+		//	{
+		//		/*PartSize = PartSys.size();
+		//		ObjID = rand() % PartSize;
+		//		delete PartSys[ObjID];
+		//		PartSys.erase(PartSys.begin() + ObjID);	*/
+		//		k++;
+		//	}
+		//	k = 0;
+		//	while (k < 100)
+		//	{
+		//		PartSys.push_back(new Particle);
+		//		k++;
+		//	}
+		//	i++;
+		//}
 
 		c_end = std::clock();
 		auto t_end = std::chrono::high_resolution_clock::now();
@@ -148,6 +172,71 @@ int main()
 			<< 1000.0 * (c_end - c_start) / CLOCKS_PER_SEC << " ms\n"
 			<< "Wall clock time passed: "
 			<< std::chrono::duration<double, std::milli>(t_end - t_start).count()
+			<< " ms\n";
+	}
+	else if (MEMORY_OS == false && Scenario == 1 && AP == 0)
+	{
+		Particle* Party[50000];
+		int Remove[10000];
+		list<int> free;
+		vector<int> used;
+		_PAllocator->setupPool(sizeof(Particle) * 50000, sizeof(Particle), _MManager->GetMemory(sizeof(Particle) * 50000));
+		c_time = std::clock();
+		auto t_time = std::chrono::high_resolution_clock::now();
+
+		cout << "hej";
+		for (int i = 0; i < 50000; i++)	// Add 50000 particle objects
+		{
+			Party[i] = new(_PAllocator->allocate())Particle;
+		}
+
+		_PAllocator->remove(static_cast<void*>(Party[2500]));
+		for (i = 1; i < 25000; i++)	//Removes all the objects
+		{
+			_PAllocator->remove(static_cast<void*>(Party[i + 25000]));
+			_PAllocator->remove(static_cast<void*>(Party[25000 - 1]));
+		}
+
+		for (i = 0; i < 50000; i++)	// Adds them again
+		{
+			Party[i] = new(_PAllocator->allocate())Particle;
+		}
+
+		auto t_TotTime = std::chrono::high_resolution_clock::now() - t_time;		//stops time
+		c_TotTime = std::clock() - c_time;		//stops time
+
+		for (i = 0; i < 50000; i++)	//pushes used pointer indexes to a vector
+		{
+			used.push_back(i);
+		}
+
+		for (i = 0; i < 10000; i++)	//Randoms the objects that should be removed
+		{
+			Remove[i] = rand() % 50000;
+		}
+
+		c_time = std::clock();		//restarts time
+		t_time = std::chrono::high_resolution_clock::now();		//restarts time
+
+		for (i = 0; i < 10000; i++)	//Randoms the objects that should be removed
+		{
+			_PAllocator->remove(static_cast<void*>(Party[Remove[i]]));
+		}
+
+		t_TotTime += std::chrono::high_resolution_clock::now() - t_time;		//stops time
+		c_TotTime += std::clock() - c_time;		//stops time
+
+		for (i = 0; i < 10000; i++)
+		{
+			free.push_back(Remove[i]);
+			used.erase(used.begin() + Remove[i]);
+		}
+
+
+		std::cout << std::fixed << std::setprecision(2) << "CPU time used: "
+			<< 1000.0 * c_TotTime / CLOCKS_PER_SEC << " ms\n"
+			<< "Wall clock time passed: "
+			<< std::chrono::duration<double, std::milli>(t_TotTime).count()
 			<< " ms\n";
 	}
 

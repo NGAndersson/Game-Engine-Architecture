@@ -1,4 +1,2 @@
 ﻿  Main.cpp
-c:\users\gis-2\source\repos\game-engine-architecture\project1\project1\source\main.cpp(27): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  Project1.vcxproj -> C:\Users\GiS-2\Source\Repos\Game-Engine-Architecture\Project1\Debug\Project1.exe
-  Project1.vcxproj -> C:\Users\GiS-2\Source\Repos\Game-Engine-Architecture\Project1\Debug\Project1.pdb (Partial PDB)
+c:\users\gis-2\source\repos\game-engine-architecture\project1\project1\source\main.cpp : fatal error C1041: cannot open program database 'C:\Users\GiS-2\Source\Repos\Game-Engine-Architecture\Project1\Project1\Debug\vc140.pdb'; if multiple CL.EXE write to the same .PDB file, please use /FS
