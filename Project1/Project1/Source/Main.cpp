@@ -13,9 +13,9 @@
 #include <time.h> 
 #include <list>
 
-#define MEMORY_OS false
+#define MEMORY_OS true
 #define Scenario 1
-#define AP 0
+#define LightTest 0
 
 struct Particle{
 	int x = 1;
@@ -35,7 +35,7 @@ int main()
 	//StackAllocator _SAllocator;*/
 
 
-	if (MEMORY_OS == false && Scenario == 1 && AP == 1)
+	if (MEMORY_OS == false && Scenario == 1 && LightTest == 1)
 	{
 		vector<Particle*> PartSys;
 		int PartSize, ObjID;
@@ -104,7 +104,7 @@ int main()
 			<< std::chrono::duration<double, std::milli>(t_end - t_start).count()
 			<< " ms\n";
 	}
-	else if (MEMORY_OS == true && Scenario == 1 && AP == 1)
+	else if (MEMORY_OS == true && Scenario == 1 && LightTest == 1)
 	{
 		vector<Particle*> PartSys;
 		Particle* Party[50000];
@@ -174,7 +174,7 @@ int main()
 			<< std::chrono::duration<double, std::milli>(t_end - t_start).count()
 			<< " ms\n";
 	}
-	else if (MEMORY_OS == false && Scenario == 1 && AP == 0)
+	else if (MEMORY_OS == false && Scenario == 1 && LightTest == 0)
 	{
 		Particle* Party[50000];
 		int Remove[10000];
@@ -239,7 +239,7 @@ int main()
 			<< std::chrono::duration<double, std::milli>(t_TotTime).count()
 			<< " ms\n";
 	}
-	else if (MEMORY_OS == true && Scenario == 1 && AP == 0)
+	else if (MEMORY_OS == true && Scenario == 1 && LightTest == 0)
 	{
 		Particle* Party[50000];
 		int Remove[10000];
