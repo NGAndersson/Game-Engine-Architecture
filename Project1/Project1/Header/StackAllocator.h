@@ -1,5 +1,6 @@
 #pragma once
 #include "Allocator.h"
+#include "../Header/MemoryManager.h"
 #include <stdint.h>
 
 class StackAllocator {
@@ -9,12 +10,14 @@ public:
 	~StackAllocator();
 	void* Alloc(uint32_t byteSize);
 	Marker GetMarker();
-	void FreeToMarker();
+	void FreeToMarker(Marker marker);
 	void ClearStack();
+
+	MemoryManager memManager;
 
 private:
 	void* startPtr;
-	void* endPtr;
-	Marker currentTop;
+	void* topPtr;
 	uint32_t totalStackSize;
+	uint32_t usedMem;
 };
