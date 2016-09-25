@@ -24,6 +24,11 @@ struct Particle{
 	int TimeToLive = 1;
 };
 
+void Threadfunc(int* ToDelete, Particle* Party, PoolAllocator* _PAllocator)
+{
+	_PAllocator->remove(static_cast<void*>(Party[ToDelete[i]]));
+}
+
 int main()
 {
 	srand(time(NULL));
@@ -50,12 +55,11 @@ int main()
 			i++;
 		}
 		i = 1;
-		_PAllocator->remove(static_cast<void*>(Party[2500]));
-		while (i < 25000)
+		//_PAllocator->remove(static_cast<void*>(Party[2500]));
+		for (i = 0; i < 25000; i++)	//Removes all the objects
 		{
 			_PAllocator->remove(static_cast<void*>(Party[i + 25000]));
-			_PAllocator->remove(static_cast<void*>(Party[25000 - 1]));
-			i++;
+			_PAllocator->remove(static_cast<void*>(Party[24999 - i]));
 		}
 
 		/*while (i < 10000)
@@ -120,12 +124,10 @@ int main()
 		}
 		i = 1;
 		delete Party[25000];
-		while (i < 25000)
+		for (i = 0; i < 25000; i++)	//Removes all the objects
 		{
 			delete Party[i + 25000];
-			delete Party[25000 - i];
-			//PartSys.push_back( new Particle);
-			i++;
+			delete Party[24999 - i];
 		}
 		//while (i < 10000)
 		//{
@@ -220,10 +222,11 @@ int main()
 		c_time = std::clock();		//restarts time
 		t_time = std::chrono::high_resolution_clock::now();		//restarts time
 
-		for (i = 0; i < 10000; i++)	//Removes the objects that should be removed
-		{
-			_PAllocator->remove(static_cast<void*>(Party[ToDelete[i]]));
-		}
+		std::thread first(Threadfunc, ToDelete, Party);
+		//for (i = 0; i < 10000; i++)	//Removes the objects that should be removed
+		//{
+		//	_PAllocator->remove(static_cast<void*>(Party[ToDelete[i]]));
+		//}
 
 		t_TotTime += std::chrono::high_resolution_clock::now() - t_time;		//stops time
 		c_TotTime += std::clock() - c_time;		//stops time
