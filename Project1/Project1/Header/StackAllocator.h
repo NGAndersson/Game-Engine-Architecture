@@ -3,9 +3,10 @@
 
 class StackAllocator {
 public:
-	explicit StackAllocator(void* memory,int sizeOfMemory);
+	StackAllocator(void* memory,int sizeOfMemory);
 	void* Alloc(int byteSize);
 	void ClearStack();
+	StackAllocator();
 
 private:
 	void* startPtr;
