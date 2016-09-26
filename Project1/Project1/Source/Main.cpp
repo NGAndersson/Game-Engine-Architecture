@@ -13,7 +13,7 @@
 #include <time.h> 
 #include <list>
 
-#define MEMORY_OS true
+#define MEMORY_OS false
 #define Scenario 1
 #define LightTest 0
 

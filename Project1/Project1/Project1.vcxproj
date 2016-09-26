@@ -110,14 +110,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Allocator.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\MemoryManager.cpp" />
     <ClCompile Include="Source\PoolAllocator.cpp" />
     <ClCompile Include="Source\StackAllocator.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Header\Allocator.h" />
     <ClInclude Include="Header\MemoryManager.h" />
     <ClInclude Include="Header\PoolAllocator.h" />
     <ClInclude Include="Header\StackAllocator.h" />

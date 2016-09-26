@@ -1,38 +1,32 @@
 #include "../Header/StackAllocator.h"
-#include "../Header/MemoryManager.h"
 
-StackAllocator::StackAllocator(uint32_t stackByteSize) {
-	startPtr = nullptr;
-	topPtr = nullptr;
-	totalStackSize = stackByteSize;
-	startPtr = memManager.GetMemory(stackByteSize);
+StackAllocator::StackAllocator(void* memory,int sizeOfMemory) {
+	startPtr = memory;
+	totalStackSize = sizeOfMemory;
 	topPtr = startPtr;
 }
 
-StackAllocator::~StackAllocator() {
-	// memManager remove mem
-	startPtr = nullptr;
-	topPtr = nullptr;
+StackAllocator::StackAllocator()
+{
+
 }
 
-void* StackAllocator::Alloc(uint32_t byteSize) {
+void* StackAllocator::Alloc(int byteSize) {
 	// Check so we dont use more mem then size of stack.
 	if (usedMem + byteSize > totalStackSize) {
 		return nullptr;
 	}
+
+	usedMem += byteSize;
+	void* retVal;
+	retVal = topPtr;
 	topPtr = static_cast<void*>(static_cast<char*>(topPtr) + byteSize);
-	return topPtr;
-};
+	return retVal;
+}
 
 void StackAllocator::ClearStack() {
 	//startPtr = nullptr;
 	topPtr = startPtr;
-};
+	usedMem = 0;
+}
 
-void StackAllocator::FreeToMarker(Marker marker){
-	topPtr = (void*)marker;
-};
-
-StackAllocator::Marker StackAllocator::GetMarker(){
-	return (Marker)topPtr;
-};
