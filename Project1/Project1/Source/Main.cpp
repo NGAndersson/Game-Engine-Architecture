@@ -13,7 +13,7 @@
 #include <time.h> 
 #include <list>
 
-#define MEMORY_OS true
+#define MEMORY_OS false
 #define Scenario 1
 #define LightTest 0
 
@@ -122,7 +122,7 @@ int main()
 		delete Party[25000];
 		while (i < 25000)
 		{
-			delete Party[i + 25000];
+			delete Party[i + 25000]; 
 			delete Party[25000 - i];
 			//PartSys.push_back( new Particle);
 			i++;
