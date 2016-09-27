@@ -6,6 +6,7 @@ public:
 	StackAllocator(void* memory,int sizeOfMemory);
 	void* Alloc(int byteSize);
 	void ClearStack();
+	void Setup(void* memory, int sizeOfMemory);
 	StackAllocator();
 
 private:
