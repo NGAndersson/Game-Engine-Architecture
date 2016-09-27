@@ -13,9 +13,11 @@
 #include <time.h> 
 #include <list>
 
-#define MEMORY_OS false
-#define Scenario 1
+#define MEMORY_OS true
+#define Scenario 2
 #define LightTest 0
+#define TestSize 2500
+#define RemoveSize 1000
 
 struct Particle{
 	int x = 1;
@@ -39,6 +41,11 @@ void* Threadfunc(PoolAllocator* _PAllocator, MemoryManager* _MManager)
 	return _PAllocator->setupPool(sizeof(FirstInt) * 25000, sizeof(FirstInt), _MManager->GetMemory(sizeof(FirstInt) * 25000));
 }
 
+void ThreadfuncStack(StackAllocator* _SAllocator, MemoryManager* _MManager)
+{
+	_SAllocator->Setup(_MManager->GetMemory(sizeof(FirstInt) * 25000), sizeof(FirstInt) * 25000);
+}
+
 int main()
 {
 	srand(time(NULL));
@@ -48,27 +55,26 @@ int main()
 	MemoryManager* _MManager = new MemoryManager();
 	PoolAllocator* _PAllocator1 = new PoolAllocator();
 	PoolAllocator* _PAllocator2 = new PoolAllocator();
-	//StackAllocator _SAllocator;*/
+	StackAllocator* _SAllocator1 = new StackAllocator();
+	StackAllocator* _SAllocator2 = new StackAllocator();
 
 
 	if (MEMORY_OS == false && Scenario == 1 && LightTest == 1)
 	{
-		vector<Particle*> PartSys;
-		int PartSize, ObjID;
-		Particle* Party[50000];
-		_PAllocator1->setupPool(sizeof(Particle) * 50000, sizeof(Particle), _MManager->GetMemory(sizeof(Particle) * 50000));
+		Particle* Party[TestSize];
+		_PAllocator1->setupPool(sizeof(Particle) * TestSize, sizeof(Particle), _MManager->GetMemory(sizeof(Particle) * TestSize));
 		c_start = std::clock();
 		auto t_start = std::chrono::high_resolution_clock::now();
-		while (i < 50000)
+		while (i < TestSize)
 		{
 			Party[i] = new(_PAllocator1->allocate())Particle;
 			i++;
 		}
 		
-		for (i = 0; i < 25000; i++)	//Removes all the objects
+		for (i = 0; i < (TestSize / 2); i++)	//Removes all the objects
 		{
-			_PAllocator1->remove(static_cast<void*>(Party[i + 25000]));
-			_PAllocator1->remove(static_cast<void*>(Party[24999 - i]));
+			_PAllocator1->remove(static_cast<void*>(Party[i + (TestSize / 2)]));
+			_PAllocator1->remove(static_cast<void*>(Party[(TestSize / 2) - 1 - i]));
 		}
 
 
@@ -83,13 +89,21 @@ int main()
 	}
 	else if (MEMORY_OS == false && Scenario == 2)
 	{
+		FirstInt* FirstValue[TestSize];
+		SecondInt *SecondValue[TestSize];
+		std::thread first(ThreadfuncStack, _SAllocator1, _MManager);
+		std::thread second(ThreadfuncStack, _SAllocator2, _MManager);
+		first.join();
+		second.join();
 		c_start = std::clock();
 		auto t_start = std::chrono::high_resolution_clock::now();
-		while (i < 500)
+		for (int i = 0; i < TestSize; i++)
 		{
-
-			i++;
+			FirstValue[i] = new(_SAllocator1->Alloc(sizeof(FirstInt)))FirstInt;
+			SecondValue[i] = new(_SAllocator2->Alloc(sizeof(SecondInt)))SecondInt;
 		}
+		_SAllocator1->ClearStack();
+		_SAllocator2->ClearStack();
 		c_end = std::clock();
 		auto t_end = std::chrono::high_resolution_clock::now();
 
@@ -98,26 +112,39 @@ int main()
 			<< "Wall clock time passed: "
 			<< std::chrono::duration<double, std::milli>(t_end - t_start).count()
 			<< " ms\n";
+
+		int FirstTot = 0, SecondTot = 0;
+		for (int i = 0; i < TestSize; i++)
+		{
+			FirstTot += FirstValue[i]->Hej;
+			SecondTot += SecondValue[i]->Hej;
+		}
+
+		if (FirstTot == TestSize && SecondTot == TestSize * 2)
+		{
+			std::cout << "All is fine in my dreams :p" << std::endl;
+		}
+		else
+		{
+			std::cout << "Error in memory" << std::endl;
+		}
 	}
 	else if (MEMORY_OS == true && Scenario == 1 && LightTest == 1)
 	{
-		vector<Particle*> PartSys;
-		Particle* Party[50000];
-		int PartSize, ObjID;
+		Particle* Party[TestSize];
 		c_start = std::clock();
 		auto t_start = std::chrono::high_resolution_clock::now();
 		
-		while (i < 50000)
+		while (i < TestSize)
 		{
 			Party[i] = new Particle;
 			i++;
 		}
-		i = 1;
-		delete Party[25000];
-		for (i = 0; i < 25000; i++)	//Removes all the objects
+
+		for (i = 0; i < (TestSize / 2); i++)	//Removes all the objects
 		{
-			delete Party[i + 25000];
-			delete Party[24999 - i];
+			delete Party[i + (TestSize / 2)];
+			delete Party[(TestSize / 2) - 1 - i];
 		}
 		
 
@@ -132,12 +159,19 @@ int main()
 	}
 	else if (MEMORY_OS == true && Scenario == 2)
 	{
+		FirstInt* FirstValue[TestSize];
+		SecondInt *SecondValue[TestSize];
 		c_start = std::clock();
 		auto t_start = std::chrono::high_resolution_clock::now();
-		while (i < 500)
+		for (int i = 0; i < TestSize; i++)
 		{
-
-			i++;
+			FirstValue[i] = new FirstInt;
+			SecondValue[i] = new SecondInt;
+		}
+		for (int i = 0; i < TestSize; i++)
+		{
+			delete FirstValue[i];
+			delete SecondValue[i];
 		}
 		c_end = std::clock();
 		auto t_end = std::chrono::high_resolution_clock::now();
@@ -150,10 +184,10 @@ int main()
 	}
 	else if (MEMORY_OS == false && Scenario == 1 && LightTest == 0)
 	{
-		FirstInt* FirstValue[25000];
-		SecondInt* SecondValue[25000];
-		int Remove[10000];
-		int ToDelete[10000];
+		FirstInt* FirstValue[TestSize];
+		SecondInt* SecondValue[TestSize];
+		int Remove[1000];
+		int ToDelete[1000];
 		list<int> free;
 		vector<int> used;
 		std::thread first(Threadfunc, _PAllocator1, _MManager);
@@ -163,21 +197,21 @@ int main()
 		c_time = std::clock();
 		auto t_time = std::chrono::high_resolution_clock::now();
 
-		for (int i = 0; i < 25000; i++)	// Add 50000 particle objects
+		for (int i = 0; i < TestSize; i++)	// Add 50000 particle objects
 		{
 			FirstValue[i] = new(_PAllocator1->allocate())FirstInt;
 			SecondValue[i] = new(_PAllocator2->allocate())SecondInt;
 		}
 
-		for (i = 0; i < 12500; i++)	//Removes all the objects
+		for (i = 0; i < (TestSize / 2); i++)	//Removes all the objects
 		{
-			_PAllocator1->remove(static_cast<void*>(FirstValue[i + 12500]));
-			_PAllocator1->remove(static_cast<void*>(FirstValue[12499 - i]));
-			_PAllocator2->remove(static_cast<void*>(SecondValue[i + 12500]));
-			_PAllocator2->remove(static_cast<void*>(SecondValue[12499 - i]));
+			_PAllocator1->remove(static_cast<void*>(FirstValue[i + (TestSize / 2)]));
+			_PAllocator1->remove(static_cast<void*>(FirstValue[(TestSize / 2) - 1 - i]));
+			_PAllocator2->remove(static_cast<void*>(SecondValue[i + (TestSize / 2)]));
+			_PAllocator2->remove(static_cast<void*>(SecondValue[(TestSize / 2) - 1 - i]));
 		}
 
-		for (i = 0; i < 25000; i++)	// Adds them again
+		for (i = 0; i < TestSize; i++)	// Adds them again
 		{
 			FirstValue[i] = new(_PAllocator1->allocate())FirstInt;
 			SecondValue[i] = new(_PAllocator2->allocate())SecondInt;
@@ -186,12 +220,12 @@ int main()
 		auto t_TotTime = std::chrono::high_resolution_clock::now() - t_time;		//stops time
 		c_TotTime = std::clock() - c_time;		//stops time
 
-		for (i = 0; i < 25000; i++)	//pushes used pointer indexes to a vector
+		for (i = 0; i < TestSize; i++)	//pushes used pointer indexes to a vector
 		{
 			used.push_back(i);
 		}
 
-		for (i = 0; i < 10000; i++)	//Randoms the objects that should be removed
+		for (i = 0; i < RemoveSize; i++)	//Randoms the objects that should be removed
 		{
 			Remove[i] = rand() % used.size();
 			ToDelete[i] = used.at(Remove[i]);
@@ -202,7 +236,7 @@ int main()
 		c_time = std::clock();		//restarts time
 		t_time = std::chrono::high_resolution_clock::now();		//restarts time
 
-		for (i = 0; i < 10000; i++)	//Removes the objects that should be removed
+		for (i = 0; i < RemoveSize; i++)	//Removes the objects that should be removed
 		{
 			_PAllocator1->remove(static_cast<void*>(FirstValue[ToDelete[i]]));
 			_PAllocator2->remove(static_cast<void*>(SecondValue[ToDelete[i]]));
@@ -218,41 +252,48 @@ int main()
 			<< " ms\n";
 
 		int FirstTot = 0, SecondTot = 0;
-		for (i = 0; i < 15000; i++)
+		for (i = 0; i < TestSize - RemoveSize; i++)
 		{
 			FirstTot += FirstValue[used.at(i)]->Hej;
 			SecondTot += SecondValue[used.at(i)]->Hej;
 		}
-		std::cout << FirstTot << std::endl;
-		std::cout << SecondTot << std::endl;
+		if (FirstTot == (TestSize - RemoveSize) && SecondTot == (TestSize - RemoveSize) * 2)
+		{
+			std::cout << "All is fine in my dreams :p" << std::endl;
+		}
+		else
+		{
+			std::cout << "Error in memory" << std::endl;
+		}
+		
 	}
 	else if (MEMORY_OS == true && Scenario == 1 && LightTest == 0)
 	{
-		FirstInt* FirstValue[25000];
-		SecondInt* SecondValue[25000];
-		int Remove[10000];
-		int ToDelete[10000];
+		FirstInt* FirstValue[TestSize];
+		SecondInt* SecondValue[TestSize];
+		int Remove[1000];
+		int ToDelete[1000];
 		list<int> free;
 		vector<int> used;
 		
 		c_time = std::clock();
 		auto t_time = std::chrono::high_resolution_clock::now();
 
-		for (int i = 0; i < 25000; i++)	// Add 50000 particle objects
+		for (int i = 0; i < TestSize; i++)	// Add 50000 particle objects
 		{
 			FirstValue[i] = new FirstInt;
 			SecondValue[i] = new SecondInt;
 		}
 
-		for (i = 0; i < 12500; i++)	//Removes all the objects
+		for (i = 0; i < (TestSize / 2); i++)	//Removes all the objects
 		{
-			delete FirstValue[i + 12500];
-			delete FirstValue[12499 - i];
-			delete SecondValue[i + 12500];
-			delete SecondValue[12499 - i];
+			delete FirstValue[i + (TestSize / 2)];
+			delete FirstValue[(TestSize / 2) - 1 - i];
+			delete SecondValue[i + (TestSize / 2)];
+			delete SecondValue[(TestSize / 2) - 1 - i];
 		}
 
-		for (i = 0; i < 25000; i++)	// Adds them again
+		for (i = 0; i < TestSize; i++)	// Adds them again
 		{
 			FirstValue[i] = new FirstInt;
 			SecondValue[i] = new SecondInt;
@@ -261,12 +302,12 @@ int main()
 		auto t_TotTime = std::chrono::high_resolution_clock::now() - t_time;		//stops time
 		c_TotTime = std::clock() - c_time;		//stops time
 
-		for (i = 0; i < 25000; i++)	//pushes used pointer indexes to a vector
+		for (i = 0; i < TestSize; i++)	//pushes used pointer indexes to a vector
 		{
 			used.push_back(i);
 		}
 
-		for (i = 0; i < 10000; i++)	//Randoms the objects that should be removed
+		for (i = 0; i < RemoveSize; i++)	//Randoms the objects that should be removed
 		{
 			Remove[i] = rand() % used.size();
 			ToDelete[i] = used.at(Remove[i]);
@@ -277,7 +318,7 @@ int main()
 		c_time = std::clock();		//restarts time
 		t_time = std::chrono::high_resolution_clock::now();		//restarts time
 
-		for (i = 0; i < 10000; i++)	//Removes the objects that should be removed
+		for (i = 0; i < RemoveSize; i++)	//Removes the objects that should be removed
 		{
 			delete FirstValue[ToDelete[i]];
 			delete SecondValue[ToDelete[i]];

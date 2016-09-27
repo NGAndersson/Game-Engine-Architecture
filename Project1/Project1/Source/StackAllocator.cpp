@@ -11,6 +11,12 @@ StackAllocator::StackAllocator()
 
 }
 
+void StackAllocator::Setup(void* memory, int sizeOfMemory) {
+	startPtr = memory;
+	totalStackSize = sizeOfMemory;
+	topPtr = startPtr;
+}
+
 void* StackAllocator::Alloc(int byteSize) {
 	// Check so we dont use more mem then size of stack.
 	if (usedMem + byteSize > totalStackSize) {
