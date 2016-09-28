@@ -1,8 +1,4 @@
 ﻿  Main.cpp
-c:\users\yorkhawke\source\repos\game-engine-architecture\project1\project1\source\main.cpp(29): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\yorkhawke\source\repos\game-engine-architecture\project1\project1\source\main.cpp(41): warning C4101: 'ObjID': unreferenced local variable
-c:\users\yorkhawke\source\repos\game-engine-architecture\project1\project1\source\main.cpp(41): warning C4101: 'PartSize': unreferenced local variable
-c:\users\yorkhawke\source\repos\game-engine-architecture\project1\project1\source\main.cpp(111): warning C4101: 'ObjID': unreferenced local variable
-c:\users\yorkhawke\source\repos\game-engine-architecture\project1\project1\source\main.cpp(111): warning C4101: 'PartSize': unreferenced local variable
-  Project1.vcxproj -> C:\Users\yorkhawke\Source\Repos\Game-Engine-Architecture\Project1\Debug\Project1.exe
-  Project1.vcxproj -> C:\Users\yorkhawke\Source\Repos\Game-Engine-Architecture\Project1\Debug\Project1.pdb (Partial PDB)
+c:\users\gis-2\source\repos\game-engine-architecture\project1\project1\source\main.cpp(51): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Project1.vcxproj -> C:\Users\GiS-2\Source\Repos\Game-Engine-Architecture\Project1\Debug\Project1.exe
+  Project1.vcxproj -> C:\Users\GiS-2\Source\Repos\Game-Engine-Architecture\Project1\Debug\Project1.pdb (Partial PDB)
