@@ -13,10 +13,10 @@
 #include <time.h> 
 #include <list>
 
-#define MEMORY_OS true
-#define Scenario 2
-#define LightTest 0
-#define TestSize 2500
+#define MEMORY_OS false
+#define Scenario 1
+#define LightTest 1
+#define TestSize 20000
 #define RemoveSize 1000
 
 struct Particle{
@@ -160,18 +160,18 @@ int main()
 	else if (MEMORY_OS == true && Scenario == 2)
 	{
 		FirstInt* FirstValue[TestSize];
-		SecondInt *SecondValue[TestSize];
+		//SecondInt *SecondValue[TestSize];
 		c_start = std::clock();
 		auto t_start = std::chrono::high_resolution_clock::now();
 		for (int i = 0; i < TestSize; i++)
 		{
 			FirstValue[i] = new FirstInt;
-			SecondValue[i] = new SecondInt;
+			//SecondValue[i] = new SecondInt;
 		}
-		for (int i = 0; i < TestSize; i++)
+		for (int i = TestSize-1; i > -1; i--)
 		{
 			delete FirstValue[i];
-			delete SecondValue[i];
+			//delete SecondValue[i];
 		}
 		c_end = std::clock();
 		auto t_end = std::chrono::high_resolution_clock::now();
@@ -334,26 +334,6 @@ int main()
 			<< std::chrono::duration<double, std::milli>(t_TotTime).count()
 			<< " ms\n";
 	}
-
-	//TESTCASE FOR POOLALLOCATOR DO NOT REMOVE
-	//MemoryManager* test = new MemoryManager();
-
-	//PoolAllocator* mtest = new PoolAllocator();
-
-	//mtest->setupPool(256, 64, test->GetMemory(256));
-	//void* testmem[4];
-	//string* pt[4];
-	//for (int i = 0; i < 4; i++)
-	//	testmem[i] = mtest->allocate();
-
-	//for (int i = 0; i < 4; i++)
-	//{
-	//	pt[i] = new(testmem[i])string("Hello World");
-	//}
-
-	//mtest->remove(static_cast<void*>(pt[0]));
-
-	//string* tp = new(mtest->allocate())string("Oscar gillar Man");
 
 	getchar();
 
