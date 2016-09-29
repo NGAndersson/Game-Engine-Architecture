@@ -1,4 +1,10 @@
-﻿  Main.cpp
-c:\users\gis-2\source\repos\game-engine-architecture\project1\project1\source\main.cpp(51): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  Project1.vcxproj -> C:\Users\GiS-2\Source\Repos\Game-Engine-Architecture\Project1\Debug\Project1.exe
-  Project1.vcxproj -> C:\Users\GiS-2\Source\Repos\Game-Engine-Architecture\Project1\Debug\Project1.pdb (Partial PDB)
+﻿  PoolAllocator.cpp
+c:\users\jens\documents\github\game-engine-architecture\project1\project1\source\poolallocator.cpp(23): error C2084: function 'void PoolAllocator::remove(void *)' already has a body
+  c:\users\jens\documents\github\game-engine-architecture\project1\project1\header\poolallocator.h(29): note: see previous definition of 'remove'
+c:\users\jens\documents\github\game-engine-architecture\project1\project1\source\poolallocator.cpp(33): error C2084: function 'void *PoolAllocator::allocate(void)' already has a body
+  c:\users\jens\documents\github\game-engine-architecture\project1\project1\header\poolallocator.h(37): note: see previous definition of 'allocate'
+  Main.cpp
+c:\users\jens\documents\github\game-engine-architecture\project1\project1\source\main.cpp(51): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\jens\documents\github\game-engine-architecture\project1\project1\source\main.cpp(53): warning C4101: 'c_TotTime': unreferenced local variable
+c:\users\jens\documents\github\game-engine-architecture\project1\project1\source\main.cpp(53): warning C4101: 'c_time': unreferenced local variable
+  Generating Code...
