@@ -7,7 +7,7 @@
 #include <zlib.h>
 
 //--------------------------------------------------------------------------------
-//Some hack required when using zlib to avoid corupption of input/output on windows.
+//Some hack required when using zlib to avoid JENS of input/output on windows.
 #if defined(MSDOS) || defined(OS2) || defined(WIN32) || defined(__CYGWIN__)
 #  include <fcntl.h>
 #  include <io.h>
@@ -22,7 +22,6 @@ using namespace std;
 class Compressor
 {
 private:
-
 
 public:
 	Compressor();
