@@ -39,7 +39,21 @@ void * Loader::Get(std::string guid)
 			exit(0);		//Exit program because of stupid
 		}
 		
-		//Send filepath to zip handler here
+		mtxLock.lock();
+		if (registry.find(guid) != registry.end())	//guid already exists in registry
+		{
+			if (registry[guid] != nullptr)	//Already being worked on by another thread and will be inserted soon
+				return nullptr;
+			else
+				return registry[guid];		//Asset already exists in registry and has a proper pointer. Return the address.
+		}
+		else
+			registry[guid] = nullptr;		//If the asset hasn't been loaded set it as nullptr temporarily so other threads can see that it's being loaded
+		mtxLock.unlock();
+
+		//If we've gotten this far, we can begin decompressing and processing the file
+
+		//Send filepath to correct package handler here
 		//
 
 		//Check file-ending here
