@@ -1,0 +1,6 @@
+﻿  Main.cpp
+  Loader.cpp
+  Compressor.cpp
+  Generating Code...
+c:\users\yorkhawke\source\repos\game-engine-architecture\project1\assignment 2\loader.cpp(9): warning C4715: 'Loader::Load': not all control paths return a value
+LINK : fatal error LNK1561: entry point must be defined

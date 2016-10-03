@@ -26,7 +26,7 @@ private:
 public:
 	Compressor();
 	~Compressor();
-	void decompress(char* path);
+	void decompress(string path);
 	void compress();
 
 
