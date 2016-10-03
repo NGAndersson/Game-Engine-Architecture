@@ -10,6 +10,8 @@ public:
 
 
 private:
+	std::string FindPathZip(std::string guid);
+	std::string FindPathCustom(std::string guid);
 	std::unordered_map<std::string, void*> registry;
 	int maxMemory;
 	int usedMemory;
