@@ -53,7 +53,7 @@ void * Loader::Get(std::string guid)
 
 		//If we've gotten this far, we can begin decompressing and processing the file
 
-		//Send filepath to zip handler here
+		//Send filepath to correct package handler here
 		//
 
 		//Check file-ending here
