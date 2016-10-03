@@ -1,6 +1,7 @@
 #pragma once
 #include <unordered_map>
 #include <string>
+#include <mutex>
 
 class Loader{
 public:
@@ -12,4 +13,5 @@ private:
 	std::unordered_map<std::string, void*> registry;
 	int maxMemory;
 	int usedMemory;
+	std::mutex mtxLock;
 };
