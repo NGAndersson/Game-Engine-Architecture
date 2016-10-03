@@ -5,10 +5,11 @@
 class Loader{
 public:
 	Loader();
-	void* Load(std::string guid);
+	void* Get(std::string guid);
 
 
 private:
 	std::unordered_map<std::string, void*> registry;
 	int maxMemory;
+	int usedMemory;
 };
