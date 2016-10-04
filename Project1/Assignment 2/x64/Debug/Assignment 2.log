@@ -1,0 +1,6 @@
+﻿  Main.cpp
+c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\main.cpp(17): warning C4244: 'return': conversion from 'WPARAM' to 'int', possible loss of data
+  Game.cpp
+  Generating Code...
+  Assignment 2.vcxproj -> C:\Users\GiS-2\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\Assignment 2.exe
+  Assignment 2.vcxproj -> C:\Users\GiS-2\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\Assignment 2.pdb (Partial PDB)

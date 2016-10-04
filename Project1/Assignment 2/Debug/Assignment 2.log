@@ -1,0 +1,13 @@
+﻿  Renderer.cpp
+c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\objloader.h(12): fatal error C1083: Cannot open include file: 'WICTextureLoader.h': No such file or directory
+  OBJloader.cpp
+c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\objloader.h(12): fatal error C1083: Cannot open include file: 'WICTextureLoader.h': No such file or directory
+  ModelHandler.cpp
+c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\objloader.h(12): fatal error C1083: Cannot open include file: 'WICTextureLoader.h': No such file or directory
+  Main.cpp
+  Loader.cpp
+  Game.cpp
+  Display.cpp
+  Camera.cpp
+  Generating Code...
+c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\loader.cpp(9): warning C4715: 'Loader::Load': not all control paths return a value
