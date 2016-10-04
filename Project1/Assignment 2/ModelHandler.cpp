@@ -114,9 +114,9 @@ bool ModelHandler::SetBuffers(ID3D11DeviceContext* deviceContext)
 {
 	D3D11_MAPPED_SUBRESOURCE _mappedResource;
 
-	HRESULT hr = deviceContext->Map(m_OBJColourBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &_mappedResource);
+ 	HRESULT hr = deviceContext->Map(m_OBJColourBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &_mappedResource);
 
-	_OBJColour.Deffuse = XMFLOAT3(m_RGBDeffuse[0].x * m_beatBoost, m_RGBDeffuse[0].y * m_beatBoost, m_RGBDeffuse[0].z * m_beatBoost);
+	_OBJColour.Deffuse = XMFLOAT3(m_RGBDeffuse[0].x, m_RGBDeffuse[0].y, m_RGBDeffuse[0].z);
 	_OBJColour.Albi = m_RGBAL[0];
 	_OBJColour.Ni = m_Tf[0];
 	_OBJColour.Tf = m_Ni[0];
@@ -134,27 +134,6 @@ bool ModelHandler::SetBuffers(ID3D11DeviceContext* deviceContext)
 	deviceContext->PSSetShaderResources(0, 1, &m_ObjTex);
 
 	return true;
-}
-
-void ModelHandler::beatBoost(bool beat, float time, float timeSinceLast, float BPM)
-{
-	if (beat == true)
-	{
-		if (timeSinceLast != -1)
-		{
-			m_beatBoost = 4;
-			m_beatTime = (timeSinceLast) / 3;
-		}
-		else
-		{
-			m_beatBoost = 4;
-			m_beatTime = (60 / BPM) / 3;
-		}
-	}
-	else if (beat == false)
-	{
-		m_beatBoost += -time / m_beatTime;
-	}
 }
 
 int ModelHandler::GetVertexCount()

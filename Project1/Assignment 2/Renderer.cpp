@@ -92,8 +92,8 @@ Renderer::Renderer(ID3D11DeviceContext * deviceContext, ID3D11Device * device)
 	m_device = device;
 	m_deviceContext = deviceContext;
 
-	m_cam.SetCameraPos(XMVectorSet(39.0f, 65.0f,  52.0f, 0.0f));
-	m_cam.SetLookAtVec(XMVectorSet(0.0f, -1.0f, 0.0001f, 0.0f));
+	m_cam.SetCameraPos(XMVectorSet(0, 0, 0, 0));
+	m_cam.SetLookAtVec(XMVectorSet(0, 0, 1, 0));
 	m_cam.SetProjectionMatrix();
 	m_cam.SetViewMatrix();
 	m_cam.SetViewProjectionMatrix();

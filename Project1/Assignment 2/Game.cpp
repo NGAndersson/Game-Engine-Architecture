@@ -50,10 +50,12 @@ void Game::InitGame(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 
 	//Create and initialize device/devicecontext/swapchain/depthstenciel
 	CreateDirect3DContext(_hwnd);
+	
 
 	//Sets the viewport
 	SetViewport();
-
+	m_entitymanager = new EntityManager();
+	m_entitymanager->Initialize(m_device, m_deviceContext);
 }
 
 WPARAM Game::MainLoop(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -78,10 +80,6 @@ WPARAM Game::MainLoop(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 		//Call update functions
 		/*Update(time, hInstance, hPrevInstance, lpCmdLine, nCmdShow);*/
 
-		//Set camera pos
-		m_camera = new Camera(XMVectorSet(0, 0, 0, 0), XMVectorSet(0, 0, 1, 0));
-		m_camera->CreateBuffer(m_device);
-
 		//Call Render Functions
 		Render();
 		m_swapChain->Present(0, 0);
@@ -104,6 +102,8 @@ void Game::Render()
 	m_deviceContext->ClearRenderTargetView(m_backbufferRTV, _clearColor);
 	m_deviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 	m_deviceContext->OMSetRenderTargets(1, &m_backbufferRTV, m_depthStencilView);
+
+	m_entitymanager->Render();
 
 }
 

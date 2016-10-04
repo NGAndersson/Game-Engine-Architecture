@@ -116,21 +116,25 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Display.cpp" />
+    <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Loader.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ModelHandler.cpp" />
     <ClCompile Include="OBJloader.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="ShaderHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Display.h" />
+    <ClInclude Include="EntityManager.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Loader.h" />
     <ClInclude Include="ModelHandler.h" />
     <ClInclude Include="OBJloader.h" />
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="ShaderHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Text.txt" />

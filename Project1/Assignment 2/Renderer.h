@@ -30,6 +30,7 @@ private:
 
 public:
 	~Renderer();
+
 	void Render(ModelHandler* model, XMFLOAT3 position, XMMATRIX &rotation, XMFLOAT3 scale);
 	void RenderInstanced(ModelHandler * model, vector<XMFLOAT3> position, vector<XMMATRIX> &rotation, int amountOfBullets, vector<XMFLOAT3> scale);
 	Renderer(ID3D11DeviceContext* deviceContext, ID3D11Device* device);

@@ -12,6 +12,7 @@
 #include <iostream>
 #include <vector>
 #include <d3dcompiler.h>
+#include "EntityManager.h"
 
 #pragma comment (lib, "d3d11.lib")
 #pragma comment (lib, "d3dcompiler.lib")
@@ -36,9 +37,8 @@ public:
 
 private:
 	int m_width = 1920,m_height = 1280;
-
-	Camera* m_camera;
 	Display* m_display;
+	EntityManager* m_entitymanager;
 	MSG m_winMSG;
 	ID3D11DeviceContext* m_deviceContext = nullptr;
 	ID3D11Device* m_device = nullptr;
