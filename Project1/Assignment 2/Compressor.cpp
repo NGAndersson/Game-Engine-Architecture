@@ -12,7 +12,7 @@ Compressor::~Compressor()
 
 }
 
-void Compressor::decompress(char* path)
+void Compressor::decompress(string path)
 {
 
 
