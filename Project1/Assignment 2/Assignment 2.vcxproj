@@ -116,6 +116,7 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Display.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Loader.cpp" />
@@ -124,10 +125,12 @@
     <ClCompile Include="OBJloader.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ShaderHandler.cpp" />
+    <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Display.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Loader.h" />
@@ -135,6 +138,7 @@
     <ClInclude Include="OBJloader.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ShaderHandler.h" />
+    <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Text.txt" />

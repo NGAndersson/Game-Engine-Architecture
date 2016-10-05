@@ -1,5 +1,6 @@
 #ifndef _ENTITYMANAGER_H
 #define _ENTITYMANAGER_H
+#include "Entity.h"
 #include <vector>
 #include "Renderer.h"
 #include "ShaderHandler.h"
@@ -29,6 +30,7 @@ private:
 	//Vectors with all the different types of entities
 	ShaderHandler* m_shaderLoad;
 	ModelHandler* m_modelHandler;
+	Entity* m_entity;
 
 	Renderer* m_renderer;
 	ID3D11Device* m_device;

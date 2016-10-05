@@ -7,10 +7,10 @@ Game::Game()
 
 Game::~Game()
 {
-	/*if (m_swapChain != nullptr)
+	if (m_swapChain != nullptr)
 	{
 		m_swapChain->Release();
-	}*/
+	}
 	if (m_backbufferRTV != nullptr)
 	{
 		m_backbufferRTV->Release();
@@ -38,6 +38,7 @@ Game::~Game()
 
 	delete m_display;
 	m_display = 0;
+	delete m_entitymanager;
 }
 
 void Game::InitGame(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -60,6 +61,11 @@ void Game::InitGame(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 
 WPARAM Game::MainLoop(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
+	Timer _time;
+	static float _frameTime = 0.f;
+	_time.StartTime();
+	_time.TimeCheck();
+
 	InitGame(hInstance,hPrevInstance,lpCmdLine,nCmdShow);//initialize the things that does not need ScreenWidh/m_height
 
 	while (TRUE) {
@@ -77,21 +83,27 @@ WPARAM Game::MainLoop(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 		if (m_winMSG.message == WM_QUIT)
 			return m_winMSG.wParam;
 
+		float time = _time.TimeCheck();
+		_frameTime += time;
+
 		//Call update functions
-		/*Update(time, hInstance, hPrevInstance, lpCmdLine, nCmdShow);*/
+		Update(time, hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+
+
 
 		//Call Render Functions
-		Render();
-		m_swapChain->Present(0, 0);
+		if (_frameTime*1000.f >= 16.6f) {
+			Render();
+			m_swapChain->Present(0, 0);
+			_frameTime = 0.f;
+		}
 	}
 
 }
 
 void Game::Update(double time, HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-
-
-
+	m_entitymanager->Update(time);
 }
 
 void Game::Render()
@@ -101,7 +113,6 @@ void Game::Render()
 	float _clearColor[] = { 0, 0, 0, 1 };
 	m_deviceContext->ClearRenderTargetView(m_backbufferRTV, _clearColor);
 	m_deviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
-	m_deviceContext->OMSetRenderTargets(1, &m_backbufferRTV, m_depthStencilView);
 
 	m_entitymanager->Render();
 

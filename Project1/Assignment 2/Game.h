@@ -3,6 +3,7 @@
 
 #include "Display.h"
 #include "Camera.h"
+#include "Timer.h"
 #include <dxgidebug.h>
 #include <d3d11.h>
 #include <DirectXMath.h>
