@@ -7,6 +7,7 @@
 #include <zlib.h>
 #include <zip.h>
 
+
 //--------------------------------------------------------------------------------
 //Some hack required when using zlib to avoid JENS of input/output on windows.
 #if defined(MSDOS) || defined(OS2) || defined(WIN32) || defined(__CYGWIN__)

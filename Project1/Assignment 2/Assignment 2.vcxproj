@@ -68,7 +68,22 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\include;..\packages\libzip.1.1.2.7\build\native\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\lib;..\packages\libzip.1.1.2.7\build\native\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\include;..\packages\libzip.1.1.2.7\build\native\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\lib;..\packages\libzip.1.1.2.7\build\native\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\include;..\packages\libzip.1.1.2.7\build\native\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\lib;..\packages\libzip.1.1.2.7\build\native\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\include;..\packages\libzip.1.1.2.7\build\native\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\lib;..\packages\libzip.1.1.2.7\build\native\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -119,6 +134,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Decompressor.cpp" />
     <ClCompile Include="Display.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityManager.cpp" />
@@ -133,6 +149,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Decompressor.h" />
     <ClInclude Include="Display.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityManager.h" />
