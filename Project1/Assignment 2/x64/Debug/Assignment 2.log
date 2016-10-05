@@ -1,2 +1,21 @@
-﻿  Assignment 2.vcxproj -> C:\Users\GiS-2\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\Assignment 2.exe
+﻿  Timer.cpp
+c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\timer.cpp(51): warning C4244: '=': conversion from 'float' to '__int64', possible loss of data
+  ShaderHandler.cpp
+  Renderer.cpp
+  OBJloader.cpp
+  ModelHandler.cpp
+  Main.cpp
+c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\main.cpp(17): warning C4244: 'return': conversion from 'WPARAM' to 'int', possible loss of data
+  Loader.cpp
+  Game.cpp
+c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\game.cpp(86): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  EntityManager.cpp
+  Entity.cpp
+c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\entity.cpp(23): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Display.cpp
+  Camera.cpp
+  Generating Code...
+c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\loader.cpp(9): warning C4715: 'Loader::Load': not all control paths return a value
+  LINK : C:\Users\GiS-2\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\Assignment 2.exe not found or not built by the last incremental link; performing full link
+  Assignment 2.vcxproj -> C:\Users\GiS-2\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\Assignment 2.exe
   Assignment 2.vcxproj -> C:\Users\GiS-2\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\Assignment 2.pdb (Partial PDB)

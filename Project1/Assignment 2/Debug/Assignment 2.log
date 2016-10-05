@@ -1,13 +1,23 @@
-﻿  Renderer.cpp
-c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\objloader.h(12): fatal error C1083: Cannot open include file: 'WICTextureLoader.h': No such file or directory
+﻿  Timer.cpp
+c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\timer.cpp(51): warning C4244: '=': conversion from 'float' to '__int64', possible loss of data
+  ShaderHandler.cpp
+  Renderer.cpp
   OBJloader.cpp
-c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\objloader.h(12): fatal error C1083: Cannot open include file: 'WICTextureLoader.h': No such file or directory
   ModelHandler.cpp
-c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\objloader.h(12): fatal error C1083: Cannot open include file: 'WICTextureLoader.h': No such file or directory
   Main.cpp
   Loader.cpp
   Game.cpp
+c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\game.cpp(58): warning C4316: 'EntityManager': object allocated on the heap may not be aligned 16
+c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\game.cpp(86): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  EntityManager.cpp
+c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\entitymanager.cpp(25): warning C4316: 'Renderer': object allocated on the heap may not be aligned 16
+c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\entitymanager.cpp(31): warning C4316: 'Entity': object allocated on the heap may not be aligned 16
+  Entity.cpp
+c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\entity.cpp(23): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   Display.cpp
   Camera.cpp
   Generating Code...
 c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\loader.cpp(9): warning C4715: 'Loader::Load': not all control paths return a value
+OBJloader.obj : error LNK2019: unresolved external symbol "long __cdecl DirectX::CreateWICTextureFromFile(struct ID3D11Device *,struct ID3D11DeviceContext *,wchar_t const *,struct ID3D11Resource * *,struct ID3D11ShaderResourceView * *,unsigned int)" (?CreateWICTextureFromFile@DirectX@@YAJPAUID3D11Device@@PAUID3D11DeviceContext@@PB_WPAPAUID3D11Resource@@PAPAUID3D11ShaderResourceView@@I@Z) referenced in function "public: struct ID3D11ShaderResourceView * __thiscall OBJLoader::LoadColour(struct ID3D11Device *,struct ID3D11DeviceContext *,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,struct DirectX::XMFLOAT3 *,struct DirectX::XMFLOAT3 *,struct DirectX::XMFLOAT3 *,struct DirectX::XMFLOAT3 *,struct ID3D11ShaderResourceView * *)" (?LoadColour@OBJLoader@@QAEPAUID3D11ShaderResourceView@@PAUID3D11Device@@PAUID3D11DeviceContext@@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUXMFLOAT3@DirectX@@333PAPAU2@@Z)
+C:\Users\GiS-2\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\packages\directxtk_desktop_2015.2015.11.30.1\build\native\lib\x64\Debug\DirectXTK.lib : warning LNK4272: library machine type 'x64' conflicts with target machine type 'X86'
+C:\Users\GiS-2\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\Debug\Assignment 2.exe : fatal error LNK1120: 1 unresolved externals
