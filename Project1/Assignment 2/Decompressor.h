@@ -1,10 +1,11 @@
-#ifndef COMPRESSOR_H
-#define COMPRESSOR_H
+#ifndef Decompressor_H
+#define Decompressor_H
 
 #include <stdio.h>
 #include <string>
 #include <assert.h>
 #include <zlib.h>
+#include <zip.h>
 
 //--------------------------------------------------------------------------------
 //Some hack required when using zlib to avoid JENS of input/output on windows.
@@ -19,19 +20,17 @@
 
 using namespace std;
 
-class Compressor
+class Decompressor
 {
 private:
 
 public:
-	Compressor();
-	~Compressor();
-	void decompress(string path);
-	void compress();
-
-
-
-
+	Decompressor();
+	~Decompressor();
+	
+	char* decompress(string Path,string fileName);
+	//Path is the name of the archive 
+	// FileName is the name of the file we want to read from.
 };
 
 
