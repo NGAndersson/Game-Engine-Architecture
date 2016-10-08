@@ -3,3 +3,14 @@ Project1/.vs/Project1/v14/.suo
 Project1/Project1/Project1.vcxproj.user
 *.db
 *.opendb
+*.tlog
+*.pdb
+*.obj
+*.tlog
+*.pdb
+*.tlog
+*.obj
+*.idb
+*.suo
+Debug/
+/Project1/Assignment 2/Debug

@@ -1,0 +1,9 @@
+﻿  StackAllocator.cpp
+  PoolAllocator.cpp
+  MemoryManager.cpp
+  Main.cpp
+c:\users\jens\documents\github\game-engine-architecture\project1\project1\source\main.cpp(51): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Generating Code...
+  LINK : C:\Users\Jens\Documents\GitHub\Game-Engine-Architecture\Project1\Debug\Project1.exe not found or not built by the last incremental link; performing full link
+  Project1.vcxproj -> C:\Users\Jens\Documents\GitHub\Game-Engine-Architecture\Project1\Debug\Project1.exe
+  Project1.vcxproj -> C:\Users\Jens\Documents\GitHub\Game-Engine-Architecture\Project1\Debug\Project1.pdb (Partial PDB)
