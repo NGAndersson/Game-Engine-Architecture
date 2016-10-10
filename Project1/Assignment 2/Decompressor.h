@@ -28,10 +28,11 @@ private:
 public:
 	Decompressor();
 	~Decompressor();
-	
-	FILE* decompress(string Path,string fileName);
-	//Path is the name of the archive 
-	// FileName is the name of the file we want to read from.
+
+	//Path is the name of the archive And FileName is the name of the file we want to read from.
+	char* decompress(string Path,string fileName);
+
+
 };
 
 

@@ -12,10 +12,10 @@ Decompressor::~Decompressor()
 
 }
 
-FILE* Decompressor::decompress(string Path,string fileName)
+char* Decompressor::decompress(string Path,string fileName)
 {
 
-	FILE* retFile;
+	char* retFile;
 	int error = 0;
 	zip* temp = zip_open(Path.c_str(), 0, &error);
 
@@ -28,12 +28,6 @@ FILE* Decompressor::decompress(string Path,string fileName)
 	zip_fclose(readData);
 	zip_close(temp);
 
-	//XMFLOAT3* retVal = new XMFLOAT3[stats.size];
-/*
-	zip_file *readVal = zip_fopen(temp, fileName.c_str(), 0);
-	zip_fread(readVal, retVal, stats.size);
-	zip_fclose(readVal);
+	return retFile;
 
-	zip_close(temp);
-*/
 }
