@@ -12,7 +12,7 @@ Decompressor::~Decompressor()
 
 }
 
-char* Decompressor::decompress(string Path,string fileName)
+istringstream Decompressor::decompress(string Path, string fileName)
 {
 
 	char* retFile;
@@ -28,6 +28,6 @@ char* Decompressor::decompress(string Path,string fileName)
 	zip_fclose(readData);
 	zip_close(temp);
 
-	return retFile;
-
+	istringstream retStream(retFile);
+	return retStream;
 }
