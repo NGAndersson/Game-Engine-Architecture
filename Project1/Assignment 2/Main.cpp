@@ -13,10 +13,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//Create, initialize and START the game
 	Game _Game;
-	//WPARAM test = _Game.MainLoop(hInstance,hPrevInstance,lpCmdLine,nCmdShow);
+	WPARAM test = _Game.MainLoop(hInstance,hPrevInstance,lpCmdLine,nCmdShow);
 
-	Decompressor ted;
-
-	//ted.decompress();
-	return test;
 }
