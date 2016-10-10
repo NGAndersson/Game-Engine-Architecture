@@ -2,6 +2,8 @@
 #include <unordered_map>
 #include <string>
 #include <mutex>
+#include "Decompressor.h"
+#include "LOSReader.h"
 
 class Loader{
 public:
@@ -11,9 +13,11 @@ public:
 
 private:
 	std::string FindPathZip(std::string guid);
-	std::string FindPathCustom(std::string guid);
+	void FindOffsetCustom(std::string guid, int& offset, int& size);
 	std::unordered_map<std::string, void*> registry;
 	int maxMemory;
 	int usedMemory;
 	std::mutex mtxLock;
+	Decompressor decompressor;
+	LOSReader losReader;
 };

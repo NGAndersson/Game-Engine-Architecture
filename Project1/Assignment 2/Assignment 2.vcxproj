@@ -140,6 +140,7 @@
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Loader.cpp" />
+    <ClCompile Include="LOSReader.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ModelHandler.cpp" />
     <ClCompile Include="OBJloader.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Loader.h" />
+    <ClInclude Include="LOSReader.h" />
     <ClInclude Include="ModelHandler.h" />
     <ClInclude Include="OBJloader.h" />
     <ClInclude Include="Renderer.h" />
