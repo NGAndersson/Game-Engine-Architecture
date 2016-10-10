@@ -21,7 +21,7 @@ bool Compress::zipTest(string Path, string file)
 		printf("Fuckin could not open filepath");
 	}
 
-	string td = "Ap Suger So Mkt";
+	string td = "Ap Suger So Mkt \n Oscar suger lika mycket som ap";
 	unsigned long int test = td.size();
 	zip_source* source = zip_source_buffer(temp, td.c_str(), test, 1);
 
