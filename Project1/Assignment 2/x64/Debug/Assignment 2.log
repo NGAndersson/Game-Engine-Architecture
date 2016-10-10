@@ -1,6 +1,2 @@
-﻿  Main.cpp
-  Loader.cpp
-  Compressor.cpp
-  Generating Code...
-c:\users\yorkhawke\source\repos\game-engine-architecture\project1\assignment 2\loader.cpp(9): warning C4715: 'Loader::Load': not all control paths return a value
-LINK : fatal error LNK1561: entry point must be defined
+﻿  Assignment 2.vcxproj -> C:\Users\GiS-2\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\Assignment 2.exe
+  Assignment 2.vcxproj -> C:\Users\GiS-2\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\Assignment 2.pdb (Partial PDB)
