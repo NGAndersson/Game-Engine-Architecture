@@ -29,7 +29,7 @@ public:
 	Decompressor();
 	~Decompressor();
 	
-	char* decompress(string Path,string fileName);
+	FILE* decompress(string Path,string fileName);
 	//Path is the name of the archive 
 	// FileName is the name of the file we want to read from.
 };

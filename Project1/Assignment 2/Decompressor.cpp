@@ -12,7 +12,7 @@ Decompressor::~Decompressor()
 
 }
 
-char* Decompressor::decompress(string Path,string fileName)
+FILE* Decompressor::decompress(string Path,string fileName)
 {
 
 	FILE* retFile;
