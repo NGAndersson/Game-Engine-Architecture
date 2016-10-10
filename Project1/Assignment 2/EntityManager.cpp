@@ -37,6 +37,7 @@ void EntityManager::Initialize(ID3D11Device* device, ID3D11DeviceContext* device
 void EntityManager::Render()
 {
 	m_shaderLoad->SetShaders(m_deviceContext);
+	m_modelHandler->SetBuffers(m_deviceContext);
 	m_renderer->Render(m_modelHandler, m_entity->GetPosition(), m_entity->GetRotation(), m_entity->GetScale());
 }
 

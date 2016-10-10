@@ -7,7 +7,6 @@ Loader::Loader()
 {
 	maxMemory = 1000000;
 	usedMemory = 0;
-
 }
 
 void * Loader::Get(std::string guid)
@@ -39,8 +38,8 @@ void * Loader::Get(std::string guid)
 	//If we've gotten this far, we can begin decompressing and processing the file
 
 	//Send filepath to correct package handler here
-	//
-
+	if (guid.substr(0, 3) == "zip")
+		//zipper.decompress(filePath);
 	//Check file-ending here
 	//
 

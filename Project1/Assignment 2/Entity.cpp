@@ -14,9 +14,9 @@ Entity::Entity(XMFLOAT3 Position, XMFLOAT3 Scale)
 void Entity::Update(double time)
 {
 	XMVECTOR _rotzAxis{ 0,1,0,0 };
-	if (m_rot >= 360)
+	if (m_rot >= 2 * XM_PI)
 	{
-		m_rot = 0;
+		m_rot = m_rot - (2 * XM_PI);
 	}
 	else
 	{

@@ -10,5 +10,5 @@ Kd 0.50 0.50 0.50
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
 Ni 1.00
-map_Kd Resources\Models\Player_Ship_Dif.png
+map_Kd Player_Ship_Dif.png
 map_Sp Resources\Models\Player_Ship_Spec.png
