@@ -37,25 +37,25 @@ void * Loader::Get(std::string guid)
 
 
 	//If we've gotten this far, we can begin decompressing and processing the file
-	std:string readerType = guid.substr(0, guid.find_first_of('.') - 1);
+	std::string readerType = guid.substr(0, guid.find_first_of('.'));
 	std::istringstream fileStream;
 	//Send filepath to correct package handler here
-	if (readerType == "zip")
-		fileStream = decompressor.decompress("test.zip", filePath);
+	//if (readerType == "zip")
+	//	fileStream = decompressor.decompress("test.zip", filePath);
 
-	else if (readerType == "los")
+	if (readerType == "los")
 		fileStream = losReader.read("test.los", losByteOffset, losByteSize);
 
 	//Check file-ending here
-	std::string fileEnd = filePath.substr(filePath.find_last_of('.') + 1, filePath.size()-1);
+	std::string fileEnd = filePath.substr(filePath.find_last_of('.') + 1, filePath.size() - 1);
 
-	
+	/*
 	if(fileEnd == "obj")
 	{
-		registry[guid] = objLoader.load(fileStream);
-		usedMemory += sizeof(registry[guid]);
-	}
-	
+	registry[guid] = objLoader.load(fileStream);
+	usedMemory += sizeof(registry[guid]);
+	}*/
+
 
 	return retPtr;
 }
@@ -96,7 +96,7 @@ void Loader::FindOffsetCustom(std::string guid, int& offset, int& size)
 	std::ifstream file;
 	file.open("test.los");
 	std::string filecount; std::getline(file, filecount);//Get top line of file which says how many files there are (and how many lines left there are in the header)
-	int files = stoi(filecount);		
+	int files = stoi(filecount);
 	for (int i = 0; i < files; i++)
 	{
 		std::getline(file, line, ' ');
@@ -109,6 +109,7 @@ void Loader::FindOffsetCustom(std::string guid, int& offset, int& size)
 			file.close();
 			return;
 		}
+		else std::getline(file, line);		//go to next line
 
 	}
 

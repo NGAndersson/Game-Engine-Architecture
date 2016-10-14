@@ -1,1 +1,1 @@
-package.gfx.test zip/folder/asset.gfx
+zip.gfx.test folder/asset.gfx
