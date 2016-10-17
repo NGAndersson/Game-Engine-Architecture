@@ -30,7 +30,7 @@ public:
 	~Decompressor();
 
 	//Path is the name of the archive And FileName is the name of the file we want to read from.
-	istringstream decompress(string Path,string fileName);
+	char* decompress(string Path,string fileName);
 
 
 };
