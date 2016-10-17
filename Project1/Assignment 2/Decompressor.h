@@ -6,6 +6,7 @@
 #include <assert.h>
 #include <zlib.h>
 #include <zip.h>
+#include <sstream>
 
 //--------------------------------------------------------------------------------
 //Some hack required when using zlib to avoid JENS of input/output on windows.
@@ -27,10 +28,11 @@ private:
 public:
 	Decompressor();
 	~Decompressor();
-	
-	char* decompress(string Path,string fileName);
-	//Path is the name of the archive 
-	// FileName is the name of the file we want to read from.
+
+	//Path is the name of the archive And FileName is the name of the file we want to read from.
+	istringstream decompress(string Path,string fileName);
+
+
 };
 
 
