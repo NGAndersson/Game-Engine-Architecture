@@ -5,7 +5,7 @@
 class LOSReader{
 public:
 	LOSReader();
-	std::istringstream read(std::string filePath, int byteOffset, int byteSize);
+	char* read(std::string filePath, int byteOffset, int byteSize);
 private:
 
 };

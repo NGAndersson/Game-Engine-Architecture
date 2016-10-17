@@ -5,7 +5,7 @@ LOSReader::LOSReader()
 {
 }
 
-std::istringstream LOSReader::read(std::string filePath, int byteOffset, int size)
+char* LOSReader::read(std::string filePath, int byteOffset, int size)
 {
 	std::string line;
 	std::ifstream file;
@@ -21,5 +21,5 @@ std::istringstream LOSReader::read(std::string filePath, int byteOffset, int siz
 	file.read(data, size);				//reads size amount of characters
 	data[size] = '\0';
 	std::cout << data;
-	return std::istringstream(data);
+	return data;
 }

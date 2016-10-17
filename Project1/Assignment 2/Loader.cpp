@@ -40,24 +40,23 @@ void * Loader::Get(std::string guid)
 	std::string readerType = guid.substr(0, guid.find_first_of('.'));
 	std::istringstream fileStream;
 	//Send filepath to correct package handler here
-	//if (readerType == "zip")
-	//	fileStream = decompressor.decompress("test.zip", filePath);
+	if (readerType == "zip")
+		registry[guid] = decompressor.decompress("test.zip", filePath);
 
 	if (readerType == "los")
-		fileStream = losReader.read("test.los", losByteOffset, losByteSize);
-
-	//Check file-ending here
-	std::string fileEnd = filePath.substr(filePath.find_last_of('.') + 1, filePath.size() - 1);
-
-	/*
-	if(fileEnd == "obj")
-	{
-	registry[guid] = objLoader.load(fileStream);
-	usedMemory += sizeof(registry[guid]);
-	}*/
+		registry[guid] = losReader.read("test.los", losByteOffset, losByteSize);
 
 
 	return retPtr;
+}
+
+void Loader::Free(std::string guid)
+{
+	std::unordered_map<std::string, char*>::const_iterator it = registry.find(guid);
+	if (it == registry.end()) return;
+	else
+		delete[] it->second;
+	registry.erase(it->first);
 }
 
 std::string Loader::FindPathZip(std::string guid)
