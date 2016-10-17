@@ -13,7 +13,6 @@ OBJLoader::~OBJLoader()
 VertexInputType* OBJLoader::LoadObj(int& vertexCount, int& textureCount, int& normalCount, int& faceCount, void* file)
 {
 
-	
 	istringstream fileIn(reinterpret_cast<char*>(file));
 	VertexInputType* vertexInput;
 	vector<XMFLOAT3> vPos;
