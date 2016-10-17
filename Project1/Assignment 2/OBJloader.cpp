@@ -10,12 +10,10 @@ OBJLoader::~OBJLoader()
 
 }
 
-VertexInputType* OBJLoader::LoadObj(int& vertexCount, int& textureCount, int& normalCount, int& faceCount, string fileName)
+VertexInputType* OBJLoader::LoadObj(int& vertexCount, int& textureCount, int& normalCount, int& faceCount, void* file)
 {
-	ifstream fileIn;
+	istringstream fileIn(reinterpret_cast<char*>(file));
 	VertexInputType* vertexInput;
-
-	fileIn.open(fileName, ifstream::in);
 
 	vector<XMFLOAT3> vPos;
 	vector<XMFLOAT3> vNor;
@@ -26,9 +24,6 @@ VertexInputType* OBJLoader::LoadObj(int& vertexCount, int& textureCount, int& no
 	vector<UINT> indTex;
 	bool loop = true;
 	char _input;
-
-	if (fileIn.is_open())
-	{
 		cout << "Open" << endl;
 		while (loop)
 		{
@@ -119,11 +114,7 @@ VertexInputType* OBJLoader::LoadObj(int& vertexCount, int& textureCount, int& no
 		vector<UINT>().swap(indNor);
 		vector<UINT>().swap(indTex);
 
-		fileIn.close();
 		return vertexInput;
-	}
-
-	return false;
 }
 
 bool OBJLoader::ReadColourCounts(int& kdCount, int& kaCount, int& tfCount, int& niCount, string fileName)
