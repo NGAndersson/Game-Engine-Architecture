@@ -31,8 +31,6 @@ public:
 
 	//Path is the name of the archive And FileName is the name of the file we want to read from.
 	char* decompress(string Path,string fileName);
-
-
 };
 
 

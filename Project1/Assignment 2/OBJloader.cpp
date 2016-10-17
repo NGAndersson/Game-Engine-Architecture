@@ -285,3 +285,22 @@ ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11Devi
 	}
 	return nullptr;
 }
+
+
+ID3D11ShaderResourceView* OBJLoader::LoadTexture(ID3D11Device* device, ID3D11DeviceContext* deviceContext,void* texFile)
+{
+	
+	istringstream temp(reinterpret_cast<char*>(texFile));
+	temp.seekg(0, ios::end);
+	int length = temp.tellg();
+	temp.seekg(0, ios::beg);
+
+	char* tempb = new char[length];
+	temp.read(&tempb[0], length);
+
+	ID3D11ShaderResourceView* retV;
+
+	HRESULT hr;
+
+	hr = CreateWICTextureFromMemory(device,deviceContext, &tempb[0], (size_t)length, nullptr, &retV, NULL);//fixa
+}

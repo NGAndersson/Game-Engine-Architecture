@@ -3,9 +3,11 @@ c:\users\yorkhawke\source\repos\game-engine-architecture\project1\assignment 2\t
   ShaderHandler.cpp
   Renderer.cpp
   OBJloader.cpp
+c:\users\yorkhawke\source\repos\game-engine-architecture\project1\assignment 2\objloader.cpp(295): warning C4244: 'initializing': conversion from 'std::streamoff' to 'int', possible loss of data
+c:\users\yorkhawke\source\repos\game-engine-architecture\project1\assignment 2\objloader.cpp(305): error C2665: 'DirectX::CreateWICTextureFromMemory': none of the 2 overloads could convert all the argument types
+  c:\users\yorkhawke\source\repos\game-engine-architecture\project1\assignment 2\packages\directxtk_desktop_2015.2016.10.6.1\build\native\include\wictextureloader.h(65): note: could be 'HRESULT DirectX::CreateWICTextureFromMemory(ID3D11Device *,ID3D11DeviceContext *,const uint8_t *,std::size_t,ID3D11Resource **,ID3D11ShaderResourceView **,std::size_t)'
+  c:\users\yorkhawke\source\repos\game-engine-architecture\project1\assignment 2\objloader.cpp(305): note: while trying to match the argument list '(ID3D11Device *, ID3D11DeviceContext *, char *, std::size_t, nullptr, ID3D11ShaderResourceView **, int)'
   ModelHandler.cpp
-c:\users\yorkhawke\source\repos\game-engine-architecture\project1\assignment 2\modelhandler.cpp(37): error C2664: 'VertexInputType *OBJLoader::LoadObj(int &,int &,int &,int &,void *)': cannot convert argument 5 from 'std::string' to 'void *'
-  c:\users\yorkhawke\source\repos\game-engine-architecture\project1\assignment 2\modelhandler.cpp(37): note: No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
   Main.cpp
   LOSReader.cpp
   Loader.cpp
