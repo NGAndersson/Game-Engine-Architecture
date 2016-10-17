@@ -29,6 +29,8 @@ char* Decompressor::decompress(string Path, string fileName)
 	zip_fread(readData, retFile, stats.size);
 	zip_fclose(readData);
 	zip_close(temp);
+	retFile[stats.size] = '\0';
+
 
 	return retFile;
 }
