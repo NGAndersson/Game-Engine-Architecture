@@ -15,13 +15,16 @@ struct RegistryEntry
 
 class Loader{
 public:
-	Loader();
+	static Loader& instance() {
+		static Loader *instance = new Loader(); return *instance;
+	}
 	void* Get(std::string guid);
 	void Free(std::string guid);
 	void Pin(std::string guid);
 	void Unpin(std::string guid);
 
 private:
+	Loader();
 	void Free();
 	std::string FindPathZip(std::string guid);
 	void FindOffsetCustom(std::string guid, int& offset, int& size);
