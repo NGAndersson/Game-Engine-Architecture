@@ -188,11 +188,12 @@ bool OBJLoader::ReadColourCounts(int& kdCount, int& kaCount, int& tfCount, int& 
 }
 
 //loading color and tex
-ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceContext, string fileName, XMFLOAT3 *RGBDeffuse, XMFLOAT3 *RGBAL, XMFLOAT3 *Tf, XMFLOAT3 *Ni, ID3D11ShaderResourceView** ObjTex)
+ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceContext, void* file, XMFLOAT3 *RGBDeffuse, XMFLOAT3 *RGBAL, XMFLOAT3 *Tf, XMFLOAT3 *Ni, ID3D11ShaderResourceView** ObjTex)
 {
-	ifstream _fin;
+	istringstream _fin(reinterpret_cast<char*>(file));
 	char _input;
-	wstring _TexName;
+
+	string _TexName;
 	int _kdIndex, _kaIndex, _tfIndex, _niIndex;
 
 	// Starts the index at 0
@@ -200,9 +201,9 @@ ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11Devi
 	_kaIndex = 0;
 	_tfIndex = 0;
 	_niIndex = 0;
-	
-	_fin.open(fileName);
 
+	const wchar_t* _name;
+	string _fname;
 	// Check if it was successful in opening the file.
 	if (_fin.fail() == true)
 	{
@@ -267,11 +268,10 @@ ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11Devi
 						_TexName += _input;
 						_fin.get(_input);
 					}
+					//Use the global class to send in the Guid and loadshit
+					g_Loader.get(_TexName);
 
-					const wchar_t* _name = _TexName.c_str();
-
-					CreateWICTextureFromFile(device, deviceContext, _name, nullptr, ObjTex);
-					_TexName = L"";
+					//CreateWICTextureFromFile(device, deviceContext, _name, nullptr, ObjTex);
 				}
 			}
 		}
@@ -283,24 +283,10 @@ ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11Devi
 
 		_fin.get(_input);
 	}
-	return nullptr;
-}
-
-
-ID3D11ShaderResourceView* OBJLoader::LoadTexture(ID3D11Device* device, ID3D11DeviceContext* deviceContext,void* texFile)
-{
 	
-	istringstream temp(reinterpret_cast<char*>(texFile));
-	temp.seekg(0, ios::end);
-	int length = temp.tellg();
-	temp.seekg(0, ios::beg);
 
-	char* tempb = new char[length];
-	temp.read(&tempb[0], length);
 
-	ID3D11ShaderResourceView* retV;
 
-	HRESULT hr;
 
-	hr = CreateWICTextureFromMemory(device,deviceContext, &tempb[0], (size_t)length, nullptr, &retV, NULL);//fixa
+	return nullptr;
 }
