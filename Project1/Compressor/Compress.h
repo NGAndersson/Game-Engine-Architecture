@@ -9,6 +9,9 @@
 #include <zlib.h>
 #include <zip.h>
 #include <DirectXMath.h>
+#include <iostream>'
+#include <fstream>
+#include <vector>
 
 //--------------------------------------------------------------------------------
 //Some hack required when using zlib to avoid JENS of input/output on windows.
@@ -29,16 +32,19 @@ struct vektTest
 	XMFLOAT3 nor;
 	XMFLOAT2 tex;
 };
+
 class Compress
 {
 private:
+
 
 public:
 
 	Compress();
 	~Compress();
-	bool zipFile(string Path,XMFLOAT3* data);
-	XMFLOAT3* unZip(string Path,string fileName);
+	bool zipTest(string Path, string file);
+	bool zipFile(string Path,string file,string fileName);
+	char* unZip(string Path,string fileName);
 };
 
 

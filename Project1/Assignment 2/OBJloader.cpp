@@ -10,12 +10,10 @@ OBJLoader::~OBJLoader()
 
 }
 
-VertexInputType* OBJLoader::LoadObj(int& vertexCount, int& textureCount, int& normalCount, int& faceCount, string fileName)
+VertexInputType* OBJLoader::LoadObj(int& vertexCount, int& textureCount, int& normalCount, int& faceCount, void* file)
 {
-	ifstream fileIn;
+	istringstream fileIn(reinterpret_cast<char*>(file));
 	VertexInputType* vertexInput;
-
-	fileIn.open(fileName, ifstream::in);
 
 	vector<XMFLOAT3> vPos;
 	vector<XMFLOAT3> vNor;
@@ -26,9 +24,6 @@ VertexInputType* OBJLoader::LoadObj(int& vertexCount, int& textureCount, int& no
 	vector<UINT> indTex;
 	bool loop = true;
 	char _input;
-
-	if (fileIn.is_open())
-	{
 		cout << "Open" << endl;
 		while (loop)
 		{
@@ -119,11 +114,7 @@ VertexInputType* OBJLoader::LoadObj(int& vertexCount, int& textureCount, int& no
 		vector<UINT>().swap(indNor);
 		vector<UINT>().swap(indTex);
 
-		fileIn.close();
 		return vertexInput;
-	}
-
-	return false;
 }
 
 bool OBJLoader::ReadColourCounts(int& kdCount, int& kaCount, int& tfCount, int& niCount, string fileName)
@@ -197,11 +188,12 @@ bool OBJLoader::ReadColourCounts(int& kdCount, int& kaCount, int& tfCount, int& 
 }
 
 //loading color and tex
-ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceContext, string fileName, XMFLOAT3 *RGBDeffuse, XMFLOAT3 *RGBAL, XMFLOAT3 *Tf, XMFLOAT3 *Ni, ID3D11ShaderResourceView** ObjTex)
+ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceContext, void* file, XMFLOAT3 *RGBDeffuse, XMFLOAT3 *RGBAL, XMFLOAT3 *Tf, XMFLOAT3 *Ni, ID3D11ShaderResourceView** ObjTex)
 {
-	ifstream _fin;
+	istringstream _fin(reinterpret_cast<char*>(file));
 	char _input;
-	wstring _TexName;
+
+	string _TexName;
 	int _kdIndex, _kaIndex, _tfIndex, _niIndex;
 
 	// Starts the index at 0
@@ -209,8 +201,6 @@ ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11Devi
 	_kaIndex = 0;
 	_tfIndex = 0;
 	_niIndex = 0;
-	
-	_fin.open(fileName);
 
 	// Check if it was successful in opening the file.
 	if (_fin.fail() == true)
@@ -276,11 +266,14 @@ ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11Devi
 						_TexName += _input;
 						_fin.get(_input);
 					}
+					//Use the global class to send in the Guid and loadshit
+					
+					istringstream test(reinterpret_cast<char*>(Loader::instance().Get(_TexName)));
 
-					const wchar_t* _name = _TexName.c_str();
-
-					CreateWICTextureFromFile(device, deviceContext, _name, nullptr, ObjTex);
-					_TexName = L"";
+					test.seekg(0, ios::end);
+					int size = test.tellg;
+					//IF THIS SHIT WORKS THIS IS THE WORLDS COOLEST FUCKING HACK
+					CreateWICTextureFromMemory(device, deviceContext, reinterpret_cast<uint8_t*>(Loader::instance().Get(_TexName)), (size_t)size, nullptr, ObjTex, NULL);
 				}
 			}
 		}

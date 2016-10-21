@@ -75,6 +75,25 @@ WPARAM Game::MainLoop(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 			// translate keystroke messages into the right format
 			TranslateMessage(&m_winMSG);
 
+			XMVECTOR move = XMVectorSet( 0, 0, 0, 0);
+
+			if (GetKeyState('W') == WM_KEYDOWN)
+			{
+				move += XMVectorSet( 0, 0, 1, 0);
+			}
+			if (GetKeyState('S') == WM_KEYDOWN)
+			{
+				move += XMVectorSet(0, 0, -1, 0);
+			}
+			if (GetKeyState('A') == WM_KEYDOWN)
+			{
+				move += XMVectorSet(-1, 0, 0, 0);
+			}
+			if (GetKeyState('D') == WM_KEYDOWN)
+			{
+				move += XMVectorSet(1, 0, 0, 0);
+			}
+			m_entitymanager->CamUpd(m_deviceContext, move);
 			// send the message to the WindowProc function
 			DispatchMessage(&m_winMSG);
 		}
@@ -114,7 +133,9 @@ void Game::Render()
 	m_deviceContext->ClearRenderTargetView(m_backbufferRTV, _clearColor);
 	m_deviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 
+
 	m_entitymanager->Render();
+
 }
 
 void Game::SetViewport()
