@@ -274,9 +274,6 @@ ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11Devi
 					int size = test.tellg;
 					//IF THIS SHIT WORKS THIS IS THE WORLDS COOLEST FUCKING HACK
 					CreateWICTextureFromMemory(device, deviceContext, reinterpret_cast<uint8_t*>(Loader::instance().Get(_TexName)), (size_t)size, nullptr, ObjTex, NULL);
-					//g_Loader.get(_TexName);
-
-					//CreateWICTextureFromFile(device, deviceContext, _name, nullptr, ObjTex);
 				}
 			}
 		}
