@@ -202,8 +202,6 @@ ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11Devi
 	_tfIndex = 0;
 	_niIndex = 0;
 
-	const wchar_t* _name;
-	string _fname;
 	// Check if it was successful in opening the file.
 	if (_fin.fail() == true)
 	{
@@ -269,7 +267,14 @@ ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11Devi
 						_fin.get(_input);
 					}
 					//Use the global class to send in the Guid and loadshit
-					g_Loader.get(_TexName);
+					
+					istringstream test(reinterpret_cast<char*>(Loader::instance().Get(_TexName)));
+
+					test.seekg(0, ios::end);
+					int size = test.tellg;
+					//IF THIS SHIT WORKS THIS IS THE WORLDS COOLEST FUCKING HACK
+					CreateWICTextureFromMemory(device, deviceContext, reinterpret_cast<uint8_t*>(Loader::instance().Get(_TexName)), (size_t)size, nullptr, ObjTex, NULL);
+					//g_Loader.get(_TexName);
 
 					//CreateWICTextureFromFile(device, deviceContext, _name, nullptr, ObjTex);
 				}
@@ -283,10 +288,5 @@ ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11Devi
 
 		_fin.get(_input);
 	}
-	
-
-
-
-
 	return nullptr;
 }
