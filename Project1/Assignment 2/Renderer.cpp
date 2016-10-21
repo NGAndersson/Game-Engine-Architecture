@@ -16,14 +16,17 @@ struct Vertex    //Overloaded Vertex Structure
 
 Renderer::~Renderer()
 {
-	if (m_camBuffer != nullptr)
-		m_camBuffer->Release();
-
 	if (m_worldBuffer != nullptr)
 		m_worldBuffer->Release();
 
 	if (m_worldBufferInstance != nullptr)
 		m_worldBufferInstance->Release();
+}
+
+void Renderer::CamUpdate(ID3D11DeviceContext * deviceContext, XMVECTOR direction)
+{
+	m_cam.MoveCamera(direction);
+	m_cam.SetConstantBuffer(deviceContext);
 }
 
 void Renderer::Render(ModelHandler * model, XMFLOAT3 position, XMMATRIX &rotation, XMFLOAT3 scale)

@@ -73,6 +73,14 @@ void Camera::SetCameraPos(XMVECTOR NewCameraPosition)
 	m_cameraPos = NewCameraPosition;
 }
 
+void Camera::MoveCamera(XMVECTOR MoveDist)
+{
+	m_cameraPos += MoveDist;
+	SetLookAtVec(XMVectorSet(0, 0, 1, 0));
+	SetViewMatrix();
+	SetViewProjectionMatrix();
+}
+
 void Camera::SetLookAtVec(XMVECTOR PositionLookingAt)
 {
 	m_lookAtVec = m_cameraPos + XMVector3Normalize(PositionLookingAt);

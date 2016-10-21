@@ -14,6 +14,11 @@ EntityManager::~EntityManager()
 	delete m_entity;
 }
 
+void EntityManager::CamUpd(ID3D11DeviceContext* deviceContext, XMVECTOR direction)
+{
+	m_renderer->CamUpdate(deviceContext, direction);
+}
+
 void EntityManager::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext)
 {
 

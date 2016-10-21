@@ -24,6 +24,7 @@ public:
 	void Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext);
 	void Render();
 	void Update(double time);
+	void CamUpd(ID3D11DeviceContext* deviceContext, XMVECTOR direction);
 
 	//Variables
 private:
