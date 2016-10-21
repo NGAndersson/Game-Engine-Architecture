@@ -31,16 +31,21 @@ public:
 private:
 	//Vectors with all the different types of entities
 	ShaderHandler* m_shaderLoad;
-	ModelHandler* m_modelHandler;
+	ModelHandler* m_modelHandlers [4][3];
+	ModelHandler* m_modelHandlers1[3];
+	ModelHandler* m_modelHandlers2[3];
+	ModelHandler* m_modelHandlers3[3];
+	ModelHandler* m_modelHandlers4[3];
 
-	Loader m_loader;
-	void* m_tempAsset;
-	char* m_objAsset; //should be a pointer of type ModelHandler or OBJ or whatever depending on what format we choose to do it in
-	char* m_mtlAsset;
-	char* m_vAsset;
-	char* m_gAsset;
-	char* m_pAsset;
-	int LoD = 0;
+	vector<Entity*> m_entityList;
+	Loader Loader::instance();
+	void* m_objAsset; //should be a pointer of type ModelHandler or OBJ or whatever depending on what format we choose to do it in
+	void* m_mtlAsset;
+	void* m_vAsset;
+	void* m_gAsset;
+	void* m_pAsset;
+	int LoD = 5;
+	float distance;
 	XMFLOAT3 m_camPos;
 	XMFLOAT3 m_entityPos;
 	Camera m_cam;
@@ -49,7 +54,10 @@ private:
 	ID3D11DeviceContext* m_deviceContext;
 	XMMATRIX m_xmrot;
 public:
-	Entity* m_entity;
+	Entity* m_entity1;
+	Entity* m_entity2;
+	Entity* m_entity3;
+	Entity* m_entity4;
 };
 
 #endif // !_ENTITYMANAGER_H
