@@ -15,7 +15,7 @@ public:
 		m_speed = 0;
 	}
 	~Entity() {}
-	Entity(XMFLOAT3 Position, XMFLOAT3 Scale);
+	Entity(XMFLOAT3 Position, XMFLOAT3 Scale, int levelOfDetail);
 
 	void Update(double time);
 
@@ -28,7 +28,11 @@ public:
 
 	 XMFLOAT3 GetScale() { return m_scale; }
 
+	 int GetLoD() { return m_LoD; }
+
 	 void SetScale(XMFLOAT3 newScale) { m_scale = newScale; }
+
+	 void SetLoD(int levelOfDetail) { m_LoD = levelOfDetail; }
 
 	 virtual float GetSpeed() { return m_speed; }
 
@@ -40,5 +44,6 @@ protected:
 	 XMFLOAT3 m_scale;
 	 float m_rot = XM_PI;
 	 float m_speed;
+	 int m_LoD;
 };
 #endif // ! ENTITY

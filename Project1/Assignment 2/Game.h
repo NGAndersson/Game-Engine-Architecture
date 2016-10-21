@@ -37,7 +37,7 @@ public:
 	WPARAM MainLoop(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow);
 
 private:
-	int m_width = 1920,m_height = 1280;
+	int m_width = 1920, m_height = 1280;
 	Display* m_display;
 	EntityManager* m_entitymanager;
 	MSG m_winMSG;
@@ -48,7 +48,6 @@ private:
 	ID3D11DepthStencilView* m_depthStencilView = nullptr;
 	ID3D11Texture2D* m_depthStencil = nullptr;
 	ID3D11SamplerState* m_sampleState = nullptr;
-
 public:
 };
 
