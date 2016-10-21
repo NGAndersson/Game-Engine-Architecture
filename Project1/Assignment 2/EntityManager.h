@@ -32,17 +32,13 @@ private:
 	//Vectors with all the different types of entities
 	ShaderHandler* m_shaderLoad;
 	ModelHandler* m_modelHandlers [4][3];
-	ModelHandler* m_modelHandlers1[3];
-	ModelHandler* m_modelHandlers2[3];
-	ModelHandler* m_modelHandlers3[3];
-	ModelHandler* m_modelHandlers4[3];
 
 	vector<Entity*> m_entityList;
 	void* m_objAsset; //should be a pointer of type ModelHandler or OBJ or whatever depending on what format we choose to do it in
 	void* m_mtlAsset;
-	string m_vAsset;
-	string m_gAsset;
-	string m_pAsset;
+	char* m_vAsset;
+	char* m_gAsset;
+	char* m_pAsset;
 	int LoD = 5;
 	float distance;
 	XMFLOAT3 m_camPos;

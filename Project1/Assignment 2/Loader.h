@@ -16,8 +16,13 @@ struct RegistryEntry
 class Loader{
 public:
 	static Loader& instance() {
-		static Loader *instance = new Loader(); return *instance;
+		static Loader instance;
+		return instance;
 	}
+
+	Loader(Loader const&) = delete;
+	void operator= (Loader const&) = delete;
+
 	void* Get(std::string guid);
 	void Free(std::string guid);
 	void Pin(std::string guid);

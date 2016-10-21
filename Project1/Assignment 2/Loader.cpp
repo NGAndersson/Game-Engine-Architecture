@@ -18,10 +18,16 @@ void * Loader::Get(std::string guid)
 	mtxLock.lock();
 	if (registry.find(guid) != registry.end())	//guid already exists in registry
 	{
-		if (registry[guid].data != nullptr)	//Already being worked on by another thread and will be inserted soon
+		if (registry[guid].data == nullptr)	//Already being worked on by another thread and will be inserted soon
+		{
+			mtxLock.unlock();
 			return nullptr;
+		}
 		else
+		{
+			mtxLock.unlock();
 			return reinterpret_cast<void*>(registry[guid].data);		//Asset already exists in registry and has a proper pointer. Return the address
+		}
 	}
 	else	//Guid is not yet in registry
 	{	//Find out if there's such a guid in our packages
@@ -109,10 +115,10 @@ std::string Loader::FindPathZip(std::string guid)
 		if (line == guid)						//If found
 		{
 			std::getline(fileTable, line, ' ');		//Get filepath of guid
-			fileTable.close();
 			std::string size;
 			std::getline(fileTable, size);
 			usedMemory += stoi(size);
+			fileTable.close();
 			if (usedMemory > maxMemory)
 			{
 				registry[guid].pinned = true; Free(); registry[guid].pinned = false;	//Temporarily pin so we don't remove the entry we're trying to load in order to free up the space to load it
@@ -124,6 +130,7 @@ std::string Loader::FindPathZip(std::string guid)
 
 	if (!found)		//File not found in lookup table
 	{
+		
 		std::cout << guid << " is not a valid GUID. No such file found in fileTable.txt" << std::endl;
 		getchar();
 		exit(0);		//Exit program because of stupid

@@ -1,9 +1,2 @@
-﻿  Renderer.cpp
-  ModelHandler.cpp
-c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\modelhandler.cpp(37): error C2664: 'VertexInputType *OBJLoader::LoadObj(int &,int &,int &,int &,void *)': cannot convert argument 5 from 'std::string' to 'void *'
-  c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\modelhandler.cpp(37): note: No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
-  Main.cpp
-  Game.cpp
-c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\game.cpp(105): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  EntityManager.cpp
-  Generating Code...
+﻿  Assignment 2.vcxproj -> C:\Users\yorkhawke\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\Assignment 2.exe
+  Assignment 2.vcxproj -> C:\Users\yorkhawke\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\Assignment 2.pdb (Partial PDB)

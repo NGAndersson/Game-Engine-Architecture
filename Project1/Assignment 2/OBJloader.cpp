@@ -12,6 +12,8 @@ OBJLoader::~OBJLoader()
 
 VertexInputType* OBJLoader::LoadObj(int& vertexCount, int& textureCount, int& normalCount, int& faceCount, void* file)
 {
+	faceCount = 0;
+	normalCount = 0; textureCount = 0; vertexCount = 0;
 	istringstream fileIn(reinterpret_cast<char*>(file));
 	VertexInputType* vertexInput;
 
@@ -264,7 +266,7 @@ ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11Devi
 					istringstream test(reinterpret_cast<char*>(Loader::instance().Get(_TexName)));
 
 					test.seekg(0, ios::end);
-					int size = test.tellg;
+					int size = test.tellg();
 					//IF THIS SHIT WORKS THIS IS THE WORLDS COOLEST FUCKING HACK
 					CreateWICTextureFromMemory(device, deviceContext, reinterpret_cast<uint8_t*>(Loader::instance().Get(_TexName)), (size_t)size, nullptr, ObjTex, NULL);
 				}

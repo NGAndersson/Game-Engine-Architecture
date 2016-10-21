@@ -10,10 +10,7 @@ EntityManager::EntityManager()
 
 EntityManager::~EntityManager()
 {
-	delete m_modelHandlers1;
-	delete m_modelHandlers2;
-	delete m_modelHandlers3;
-	delete m_modelHandlers4;
+
 	delete m_shaderLoad;
 	delete m_renderer;
 	//delete m_entity;
@@ -27,11 +24,11 @@ void EntityManager::Initialize(ID3D11Device* device, ID3D11DeviceContext* device
 	m_deviceContext = deviceContext;
 
 	//Set all asset pointers
-	m_objAsset = Loader::instance().Get("zip.asset1.obj");
-	m_mtlAsset = Loader::instance().Get("zip.asset1.mtl");
-	m_vAsset = string(reinterpret_cast<char*>(Loader::instance().Get("zip.vertexasset.hlsl")));
-	m_gAsset = string(reinterpret_cast<char*>(Loader::instance().Get("zip.geometryasset.hlsl")));
-	m_pAsset = string(reinterpret_cast<char*>(Loader::instance().Get("zip.pixelasset.hlsl")));
+//	m_objAsset = Loader::instance().Get("zip.asset1.obj");
+//	m_mtlAsset = Loader::instance().Get("zip.asset1.mtl");
+	m_vAsset = reinterpret_cast<char*>(Loader::instance().Get("zip.vertexshader.hlsl"));
+	m_gAsset = reinterpret_cast<char*>(Loader::instance().Get("zip.geometryshader.hlsl"));
+	m_pAsset = reinterpret_cast<char*>(Loader::instance().Get("zip.pixelshader.hlsl"));
 
 	//Set the renderer
 	m_renderer = new Renderer(m_deviceContext, m_device);
@@ -67,9 +64,10 @@ void EntityManager::Initialize(ID3D11Device* device, ID3D11DeviceContext* device
 void EntityManager::Render()
 {
 	m_shaderLoad->SetShaders(m_deviceContext);
-	m_modelHandlers1[1]->SetBuffers(m_deviceContext);
+	//m_modelHandlers1[1]->SetBuffers(m_deviceContext);
 	for (int i = 0; i < 4; i++)
 	{
+		m_modelHandlers[i][1]->SetBuffers(m_deviceContext);
 		//Always render [i][1] as the [1] refers to the middle LoD level for each model i, which is the one we're always actively seeing
 		m_renderer->Render(m_modelHandlers[i][1], m_entityList[i]->GetPosition(), m_entityList[i]->GetRotation(), m_entityList[i]->GetScale());
 	}
@@ -87,7 +85,7 @@ void EntityManager::Update(double time)
 		LoD = min(int(distance / 10), 10);
 		if (m_entityList[j]->GetLoD() != LoD)
 		{
-			if (m_entityList[j]->GetLoD > LoD) //Move forward to the next LoD
+			if (m_entityList[j]->GetLoD() > LoD) //Move forward to the next LoD
 			{
 				m_modelHandlers[j][2] = m_modelHandlers[j][1];
 				m_modelHandlers[j][1] = m_modelHandlers[j][0];
@@ -97,7 +95,7 @@ void EntityManager::Update(double time)
 				m_modelHandlers[j][0]->LoadOBJData(m_objAsset, m_mtlAsset, m_device, m_deviceContext);
 				m_modelHandlers[j][0]->CreateBuffers(m_device);
 			}
-			else if (m_entityList[j]->GetLoD < LoD) //Move backward to the previous LoD
+			else if (m_entityList[j]->GetLoD() < LoD) //Move backward to the previous LoD
 			{
 				m_modelHandlers[j][0] = m_modelHandlers[j][1];
 				m_modelHandlers[j][1] = m_modelHandlers[j][2];
