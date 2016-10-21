@@ -38,12 +38,11 @@ private:
 	ModelHandler* m_modelHandlers4[3];
 
 	vector<Entity*> m_entityList;
-	Loader Loader::instance();
 	void* m_objAsset; //should be a pointer of type ModelHandler or OBJ or whatever depending on what format we choose to do it in
 	void* m_mtlAsset;
-	void* m_vAsset;
-	void* m_gAsset;
-	void* m_pAsset;
+	string m_vAsset;
+	string m_gAsset;
+	string m_pAsset;
 	int LoD = 5;
 	float distance;
 	XMFLOAT3 m_camPos;

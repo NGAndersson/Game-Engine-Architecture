@@ -16,7 +16,7 @@ EntityManager::~EntityManager()
 	delete m_modelHandlers4;
 	delete m_shaderLoad;
 	delete m_renderer;
-	delete m_entity;
+	//delete m_entity;
 }
 
 void EntityManager::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext)
@@ -29,9 +29,9 @@ void EntityManager::Initialize(ID3D11Device* device, ID3D11DeviceContext* device
 	//Set all asset pointers
 	m_objAsset = Loader::instance().Get("zip.asset1.obj");
 	m_mtlAsset = Loader::instance().Get("zip.asset1.mtl");
-	m_vAsset = Loader::instance().Get("zip.vertexasset.hlsl");
-	m_gAsset = Loader::instance().Get("zip.geometryasset.hlsl");
-	m_pAsset = Loader::instance().Get("zip.pixelasset.hlsl");
+	m_vAsset = string(reinterpret_cast<char*>(Loader::instance().Get("zip.vertexasset.hlsl")));
+	m_gAsset = string(reinterpret_cast<char*>(Loader::instance().Get("zip.geometryasset.hlsl")));
+	m_pAsset = string(reinterpret_cast<char*>(Loader::instance().Get("zip.pixelasset.hlsl")));
 
 	//Set the renderer
 	m_renderer = new Renderer(m_deviceContext, m_device);
@@ -49,7 +49,7 @@ void EntityManager::Initialize(ID3D11Device* device, ID3D11DeviceContext* device
 	}
 	//Create Shaders
 	m_shaderLoad = new ShaderHandler();
-	m_shaderLoad->CreateShaders(m_device, m_vAsset, m_gAsset, m_pAsset); <--- Detta är vad det ska bli efter att CreateShaders är omskriven
+	m_shaderLoad->CreateShaders(m_device, m_vAsset, m_gAsset, m_pAsset); //<--- Detta är vad det ska bli efter att CreateShaders är omskriven
 	//Create entities with position and the like
 	m_entity1 = new Entity(XMFLOAT3(0, 0, 10), XMFLOAT3(1, 1, 1), LoD);
 	m_entityList.push_back(m_entity1);
@@ -95,7 +95,7 @@ void EntityManager::Update(double time)
 				m_mtlAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".lod" + to_string(LoD - 1) + ".mtl");
 				//unsure if need to call on ~ModelHandler() and then new Modelhandler for [j][0] or if below is fine
 				m_modelHandlers[j][0]->LoadOBJData(m_objAsset, m_mtlAsset, m_device, m_deviceContext);
-				m_modelHandlers[j][0]->CreateBuffers(m_objAsset, m_mtlAsset, m_device, m_deviceContext);
+				m_modelHandlers[j][0]->CreateBuffers(m_device);
 			}
 			else if (m_entityList[j]->GetLoD < LoD) //Move backward to the previous LoD
 			{
@@ -105,7 +105,7 @@ void EntityManager::Update(double time)
 				m_mtlAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".lod" + to_string(LoD + 1) + ".mtl");
 				//unsure if need to call on ~ModelHandler() and then new Modelhandler for [j][2] or if below is fine
 				m_modelHandlers[j][2]->LoadOBJData(m_objAsset, m_mtlAsset, m_device, m_deviceContext);
-				m_modelHandlers[j][2]->CreateBuffers(m_objAsset, m_mtlAsset, m_device, m_deviceContext);
+				m_modelHandlers[j][2]->CreateBuffers(m_device);
 			}
 			m_entityList[j]->SetLoD(LoD); //Sets the current LoD to the entity so that it's updated for the next calculation
 		}

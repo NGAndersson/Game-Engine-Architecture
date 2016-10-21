@@ -30,7 +30,7 @@ ModelHandler::~ModelHandler()
 	}
 }
 
-bool ModelHandler::LoadOBJData(void* file, string colourFileName, ID3D11Device* device, ID3D11DeviceContext* deviceContext)
+bool ModelHandler::LoadOBJData(void* file, void* colourFileName, ID3D11Device* device, ID3D11DeviceContext* deviceContext)
 {
 	bool _ifOK;
 
