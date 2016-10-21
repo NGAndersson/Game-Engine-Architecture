@@ -29,6 +29,7 @@ public:
 	void SetLookAtVec(XMVECTOR PositionLookingAt);
 	HRESULT CreateBuffer(ID3D11Device* device);
 	void SetConstantBuffer(ID3D11DeviceContext* gDeviceContext);
+	void MoveCamera(XMVECTOR MoveDist);
 
 	
 
