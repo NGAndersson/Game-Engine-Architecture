@@ -117,19 +117,16 @@ VertexInputType* OBJLoader::LoadObj(int& vertexCount, int& textureCount, int& no
 		return vertexInput;
 }
 
-bool OBJLoader::ReadColourCounts(int& kdCount, int& kaCount, int& tfCount, int& niCount, string fileName)
+bool OBJLoader::ReadColourCounts(int& kdCount, int& kaCount, int& tfCount, int& niCount, void* fileName)
 {
-	ifstream _file;
-	char _input;
 
+	istringstream _file(reinterpret_cast<char*>(fileName));
+	char _input;
 	// Initialize the counts.
 	kdCount = 0;
 	kaCount = 0;
 	tfCount = 0;
 	niCount = 0;
-
-	// Open the file.
-	_file.open(fileName);
 
 	// Check if it was successful in opening the file.
 	if (_file.fail() == true)
@@ -180,10 +177,6 @@ bool OBJLoader::ReadColourCounts(int& kdCount, int& kaCount, int& tfCount, int& 
 		// Start reading the beginning of the next line.
 		_file.get(_input);
 	}
-
-	// Close the file.
-	_file.close();
-
 	return true;
 }
 
