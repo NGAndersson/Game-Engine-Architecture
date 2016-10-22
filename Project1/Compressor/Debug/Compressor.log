@@ -1,0 +1,8 @@
+﻿  main.cpp
+  Compress.cpp
+  Generating Code...
+Compress.obj : error LNK2019: unresolved external symbol __imp__zip_close referenced in function "public: bool __thiscall Compress::zipFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,struct vektTest *)" (?zipFile@Compress@@QAE_NV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUvektTest@@@Z)
+Compress.obj : error LNK2019: unresolved external symbol __imp__zip_file_add referenced in function "public: bool __thiscall Compress::zipFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,struct vektTest *)" (?zipFile@Compress@@QAE_NV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUvektTest@@@Z)
+Compress.obj : error LNK2019: unresolved external symbol __imp__zip_open referenced in function "public: bool __thiscall Compress::zipFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,struct vektTest *)" (?zipFile@Compress@@QAE_NV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUvektTest@@@Z)
+Compress.obj : error LNK2019: unresolved external symbol __imp__zip_source_buffer referenced in function "public: bool __thiscall Compress::zipFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,struct vektTest *)" (?zipFile@Compress@@QAE_NV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PAUvektTest@@@Z)
+C:\Users\Per\Source\Repos\Game-Engine-Architecture\Project1\Compressor\Debug\Compressor.exe : fatal error LNK1120: 4 unresolved externals
