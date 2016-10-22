@@ -48,7 +48,7 @@ void EntityManager::Initialize(ID3D11Device* device, ID3D11DeviceContext* device
 	m_shaderLoad = new ShaderHandler();
 	m_shaderLoad->CreateShaders(m_device, m_vAsset, m_gAsset, m_pAsset); //<--- Detta är vad det ska bli efter att CreateShaders är omskriven
 	//Create entities with position and the like
-	m_entity1 = new Entity(XMFLOAT3(0, 0, 10), XMFLOAT3(1, 1, 1), LoD);
+	m_entity1 = new Entity(XMFLOAT3(0, 0, 10), XMFLOAT3(1, 1, 1), LoD);//ÄNDRA POSITIONERNA SÅ ATT DOM INTE ÄR DIREKT BAKOM VARADRA XD
 	m_entityList.push_back(m_entity1);
 	m_entity2 = new Entity(XMFLOAT3(0, 0, 20), XMFLOAT3(1, 1, 1), LoD);
 	m_entityList.push_back(m_entity2);

@@ -94,7 +94,8 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Users\yorkhawke\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\packages\libzip.1.1.2.7\build\native\lib;C:\Users\yorkhawke\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
       <SubSystem>
       </SubSystem>
     </Link>
@@ -108,7 +109,8 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Users\yorkhawke\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\packages\libzip.1.1.2.7\build\native\lib;C:\Users\yorkhawke\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
       <SubSystem>
       </SubSystem>
     </Link>
@@ -125,7 +127,8 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\Users\yorkhawke\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\packages\libzip.1.1.2.7\build\native\lib;C:\Users\yorkhawke\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
       <SubSystem>
       </SubSystem>
     </Link>
@@ -142,7 +145,8 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\Users\yorkhawke\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\packages\libzip.1.1.2.7\build\native\lib;C:\Users\yorkhawke\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
       <SubSystem>
       </SubSystem>
     </Link>
