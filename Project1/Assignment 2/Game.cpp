@@ -85,19 +85,19 @@ WPARAM Game::MainLoop(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 
 		if (GetAsyncKeyState(0x57))
 		{
-			move += XMVectorSet(0, 0, 0.0001, 0);
+			move += XMVectorSet(0, 0, 0.0001f, 0);
 		}
 		if (GetAsyncKeyState(0x53))
 		{
-			move += XMVectorSet(0, 0, -0.0001, 0);
+			move += XMVectorSet(0, 0, -0.0001f, 0);
 		}
 		if (GetAsyncKeyState(0x41))
 		{
-			move += XMVectorSet(-0.0001, 0, 0, 0);
+			move += XMVectorSet(-0.0001f, 0, 0, 0);
 		}
 		if (GetAsyncKeyState(0x44))
 		{
-			move += XMVectorSet(0.0001, 0, 0, 0);
+			move += XMVectorSet(0.0001f, 0, 0, 0);
 		}
 		//Finns inte ??
 		m_entitymanager->CamUpd(m_deviceContext, move);
@@ -106,7 +106,7 @@ WPARAM Game::MainLoop(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 		if (m_winMSG.message == WM_QUIT)
 			return m_winMSG.wParam;
 
-		float time = _time.TimeCheck();
+		float time = (float)_time.TimeCheck();
 		_frameTime += time;
 
 		//Call update functions
