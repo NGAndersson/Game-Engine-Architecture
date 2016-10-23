@@ -48,13 +48,13 @@ void EntityManager::Initialize(ID3D11Device* device, ID3D11DeviceContext* device
 	m_shaderLoad = new ShaderHandler();
 	m_shaderLoad->CreateShaders(m_device, m_vAsset, m_gAsset, m_pAsset); //<--- Detta är vad det ska bli efter att CreateShaders är omskriven
 	//Create entities with position and the like
-	m_entity1 = new Entity(XMFLOAT3(0, 0, 10), XMFLOAT3(1, 1, 1), LoD);//ÄNDRA POSITIONERNA SÅ ATT DOM INTE ÄR DIREKT BAKOM VARADRA XD
+	m_entity1 = new Entity(XMFLOAT3(40, 0, 40), XMFLOAT3(1, 1, 1), LoD);
 	m_entityList.push_back(m_entity1);
-	m_entity2 = new Entity(XMFLOAT3(0, 0, 20), XMFLOAT3(1, 1, 1), LoD);
+	m_entity2 = new Entity(XMFLOAT3(40, 0, -40), XMFLOAT3(1, 1, 1), LoD);
 	m_entityList.push_back(m_entity2);
-	m_entity3 = new Entity(XMFLOAT3(0, 0, 30), XMFLOAT3(1, 1, 1), LoD);
+	m_entity3 = new Entity(XMFLOAT3(-40, 0, 40), XMFLOAT3(1, 1, 1), LoD);
 	m_entityList.push_back(m_entity3);
-	m_entity4 = new Entity(XMFLOAT3(0, 0, 40), XMFLOAT3(1, 1, 1), LoD);
+	m_entity4 = new Entity(XMFLOAT3(-40, 00, -40), XMFLOAT3(1, 1, 1), LoD);
 	m_entityList.push_back(m_entity4);
 
 	XMVECTOR _rotatAxis{ 0, 1, 0, 0 };
@@ -72,17 +72,20 @@ void EntityManager::Render()
 		m_renderer->Render(m_modelHandlers[i][1], m_entityList[i]->GetPosition(), m_entityList[i]->GetRotation(), m_entityList[i]->GetScale());
 	}
 }
+//FIXA IN alla olia level of details.... Lägg till mtl filernas namn etc i fileTable.txt 
 
 void EntityManager::Update(double time)
 {
 	XMStoreFloat3(&m_camPos, m_cam.GetCameraPos());
 	for (int j = 0; j < m_entityList.size(); j++)
 	{
+		
 		//Calculates distance in order to calculat the LoD, Level of Depth, which depends on the distance
 		distance = sqrt((m_camPos.x - m_entityList[j]->GetPosition().x) * (m_camPos.x - m_entityList[j]->GetPosition().x) +
 						(m_camPos.y - m_entityList[j]->GetPosition().y) * (m_camPos.y - m_entityList[j]->GetPosition().y) + 
 						(m_camPos.z - m_entityList[j]->GetPosition().z) * (m_camPos.z - m_entityList[j]->GetPosition().z));
-		LoD = min(int(distance / 10), 10);
+
+		LoD = min(int(distance / 10), 10);//???
 		if (m_entityList[j]->GetLoD() != LoD)
 		{
 			if (m_entityList[j]->GetLoD() > LoD) //Move forward to the next LoD
