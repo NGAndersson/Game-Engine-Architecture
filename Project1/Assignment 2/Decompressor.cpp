@@ -14,7 +14,7 @@ Decompressor::~Decompressor()
 
 char* Decompressor::decompress(string Path, string fileName)
 {
-
+	cout << "Decompressing File" << endl;
 	char* retFile;
 	int error = 0;
 	zip* temp = zip_open(Path.c_str(), 0, &error);

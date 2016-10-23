@@ -7,6 +7,7 @@
 #include <zlib.h>
 #include <zip.h>
 #include <sstream>
+#include <iostream>
 
 //--------------------------------------------------------------------------------
 //Some hack required when using zlib to avoid JENS of input/output on windows.
