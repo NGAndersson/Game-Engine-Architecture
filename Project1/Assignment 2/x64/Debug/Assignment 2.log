@@ -1,21 +1,12 @@
-﻿  Timer.cpp
-c:\users\bth\source\repos\game-engine-architecture\project1\assignment 2\timer.cpp(51): warning C4244: '=': conversion from 'float' to '__int64', possible loss of data
-  ShaderHandler.cpp
-  Renderer.cpp
-  OBJloader.cpp
-c:\users\bth\source\repos\game-engine-architecture\project1\assignment 2\objloader.cpp(259): warning C4244: 'initializing': conversion from 'std::streamoff' to 'int', possible loss of data
-  ModelHandler.cpp
-  Main.cpp
-  LOSReader.cpp
-  Loader.cpp
-  Game.cpp
-c:\users\bth\source\repos\game-engine-architecture\project1\assignment 2\game.cpp(107): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  EntityManager.cpp
-  Entity.cpp
-c:\users\bth\source\repos\game-engine-architecture\project1\assignment 2\entity.cpp(24): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  Display.cpp
-  Decompressor.cpp
-  Camera.cpp
+﻿  StackAllocator.cpp
+c:\users\bth\source\repos\game-engine-architecture\project1\project1\source\stackallocator.cpp(64): warning C4312: 'type cast': conversion from 'Marker' to 'void *' of greater size
+c:\users\bth\source\repos\game-engine-architecture\project1\project1\source\stackallocator.cpp(67): warning C4312: 'type cast': conversion from 'Marker' to 'void *' of greater size
+c:\users\bth\source\repos\game-engine-architecture\project1\project1\source\stackallocator.cpp(73): warning C4311: 'type cast': pointer truncation from 'void *' to 'Marker'
+c:\users\bth\source\repos\game-engine-architecture\project1\project1\source\stackallocator.cpp(73): warning C4302: 'type cast': truncation from 'void *' to 'Marker'
+c:\users\bth\source\repos\game-engine-architecture\project1\project1\source\stackallocator.cpp(76): warning C4311: 'type cast': pointer truncation from 'void *' to 'Marker'
+c:\users\bth\source\repos\game-engine-architecture\project1\project1\source\stackallocator.cpp(76): warning C4302: 'type cast': truncation from 'void *' to 'Marker'
+  PoolAllocator.cpp
+  MemoryManager.cpp
   Generating Code...
   Assignment 2.vcxproj -> C:\Users\BTH\Source\Repos\Game-Engine-Architecture\Project1\x64\Debug\Assignment 2.exe
   Assignment 2.vcxproj -> C:\Users\BTH\Source\Repos\Game-Engine-Architecture\Project1\x64\Debug\Assignment 2.pdb (Partial PDB)
