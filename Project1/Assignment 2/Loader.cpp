@@ -54,7 +54,7 @@ void * Loader::Get(std::string guid)
 		registry[guid].data = decompressor.decompress("test.zip", filePath);
 
 	if (readerType == "los")
-		registry[guid].data = losReader.read("txtures.los", losByteOffset, losByteSize);
+		registry[guid].data = losReader.read("textures.los", losByteOffset, losByteSize);
 
 	registry[guid].referenceCount++;
 	return reinterpret_cast<void*>(registry[guid].data);
@@ -144,7 +144,7 @@ void Loader::FindOffsetCustom(std::string guid, int& offset, int& size)
 	std::string line;
 
 	std::ifstream file;
-	file.open("test.los");
+	file.open("textures.los");
 	std::string filecount; std::getline(file, filecount);//Get top line of file which says how many files there are (and how many lines left there are in the header)
 	int files = stoi(filecount);
 	for (int i = 0; i < files; i++)
@@ -171,7 +171,7 @@ void Loader::FindOffsetCustom(std::string guid, int& offset, int& size)
 
 
 	//File not found in lookup table
-	std::cout << guid << " is not a valid GUID. No such file found in fileTable.txt" << std::endl;
+	std::cout << guid << " is not a valid GUID. No such file found in textures.los" << std::endl;
 	getchar();
 	exit(0);		//Exit program because of stupid
 }

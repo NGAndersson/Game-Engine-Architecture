@@ -252,13 +252,12 @@ ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11Devi
 						_fin.get(_input);
 					}
 					//Use the global class to send in the Guid and loadshit
-					
-					istringstream test(reinterpret_cast<char*>(Loader::instance().Get(_TexName)));
-
-					test.seekg(0, ios::end);
-					int size = test.tellg();
+					if (_TexName.back() == '\r')
+						_TexName.pop_back();
+					char* texture = reinterpret_cast<char*>(Loader::instance().Get(_TexName));
+					int size = strlen(texture);
 					//IF THIS SHIT WORKS THIS IS THE WORLDS COOLEST FUCKING HACK
-					CreateWICTextureFromMemory(device, deviceContext, reinterpret_cast<uint8_t*>(Loader::instance().Get(_TexName)), (size_t)size, nullptr, ObjTex, NULL);
+					HRESULT _hr = CreateWICTextureFromMemory(device, deviceContext, reinterpret_cast<uint8_t*>(Loader::instance().Get(_TexName)), (size_t)size, nullptr, ObjTex, NULL);
 				}
 			}
 		}
