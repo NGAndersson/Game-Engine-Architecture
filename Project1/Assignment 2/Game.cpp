@@ -75,30 +75,32 @@ WPARAM Game::MainLoop(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 			// translate keystroke messages into the right format
 			TranslateMessage(&m_winMSG);
 
-			XMVECTOR move = XMVectorSet( 0, 0, 0, 0);
-
-			if (GetKeyState('W') == WM_KEYDOWN)
-			{
-				move += XMVectorSet( 0, 0, 1, 0);
-			}
-			if (GetKeyState('S') == WM_KEYDOWN)
-			{
-				move += XMVectorSet(0, 0, -1, 0);
-			}
-			if (GetKeyState('A') == WM_KEYDOWN)
-			{
-				move += XMVectorSet(-1, 0, 0, 0);
-			}
-			if (GetKeyState('D') == WM_KEYDOWN)
-			{
-				move += XMVectorSet(1, 0, 0, 0);
-			}
-			//Finns inte ??
-			//m_entitymanager->CamUpd(m_deviceContext, move);
+			
 
 			// send the message to the WindowProc function
 			DispatchMessage(&m_winMSG);
 		}
+
+		XMVECTOR move = XMVectorSet(0, 0, 0, 0);
+
+		if (GetAsyncKeyState(0x57))
+		{
+			move += XMVectorSet(0, 0, 0.0001, 0);
+		}
+		if (GetAsyncKeyState(0x53))
+		{
+			move += XMVectorSet(0, 0, -0.0001, 0);
+		}
+		if (GetAsyncKeyState(0x41))
+		{
+			move += XMVectorSet(-0.0001, 0, 0, 0);
+		}
+		if (GetAsyncKeyState(0x44))
+		{
+			move += XMVectorSet(0.0001, 0, 0, 0);
+		}
+		//Finns inte ??
+		m_entitymanager->CamUpd(m_deviceContext, move);
 
 		// If the message is WM_QUIT, exit the while loop
 		if (m_winMSG.message == WM_QUIT)

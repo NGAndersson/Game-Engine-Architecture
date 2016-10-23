@@ -112,3 +112,8 @@ void EntityManager::Update(double time)
 		m_entityList[j]->Update(time);
 	}
 }
+
+void EntityManager::CamUpd(ID3D11DeviceContext* m_deviceContext, XMVECTOR move)
+{
+	m_renderer->CamUpdate(m_deviceContext, move);
+}
