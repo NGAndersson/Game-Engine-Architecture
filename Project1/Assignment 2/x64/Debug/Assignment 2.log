@@ -1,21 +1,28 @@
 ﻿  Timer.cpp
-c:\users\bth\source\repos\game-engine-architecture\project1\assignment 2\timer.cpp(51): warning C4244: '=': conversion from 'float' to '__int64', possible loss of data
+c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\timer.cpp(51): warning C4244: '=': conversion from 'float' to '__int64', possible loss of data
   ShaderHandler.cpp
   Renderer.cpp
   OBJloader.cpp
-c:\users\bth\source\repos\game-engine-architecture\project1\assignment 2\objloader.cpp(259): warning C4244: 'initializing': conversion from 'std::streamoff' to 'int', possible loss of data
+c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\objloader.cpp(259): warning C4244: 'initializing': conversion from 'std::streamoff' to 'int', possible loss of data
   ModelHandler.cpp
   Main.cpp
   LOSReader.cpp
   Loader.cpp
   Game.cpp
-c:\users\bth\source\repos\game-engine-architecture\project1\assignment 2\game.cpp(107): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\game.cpp(88): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\game.cpp(92): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\game.cpp(96): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\game.cpp(100): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\game.cpp(109): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   EntityManager.cpp
   Entity.cpp
-c:\users\bth\source\repos\game-engine-architecture\project1\assignment 2\entity.cpp(24): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\gis-2\source\repos\game-engine-architecture\project1\assignment 2\entity.cpp(24): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   Display.cpp
   Decompressor.cpp
   Camera.cpp
   Generating Code...
-  Assignment 2.vcxproj -> C:\Users\BTH\Source\Repos\Game-Engine-Architecture\Project1\x64\Debug\Assignment 2.exe
-  Assignment 2.vcxproj -> C:\Users\BTH\Source\Repos\Game-Engine-Architecture\Project1\x64\Debug\Assignment 2.pdb (Partial PDB)
+  LINK : C:\Users\GiS-2\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\Assignment 2.exe not found or not built by the last incremental link; performing full link
+DirectXTK.lib(pch.obj) : warning LNK4099: PDB 'DirectXTK.pdb' was not found with 'DirectXTK.lib(pch.obj)' or at 'C:\Users\GiS-2\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\DirectXTK.pdb'; linking object as if no debug info
+DirectXTK.lib(WICTextureLoader.obj) : warning LNK4099: PDB 'DirectXTK.pdb' was not found with 'DirectXTK.lib(WICTextureLoader.obj)' or at 'C:\Users\GiS-2\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\DirectXTK.pdb'; linking object as if no debug info
+  Assignment 2.vcxproj -> C:\Users\GiS-2\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\Assignment 2.exe
+  Assignment 2.vcxproj -> C:\Users\GiS-2\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\Assignment 2.pdb (Partial PDB)
