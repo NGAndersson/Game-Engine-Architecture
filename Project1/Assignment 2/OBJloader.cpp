@@ -12,6 +12,7 @@ OBJLoader::~OBJLoader()
 
 VertexInputType* OBJLoader::LoadObj(int& vertexCount, int& textureCount, int& normalCount, int& faceCount, void* file)
 {
+	cout << "Loading Object" << endl;
 	faceCount = 0;
 	normalCount = 0; textureCount = 0; vertexCount = 0;
 	istringstream fileIn(reinterpret_cast<char*>(file));
@@ -179,6 +180,8 @@ bool OBJLoader::ReadColourCounts(int& kdCount, int& kaCount, int& tfCount, int& 
 //loading color and tex
 ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceContext, void* file, XMFLOAT3 *RGBDeffuse, XMFLOAT3 *RGBAL, XMFLOAT3 *Tf, XMFLOAT3 *Ni, ID3D11ShaderResourceView** ObjTex)
 {
+	cout << "Loading Mtl File" << endl;
+
 	istringstream _fin(reinterpret_cast<char*>(file));
 	char _input;
 
