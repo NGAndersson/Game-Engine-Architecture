@@ -1,7 +1,7 @@
 zip.asset0.lod0.obj cube.obj 835
-zip.asset0.lod0.mtl cube.mtl 237
+zip.asset0.lod0.mtl cube1.mtl 237
 zip.asset0.lod1.obj cube.obj 835
-zip.asset0.lod1.mtl cube.mtl 237
+zip.asset0.lod1.mtl cube1.mtl 237
 zip.asset0.lod2.obj cube.obj 835
 zip.asset0.lod2.mtl cube.mtl 237
 zip.asset0.lod3.obj cube.obj 835

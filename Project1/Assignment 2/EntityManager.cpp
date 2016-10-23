@@ -72,7 +72,6 @@ void EntityManager::Render()
 		m_renderer->Render(m_modelHandlers[i][1], m_entityList[i]->GetPosition(), m_entityList[i]->GetRotation(), m_entityList[i]->GetScale());
 	}
 }
-//FIXA IN alla olia level of details.... Lägg till mtl filernas namn etc i fileTable.txt 
 
 void EntityManager::Update(double time)
 {

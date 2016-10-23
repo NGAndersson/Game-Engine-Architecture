@@ -130,12 +130,6 @@ bool OBJLoader::ReadColourCounts(int& kdCount, int& kaCount, int& tfCount, int& 
 	tfCount = 0;
 	niCount = 0;
 
-	// Check if it was successful in opening the file.
-	if (_file.fail() == true)
-	{
-		return false;
-	}
-
 	// Read from the file and continue to read until the end of the file is reached.
 	_file.get(_input);
 	while (!_file.eof())
@@ -188,6 +182,8 @@ ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11Devi
 	istringstream _fin(reinterpret_cast<char*>(file));
 	char _input;
 
+	string test(reinterpret_cast<char*>(file));
+
 	string _TexName;
 	int _kdIndex, _kaIndex, _tfIndex, _niIndex;
 
@@ -197,15 +193,9 @@ ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11Devi
 	_tfIndex = 0;
 	_niIndex = 0;
 
-	// Check if it was successful in opening the file.
-	if (_fin.fail() == true)
-	{
-		return false;
-	}
-
 	_fin.get(_input);
 
-	while (!_fin.eof())
+	while (!_fin.eof())//Problemet ligger i att Cube.mtl är gjort på ett annat sätt så få ap att fixa en som funkar det är hans kod typ.
 	{
 		if (_input == 'K')
 		{

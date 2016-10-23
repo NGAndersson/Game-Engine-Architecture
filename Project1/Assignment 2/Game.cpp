@@ -93,7 +93,9 @@ WPARAM Game::MainLoop(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 			{
 				move += XMVectorSet(1, 0, 0, 0);
 			}
+			//Finns inte ??
 			//m_entitymanager->CamUpd(m_deviceContext, move);
+
 			// send the message to the WindowProc function
 			DispatchMessage(&m_winMSG);
 		}
