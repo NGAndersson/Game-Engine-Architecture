@@ -1,14 +1,1 @@
-﻿  StackAllocator.cpp
-c:\users\bth\source\repos\game-engine-architecture\project1\project1\source\stackallocator.cpp(64): warning C4312: 'type cast': conversion from 'Marker' to 'void *' of greater size
-c:\users\bth\source\repos\game-engine-architecture\project1\project1\source\stackallocator.cpp(67): warning C4312: 'type cast': conversion from 'Marker' to 'void *' of greater size
-c:\users\bth\source\repos\game-engine-architecture\project1\project1\source\stackallocator.cpp(73): warning C4311: 'type cast': pointer truncation from 'void *' to 'Marker'
-c:\users\bth\source\repos\game-engine-architecture\project1\project1\source\stackallocator.cpp(73): warning C4302: 'type cast': truncation from 'void *' to 'Marker'
-c:\users\bth\source\repos\game-engine-architecture\project1\project1\source\stackallocator.cpp(76): warning C4311: 'type cast': pointer truncation from 'void *' to 'Marker'
-c:\users\bth\source\repos\game-engine-architecture\project1\project1\source\stackallocator.cpp(76): warning C4302: 'type cast': truncation from 'void *' to 'Marker'
-  PoolAllocator.cpp
-  MemoryManager.cpp
-  Generating Code...
-DirectXTK.lib(pch.obj) : warning LNK4099: PDB 'DirectXTK.pdb' was not found with 'DirectXTK.lib(pch.obj)' or at 'C:\Users\BTH\Source\Repos\Game-Engine-Architecture\Project1\Project1\x64\Debug\DirectXTK.pdb'; linking object as if no debug info
-DirectXTK.lib(WICTextureLoader.obj) : warning LNK4099: PDB 'DirectXTK.pdb' was not found with 'DirectXTK.lib(WICTextureLoader.obj)' or at 'C:\Users\BTH\Source\Repos\Game-Engine-Architecture\Project1\Project1\x64\Debug\DirectXTK.pdb'; linking object as if no debug info
-  Assignment 2.vcxproj -> C:\Users\BTH\Source\Repos\Game-Engine-Architecture\Project1\Project1\x64\Debug\Assignment 2.exe
-  Assignment 2.vcxproj -> C:\Users\BTH\Source\Repos\Game-Engine-Architecture\Project1\Project1\x64\Debug\Assignment 2.pdb (Partial PDB)
+﻿C:\Users\BTH\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\Assignment 2.vcxproj(215,5): error : This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is packages\directxtk_desktop_2015.2016.10.6.1\build\native\directxtk_desktop_2015.props.

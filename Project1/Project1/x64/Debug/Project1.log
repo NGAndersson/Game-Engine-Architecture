@@ -1,9 +1,15 @@
-﻿Build started 2016-10-23 19:42:05.
-     1>Project "C:\Users\Slowie\Desktop\Game-Engine-Architecture\Project1\Project1\Project1.vcxproj" on node 2 (Build target(s)).
-     1>Link:
-         Project1.vcxproj -> C:\Users\Slowie\Desktop\Game-Engine-Architecture\Project1\Project1\x64\Debug\Project1.exe
-     1>Done Building Project "C:\Users\Slowie\Desktop\Game-Engine-Architecture\Project1\Project1\Project1.vcxproj" (Build target(s)).
-
-Build succeeded.
-
-Time Elapsed 00:00:00.10
+﻿  StackAllocator.cpp
+c:\users\bth\source\repos\game-engine-architecture\project1\project1\source\stackallocator.cpp(64): warning C4312: 'type cast': conversion from 'Marker' to 'void *' of greater size
+c:\users\bth\source\repos\game-engine-architecture\project1\project1\source\stackallocator.cpp(67): warning C4312: 'type cast': conversion from 'Marker' to 'void *' of greater size
+c:\users\bth\source\repos\game-engine-architecture\project1\project1\source\stackallocator.cpp(73): warning C4311: 'type cast': pointer truncation from 'void *' to 'Marker'
+c:\users\bth\source\repos\game-engine-architecture\project1\project1\source\stackallocator.cpp(73): warning C4302: 'type cast': truncation from 'void *' to 'Marker'
+c:\users\bth\source\repos\game-engine-architecture\project1\project1\source\stackallocator.cpp(76): warning C4311: 'type cast': pointer truncation from 'void *' to 'Marker'
+c:\users\bth\source\repos\game-engine-architecture\project1\project1\source\stackallocator.cpp(76): warning C4302: 'type cast': truncation from 'void *' to 'Marker'
+  PoolAllocator.cpp
+  MemoryManager.cpp
+  Main.cpp
+c:\users\bth\source\repos\game-engine-architecture\project1\project1\source\main.cpp(51): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Generating Code...
+  LINK : C:\Users\BTH\Source\Repos\Game-Engine-Architecture\Project1\x64\Debug\Project1.exe not found or not built by the last incremental link; performing full link
+  Project1.vcxproj -> C:\Users\BTH\Source\Repos\Game-Engine-Architecture\Project1\x64\Debug\Project1.exe
+  Project1.vcxproj -> C:\Users\BTH\Source\Repos\Game-Engine-Architecture\Project1\x64\Debug\Project1.pdb (Partial PDB)
