@@ -12,7 +12,7 @@ def main(argv):
 		sys.exit(2)
 	for opt, arg in opts:
 		if opt == '-h':
-			print('packager.py -i <inputfile> -g <guid> -o <outputfile>')
+			print('test.py -i <inputfile> -g <guid> -o <outputfile>')
 			sys.exit()
 		elif opt in ("-i", "--ifile"):
 			inputfile = arg

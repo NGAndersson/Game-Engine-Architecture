@@ -57,13 +57,13 @@
     <ClCompile Include="LOSReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Project1\Source\MemoryManager.cpp">
+    <ClCompile Include="MemoryManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Project1\Source\PoolAllocator.cpp">
+    <ClCompile Include="PoolAllocator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Project1\Source\StackAllocator.cpp">
+    <ClCompile Include="StackAllocator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -107,13 +107,13 @@
     <ClInclude Include="LOSReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Project1\Header\MemoryManager.h">
+    <ClInclude Include="MemoryManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Project1\Header\PoolAllocator.h">
+    <ClInclude Include="PoolAllocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Project1\Header\StackAllocator.h">
+    <ClInclude Include="StackAllocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

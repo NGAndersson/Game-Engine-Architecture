@@ -10,6 +10,8 @@
 #include <random>
 #include <memory>
 #include "Camera.h"
+#include "MemoryManager.h"
+#include "StackAllocator.h"
 
 #pragma comment (lib, "d3d11.lib")
 #pragma comment (lib, "d3dcompiler.lib")
@@ -26,6 +28,7 @@ public:
 	void Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext);
 	void Render();
 	void Update(double time);
+	void CamUpd(ID3D11DeviceContext* m_deviceContext, XMVECTOR move);
 
 	//Variables
 private:
@@ -48,6 +51,7 @@ private:
 	ID3D11Device* m_device;
 	ID3D11DeviceContext* m_deviceContext;
 	XMMATRIX m_xmrot;
+	StackAllocator m_entityAllocator;
 public:
 	Entity* m_entity1;
 	Entity* m_entity2;
