@@ -1,11 +1,4 @@
-﻿  StackAllocator.cpp
-c:\users\bth\source\repos\game-engine-architecture\project1\project1\source\stackallocator.cpp(64): warning C4312: 'type cast': conversion from 'Marker' to 'void *' of greater size
-c:\users\bth\source\repos\game-engine-architecture\project1\project1\source\stackallocator.cpp(67): warning C4312: 'type cast': conversion from 'Marker' to 'void *' of greater size
-c:\users\bth\source\repos\game-engine-architecture\project1\project1\source\stackallocator.cpp(73): warning C4311: 'type cast': pointer truncation from 'void *' to 'Marker'
-c:\users\bth\source\repos\game-engine-architecture\project1\project1\source\stackallocator.cpp(73): warning C4302: 'type cast': truncation from 'void *' to 'Marker'
-c:\users\bth\source\repos\game-engine-architecture\project1\project1\source\stackallocator.cpp(76): warning C4311: 'type cast': pointer truncation from 'void *' to 'Marker'
-c:\users\bth\source\repos\game-engine-architecture\project1\project1\source\stackallocator.cpp(76): warning C4302: 'type cast': truncation from 'void *' to 'Marker'
-  PoolAllocator.cpp
+﻿  PoolAllocator.cpp
   MemoryManager.cpp
   Generating Code...
   Assignment 2.vcxproj -> C:\Users\BTH\Source\Repos\Game-Engine-Architecture\Project1\x64\Debug\Assignment 2.exe

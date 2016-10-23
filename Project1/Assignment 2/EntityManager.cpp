@@ -1,7 +1,6 @@
 #include "EntityManager.h"
 #include <iostream>
 
-#define PACKAGETYPE = zip;
 
 
 EntityManager::EntityManager()
@@ -13,19 +12,18 @@ EntityManager::~EntityManager()
 
 	delete m_shaderLoad;
 	delete m_renderer;
-	//delete m_entity;
+
 }
 
 void EntityManager::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext)
 {
+	m_entityAllocator.Setup(MemoryManager::instance().GetMemory(sizeof(Entity) * 4), sizeof(Entity) * 4);
 
 	//Set device and context
 	m_device = device;
 	m_deviceContext = deviceContext;
 
 	//Set all asset pointers
-//	m_objAsset = Loader::instance().Get("zip.asset1.obj");
-//	m_mtlAsset = Loader::instance().Get("zip.asset1.mtl");
 	m_vAsset = reinterpret_cast<char*>(Loader::instance().Get("zip.vertexshader.hlsl"));
 	m_gAsset = reinterpret_cast<char*>(Loader::instance().Get("zip.geometryshader.hlsl"));
 	m_pAsset = reinterpret_cast<char*>(Loader::instance().Get("zip.pixelshader.hlsl"));
@@ -48,13 +46,13 @@ void EntityManager::Initialize(ID3D11Device* device, ID3D11DeviceContext* device
 	m_shaderLoad = new ShaderHandler();
 	m_shaderLoad->CreateShaders(m_device, m_vAsset, m_gAsset, m_pAsset); //<--- Detta är vad det ska bli efter att CreateShaders är omskriven
 	//Create entities with position and the like
-	m_entity1 = new Entity(XMFLOAT3(0, 0, 10), XMFLOAT3(1, 1, 1), LoD);
+	m_entity1 = new(m_entityAllocator.Alloc(sizeof(Entity), false)) Entity(XMFLOAT3(0, 0, 10), XMFLOAT3(1, 1, 1), LoD);
 	m_entityList.push_back(m_entity1);
-	m_entity2 = new Entity(XMFLOAT3(10, 0, 0), XMFLOAT3(1, 1, 1), LoD);
+	m_entity2 = new(m_entityAllocator.Alloc(sizeof(Entity), false)) Entity(XMFLOAT3(10, 0, 0), XMFLOAT3(1, 1, 1), LoD);
 	m_entityList.push_back(m_entity2);
-	m_entity3 = new Entity(XMFLOAT3(0, 0, -10), XMFLOAT3(1, 1, 1), LoD);
+	m_entity3 = new(m_entityAllocator.Alloc(sizeof(Entity), false)) Entity(XMFLOAT3(0, 0, -10), XMFLOAT3(1, 1, 1), LoD);
 	m_entityList.push_back(m_entity3);
-	m_entity4 = new Entity(XMFLOAT3(-10, 0, 0), XMFLOAT3(1, 1, 1), LoD);
+	m_entity4 = new(m_entityAllocator.Alloc(sizeof(Entity), false)) Entity(XMFLOAT3(-10, 0, 0), XMFLOAT3(1, 1, 1), LoD);
 	m_entityList.push_back(m_entity4);
 
 	XMVECTOR _rotatAxis{ 0, 1, 0, 0 };
