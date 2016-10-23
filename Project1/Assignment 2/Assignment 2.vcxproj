@@ -152,6 +152,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Project1\Source\MemoryManager.cpp" />
+    <ClCompile Include="..\Project1\Source\PoolAllocator.cpp" />
+    <ClCompile Include="..\Project1\Source\StackAllocator.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Decompressor.cpp" />
     <ClCompile Include="Display.cpp" />
@@ -168,6 +171,9 @@
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Project1\Header\MemoryManager.h" />
+    <ClInclude Include="..\Project1\Header\PoolAllocator.h" />
+    <ClInclude Include="..\Project1\Header\StackAllocator.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Decompressor.h" />
     <ClInclude Include="Display.h" />
