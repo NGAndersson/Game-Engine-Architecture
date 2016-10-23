@@ -1,3 +1,4 @@
-﻿  EntityManager.cpp
+﻿  Game.cpp
+c:\users\per\source\repos\game-engine-architecture\project1\assignment 2\game.cpp(105): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   Assignment 2.vcxproj -> C:\Users\Per\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\Assignment 2.exe
   Assignment 2.vcxproj -> C:\Users\Per\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\Assignment 2.pdb (Partial PDB)

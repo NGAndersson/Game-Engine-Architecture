@@ -165,6 +165,8 @@ HRESULT Game::CreateDirect3DContext(HWND wndHandle)
 	_swapChainDesc.OutputWindow = wndHandle;                           // the window to be used
 	_swapChainDesc.SampleDesc.Count = 1;                               // how many multisamples
 	_swapChainDesc.Windowed = TRUE;                                    // windowed/full-screen mode
+	_swapChainDesc.BufferDesc.Width = m_width;
+	_swapChainDesc.BufferDesc.Height = m_height;
 
 	//														// create a device, device context and swap chain using the information in the scd struct
 	HRESULT _hr = D3D11CreateDeviceAndSwapChain(NULL,
@@ -188,10 +190,10 @@ HRESULT Game::CreateDirect3DContext(HWND wndHandle)
 
 		// get the address of the back buffer
 		ID3D11Texture2D* _backBuffer = nullptr;
-		m_swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&_backBuffer);
+		m_swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&_backBuffer);
 
 		// use the back buffer address to create the render target
-		_hr = m_device->CreateRenderTargetView(_backBuffer, NULL, &m_backbufferRTV);
+		_hr = m_device->CreateRenderTargetView(_backBuffer,NULL, &m_backbufferRTV);
 		_backBuffer->Release();
 
 		// set the render target as the back buffer
@@ -236,6 +238,14 @@ HRESULT Game::DepthStencilInitialicer()
 	_descDepth.CPUAccessFlags = 0;
 	_descDepth.MiscFlags = 0;
 	_hr = m_device->CreateTexture2D(&_descDepth, NULL, &m_depthStencil);
+
+	D3D11_DEPTH_STENCIL_VIEW_DESC ddesc;
+
+	ddesc.Flags = 0;
+	ddesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	ddesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	ddesc.Texture2D.MipSlice = 0;
+
 	if (SUCCEEDED(_hr))
 	{
 		_hr = m_device->CreateDepthStencilView(m_depthStencil, NULL, &m_depthStencilView);
