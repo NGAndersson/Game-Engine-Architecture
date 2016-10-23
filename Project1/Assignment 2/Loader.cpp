@@ -54,7 +54,7 @@ void * Loader::Get(std::string guid)
 		registry[guid].data = decompressor.decompress("test.zip", filePath);
 
 	if (readerType == "los")
-		registry[guid].data = losReader.read("test.los", losByteOffset, losByteSize);
+		registry[guid].data = losReader.read("txtures.los", losByteOffset, losByteSize);
 
 	registry[guid].referenceCount++;
 	return reinterpret_cast<void*>(registry[guid].data);
