@@ -195,7 +195,7 @@ ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11Devi
 
 	_fin.get(_input);
 
-	while (!_fin.eof())//Problemet ligger i att Cube.mtl är gjort på ett annat sätt så få ap att fixa en som funkar det är hans kod typ.
+	while (!_fin.eof()) 
 	{
 		if (_input == 'K')
 		{
