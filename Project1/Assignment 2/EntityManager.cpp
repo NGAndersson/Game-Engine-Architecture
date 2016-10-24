@@ -12,7 +12,27 @@ EntityManager::~EntityManager()
 
 	delete m_shaderLoad;
 	delete m_renderer;
+	m_entityAllocator.ClearStack(true);
+	m_entityAllocator.ClearStack(false);
 
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			if (m_entityList[j]->GetLoD() == 9 && i == 2)
+			{
+				
+			}
+			else if (m_entityList[j]->GetLoD() == 0 && i == 0)
+			{
+
+			}
+			else
+			{
+				delete m_modelHandlers[j][i];
+			}
+		}		
+	}
 }
 
 void EntityManager::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext)
