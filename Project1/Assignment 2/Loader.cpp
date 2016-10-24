@@ -101,6 +101,20 @@ void Loader::Unpin(std::string guid)
 	}
 }
 
+int Loader::GetSize(std::string guid)
+{
+	if (registry.find(guid) != registry.end())
+	{
+		return registry[guid].size;
+	}
+	else
+	{
+		std::cout << "Can't get size of " + guid + ". No such guid loaded in registry. Loading it now.";
+		Get(guid);
+		return(GetSize(guid));
+	}
+}
+
 
 std::string Loader::FindPathZip(std::string guid)
 {
@@ -118,6 +132,7 @@ std::string Loader::FindPathZip(std::string guid)
 			std::string size;
 			std::getline(fileTable, size);
 			usedMemory += stoi(size);
+			registry[guid].size = stoi(size);
 			fileTable.close();
 			if (usedMemory > maxMemory)
 			{

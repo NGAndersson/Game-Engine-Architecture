@@ -258,7 +258,7 @@ ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11Devi
 					if (_TexName.back() == '\r')
 						_TexName.pop_back();
 					char* texture = reinterpret_cast<char*>(Loader::instance().Get(_TexName));
-					int size = strlen(texture);
+					int size = Loader::instance().GetSize(_TexName);
 					//IF THIS SHIT WORKS THIS IS THE WORLDS COOLEST FUCKING HACK
 					HRESULT _hr = CreateWICTextureFromMemory(device, deviceContext, reinterpret_cast<uint8_t*>(Loader::instance().Get(_TexName)), (size_t)size, nullptr, ObjTex, NULL);
 				}
