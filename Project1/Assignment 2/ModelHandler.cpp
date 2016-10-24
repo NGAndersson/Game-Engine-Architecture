@@ -69,6 +69,7 @@ bool ModelHandler::LoadOBJData(void* file, void* colourFileName, ID3D11Device* d
 	}
 
 	//Loads the colour data from file
+	
 	m_OBJLoad.LoadColour(device, deviceContext, colourFileName, m_RGBDeffuse, m_RGBAL, m_Tf, m_Ni, &m_ObjTex);
 	return true;
 }

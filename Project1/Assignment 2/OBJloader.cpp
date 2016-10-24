@@ -178,8 +178,9 @@ bool OBJLoader::ReadColourCounts(int& kdCount, int& kaCount, int& tfCount, int& 
 }
 
 //loading color and tex
-ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceContext, void* file, XMFLOAT3 *RGBDeffuse, XMFLOAT3 *RGBAL, XMFLOAT3 *Tf, XMFLOAT3 *Ni, ID3D11ShaderResourceView** ObjTex)
+void OBJLoader::LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceContext, void* file, XMFLOAT3 *RGBDeffuse, XMFLOAT3 *RGBAL, XMFLOAT3 *Tf, XMFLOAT3 *Ni, ID3D11ShaderResourceView** ObjTex)
 {
+
 	cout << "Loading Mtl File" << endl;
 
 	istringstream _fin(reinterpret_cast<char*>(file));
@@ -259,8 +260,9 @@ ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11Devi
 						_TexName.pop_back();
 					char* texture = reinterpret_cast<char*>(Loader::instance().Get(_TexName));
 					int size = Loader::instance().GetSize(_TexName);
-					//IF THIS SHIT WORKS THIS IS THE WORLDS COOLEST FUCKING HACK
+
 					HRESULT _hr = CreateWICTextureFromMemory(device, deviceContext, reinterpret_cast<uint8_t*>(Loader::instance().Get(_TexName)), (size_t)size, nullptr, ObjTex, NULL);
+					
 				}
 			}
 		}
@@ -272,5 +274,5 @@ ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11Devi
 
 		_fin.get(_input);
 	}
-	return nullptr;
+	return;
 }

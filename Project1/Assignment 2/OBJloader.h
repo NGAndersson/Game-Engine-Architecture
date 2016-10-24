@@ -44,7 +44,7 @@ public:
 	ID3D11ShaderResourceView* LoadTexture(ID3D11Device* device, ID3D11DeviceContext* deviceContext,void* texFile);
 	VertexInputType* LoadObj(int& vertexCount, int& textureCount, int& normalCount, int& faceCount,void* file);//file is the obj loader remade to a char array.
 	bool ReadColourCounts(int& vertexCount, int& textureCount, int& normalCount, int& faceCount, void* fileName);
-	ID3D11ShaderResourceView* LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceContext, void* file, XMFLOAT3 *RGBDeffuse, XMFLOAT3 *RGBAL, XMFLOAT3 *Tf, XMFLOAT3 *Ni, ID3D11ShaderResourceView** m_ObjTex);
+	void LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceContext, void* file, XMFLOAT3 *RGBDeffuse, XMFLOAT3 *RGBAL, XMFLOAT3 *Tf, XMFLOAT3 *Ni, ID3D11ShaderResourceView** m_ObjTex);
 };
 
 #endif
