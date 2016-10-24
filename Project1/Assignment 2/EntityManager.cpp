@@ -28,25 +28,6 @@ void EntityManager::Initialize(ID3D11Device* device, ID3D11DeviceContext* device
 	m_gAsset = reinterpret_cast<char*>(Loader::instance().Get("zip.geometryshader.hlsl"));
 	m_pAsset = reinterpret_cast<char*>(Loader::instance().Get("zip.pixelshader.hlsl"));
 
-	//Set the renderer
-	m_renderer = new Renderer(m_deviceContext, m_device);
-	//j are the differend models, i are the 3 modelhandlers belonging to each j. i = 1 is the current LoD distance, i = 0 is the LoD level for going forward and i = 2 is the LoD level for going backward
-	for (int i = 0; i < 3; i++)
-	{
-		for (int j = 0; j < 4; j++)
-		{
-			m_objAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".lod" + to_string(i) + ".obj");
-			m_mtlAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".lod" + to_string(i) + ".mtl");
-			m_modelHandlers[j][i] = new ModelHandler();
-			m_modelHandlers[j][i]->LoadOBJData(m_objAsset, m_mtlAsset, m_device, m_deviceContext);
-			Loader::instance().Free("zip.asset" + to_string(j) + ".lod" + to_string(i) + ".obj");
-			Loader::instance().Free("zip.asset" + to_string(j) + ".lod" + to_string(i) + ".mtl");
-			m_modelHandlers[j][i]->CreateBuffers(m_device);
-		}
-	}
-	//Create Shaders
-	m_shaderLoad = new ShaderHandler();
-	m_shaderLoad->CreateShaders(m_device, m_vAsset, m_gAsset, m_pAsset); //<--- Detta är vad det ska bli efter att CreateShaders är omskriven
 	//Create entities with position and the like
 	m_entity1 = new(m_entityAllocator.Alloc(sizeof(Entity), false)) Entity(XMFLOAT3(0, 0, 10), XMFLOAT3(1, 1, 1), LoD);
 	m_entityList.push_back(m_entity1);
@@ -56,6 +37,34 @@ void EntityManager::Initialize(ID3D11Device* device, ID3D11DeviceContext* device
 	m_entityList.push_back(m_entity3);
 	m_entity4 = new(m_entityAllocator.Alloc(sizeof(Entity), false)) Entity(XMFLOAT3(-10, 0, 0), XMFLOAT3(1, 1, 1), LoD);
 	m_entityList.push_back(m_entity4);
+
+	//Set the renderer
+	m_renderer = new Renderer(m_deviceContext, m_device);
+	//j are the differend models, i are the 3 modelhandlers belonging to each j. i = 1 is the current LoD distance, i = 0 is the LoD level for going forward and i = 2 is the LoD level for going backward
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			XMStoreFloat3(&m_camPos, m_renderer->GetCamera()->GetCameraPos());
+			//Calculates distance in order to calculat the LoD, Level of Depth, which depends on the distance
+			distance = sqrt((m_camPos.x - m_entityList[j]->GetPosition().x) * (m_camPos.x - m_entityList[j]->GetPosition().x) +
+				(m_camPos.y - m_entityList[j]->GetPosition().y) * (m_camPos.y - m_entityList[j]->GetPosition().y) +
+				(m_camPos.z - m_entityList[j]->GetPosition().z) * (m_camPos.z - m_entityList[j]->GetPosition().z));
+
+			LoD = max(min(int(distance / 1), 10), 0);
+			m_objAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".lod" + to_string(min(max(LoD + (i % 3) - 1, 0), 9)) + ".obj");
+			m_mtlAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".lod" + to_string(min(max(LoD + (i % 3) - 1, 0), 9)) + ".mtl");
+			m_modelHandlers[j][i] = new ModelHandler();
+			m_modelHandlers[j][i]->LoadOBJData(m_objAsset, m_mtlAsset, m_device, m_deviceContext);
+			Loader::instance().Free("zip.asset" + to_string(j) + ".lod" + to_string(min(max(LoD + (i % 3) - 1, 0), 9)) + ".obj");
+			Loader::instance().Free("zip.asset" + to_string(j) + ".lod" + to_string(min(max(LoD + (i % 3) - 1, 0), 9)) + ".mtl");
+			m_modelHandlers[j][i]->CreateBuffers(m_device);
+		}
+	}
+	//Create Shaders
+	m_shaderLoad = new ShaderHandler();
+	m_shaderLoad->CreateShaders(m_device, m_vAsset, m_gAsset, m_pAsset); //<--- Detta är vad det ska bli efter att CreateShaders är omskriven
+	
 
 	XMVECTOR _rotatAxis{ 0, 1, 0, 0 };
 	m_xmrot = XMMatrixRotationAxis(_rotatAxis, XM_PI);
@@ -84,34 +93,39 @@ void EntityManager::Update(double time)
 						(m_camPos.y - m_entityList[j]->GetPosition().y) * (m_camPos.y - m_entityList[j]->GetPosition().y) + 
 						(m_camPos.z - m_entityList[j]->GetPosition().z) * (m_camPos.z - m_entityList[j]->GetPosition().z));
 
-		LoD = max(min(int(distance/ 1), 8), 1);
+		LoD = max(min(int(distance/ 1), 9), 0);
 
 		if (m_entityList[j]->GetLoD() != LoD)
 		{
 			if (m_entityList[j]->GetLoD() > LoD) //Move forward to the next LoD
 			{
-
-				m_modelHandlers[j][2] = m_modelHandlers[j][1];
-				m_modelHandlers[j][1] = m_modelHandlers[j][0];
-				m_objAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".lod" + to_string(LoD - 1) + ".obj");
-				m_mtlAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".lod" + to_string(LoD - 1) + ".mtl");			
-				//unsure if need to call on ~ModelHandler() and then new Modelhandler for [j][0] or if below is fine
-				m_modelHandlers[j][0]->LoadOBJData(m_objAsset, m_mtlAsset, m_device, m_deviceContext);
-				Loader::instance().Free("zip.asset" + to_string(j) + ".lod" + to_string(LoD - 1) + ".obj");
-				Loader::instance().Free("zip.asset" + to_string(j) + ".lod" + to_string(LoD - 1) + ".mtl");
-				m_modelHandlers[j][0]->CreateBuffers(m_device);
+				*m_modelHandlers[j][2] = *m_modelHandlers[j][1];
+				*m_modelHandlers[j][1] = *m_modelHandlers[j][0];
+				if (LoD != 0)
+				{
+					m_objAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".lod" + to_string(LoD - 1) + ".obj");
+					m_mtlAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".lod" + to_string(LoD - 1) + ".mtl");
+					//unsure if need to call on ~ModelHandler() and then new Modelhandler for [j][0] or if below is fine
+					m_modelHandlers[j][0]->LoadOBJData(m_objAsset, m_mtlAsset, m_device, m_deviceContext);
+					Loader::instance().Free("zip.asset" + to_string(j) + ".lod" + to_string(LoD - 1) + ".obj");
+					Loader::instance().Free("zip.asset" + to_string(j) + ".lod" + to_string(LoD - 1) + ".mtl");
+					m_modelHandlers[j][0]->CreateBuffers(m_device);
+				}
 			}
 			else if (m_entityList[j]->GetLoD() < LoD) //Move backward to the previous LoD
 			{
-				m_modelHandlers[j][0] = m_modelHandlers[j][1];
-				m_modelHandlers[j][1] = m_modelHandlers[j][2];
-				m_objAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".lod" + to_string(LoD + 1) + ".obj");
-				m_mtlAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".lod" + to_string(LoD + 1) + ".mtl");
-				//unsure if need to call on ~ModelHandler() and then new Modelhandler for [j][2] or if below is fine
-				m_modelHandlers[j][2]->LoadOBJData(m_objAsset, m_mtlAsset, m_device, m_deviceContext);
-				Loader::instance().Free("zip.asset" + to_string(j) + ".lod" + to_string(LoD + 1) + ".obj");
-				Loader::instance().Free("zip.asset" + to_string(j) + ".lod" + to_string(LoD + 1) + ".mtl");
-				m_modelHandlers[j][2]->CreateBuffers(m_device);
+				*m_modelHandlers[j][0] = *m_modelHandlers[j][1];
+				*m_modelHandlers[j][1] = *m_modelHandlers[j][2];
+				if (LoD != 9)
+				{
+					m_objAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".lod" + to_string(LoD + 1) + ".obj");
+					m_mtlAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".lod" + to_string(LoD + 1) + ".mtl");
+					//unsure if need to call on ~ModelHandler() and then new Modelhandler for [j][2] or if below is fine
+					m_modelHandlers[j][2]->LoadOBJData(m_objAsset, m_mtlAsset, m_device, m_deviceContext);
+					Loader::instance().Free("zip.asset" + to_string(j) + ".lod" + to_string(LoD + 1) + ".obj");
+					Loader::instance().Free("zip.asset" + to_string(j) + ".lod" + to_string(LoD + 1) + ".mtl");
+					m_modelHandlers[j][2]->CreateBuffers(m_device);
+				}
 			}
 			m_entityList[j]->SetLoD(LoD); //Sets the current LoD to the entity so that it's updated for the next calculation
 		}
