@@ -73,7 +73,7 @@ void EntityManager::Render()
 
 void EntityManager::Update(double time)
 {
-	XMStoreFloat3(&m_camPos, m_cam.GetCameraPos());
+	XMStoreFloat3(&m_camPos, m_renderer->GetCamera()->GetCameraPos());
 	for (int j = 0; j < m_entityList.size(); j++)
 	{
 		
@@ -82,7 +82,8 @@ void EntityManager::Update(double time)
 						(m_camPos.y - m_entityList[j]->GetPosition().y) * (m_camPos.y - m_entityList[j]->GetPosition().y) + 
 						(m_camPos.z - m_entityList[j]->GetPosition().z) * (m_camPos.z - m_entityList[j]->GetPosition().z));
 
-		LoD = min(int(distance / 10), 10);//???
+		LoD = max(min(int(distance/ 10), 9), 1);
+
 		if (m_entityList[j]->GetLoD() != LoD)
 		{
 			if (m_entityList[j]->GetLoD() > LoD) //Move forward to the next LoD

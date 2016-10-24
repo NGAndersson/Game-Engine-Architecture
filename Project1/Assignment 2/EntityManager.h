@@ -46,7 +46,7 @@ private:
 	float distance;
 	XMFLOAT3 m_camPos;
 	XMFLOAT3 m_entityPos;
-	Camera m_cam;
+	//Camera m_cam;
 	Renderer* m_renderer;
 	ID3D11Device* m_device;
 	ID3D11DeviceContext* m_deviceContext;
