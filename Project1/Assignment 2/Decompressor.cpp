@@ -23,7 +23,7 @@ char* Decompressor::decompress(string Path, string fileName)
 	zip_stat_init(&stats);
 	zip_stat(temp, fileName.c_str(), 0, &stats);
 
-	retFile = new char[stats.size];
+	retFile = new char[stats.size+1];
 
 	zip_file* readData = zip_fopen(temp, fileName.c_str(), 0);
 	zip_fread(readData, retFile, stats.size);

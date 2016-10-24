@@ -5,7 +5,7 @@
 
 Loader::Loader()
 {
-	maxMemory = 1000000;
+	maxMemory = 100000;
 	usedMemory = 0;
 }
 
@@ -25,6 +25,7 @@ void * Loader::Get(std::string guid)
 		}
 		else
 		{
+			registry[guid].referenceCount++;
 			mtxLock.unlock();
 			return reinterpret_cast<void*>(registry[guid].data);		//Asset already exists in registry and has a proper pointer. Return the address
 		}
@@ -65,6 +66,7 @@ void Loader::Free(std::string guid)
 	if (registry.find(guid) != registry.end())
 	{
 		registry[guid].referenceCount--;
+		cout << "Lowering reference count of " + guid + ". New reference count = " + to_string(registry[guid].referenceCount) << endl;
 	}
 }
 
@@ -76,6 +78,7 @@ void Loader::Free()
 		{
 			if (!i.second.pinned && i.second.referenceCount <= 0)
 			{
+				cout << "Using too much memory. Removing guid: " + i.first << endl;
 				delete[] i.second.data;
 				usedMemory -= i.second.size;
 				registry.erase(i.first);
