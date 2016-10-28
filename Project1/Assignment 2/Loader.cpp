@@ -5,7 +5,7 @@
 
 Loader::Loader()
 {
-	maxMemory = 100000;
+	maxMemory = 25000;
 	usedMemory = 0;
 }
 

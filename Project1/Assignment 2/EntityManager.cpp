@@ -12,8 +12,8 @@ EntityManager::~EntityManager()
 
 	delete m_shaderLoad;
 	delete m_renderer;
-	m_entityAllocator.ClearStack(true);
-	m_entityAllocator.ClearStack(false);
+	m_stackAllocator.ClearStack(true);
+	m_stackAllocator.ClearStack(false);
 
 	for (int i = 0; i < 3; i++)
 	{
@@ -37,7 +37,7 @@ EntityManager::~EntityManager()
 
 void EntityManager::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext)
 {
-	m_entityAllocator.Setup(MemoryManager::instance().GetMemory(sizeof(Entity) * 4), sizeof(Entity) * 4);
+	m_stackAllocator.Setup(MemoryManager::instance().GetMemory(sizeof(Entity) * 4), sizeof(Entity) * 4);
 
 	//Set device and context
 	m_device = device;
@@ -49,13 +49,13 @@ void EntityManager::Initialize(ID3D11Device* device, ID3D11DeviceContext* device
 	m_pAsset = reinterpret_cast<char*>(Loader::instance().Get("zip.pixelshader.hlsl"));
 
 	//Create entities with position and the like
-	m_entity1 = new(m_entityAllocator.Alloc(sizeof(Entity), false)) Entity(XMFLOAT3(0, 0, 10), XMFLOAT3(1, 1, 1), LoD);
+	m_entity1 = new(m_stackAllocator.Alloc(sizeof(Entity), true)) Entity(XMFLOAT3(0, 0, 10), XMFLOAT3(1, 1, 1), LoD);
 	m_entityList.push_back(m_entity1);
-	m_entity2 = new(m_entityAllocator.Alloc(sizeof(Entity), false)) Entity(XMFLOAT3(10, 0, 0), XMFLOAT3(1, 1, 1), LoD);
+	m_entity2 = new(m_stackAllocator.Alloc(sizeof(Entity), true)) Entity(XMFLOAT3(10, 0, 0), XMFLOAT3(1, 1, 1), LoD);
 	m_entityList.push_back(m_entity2);
-	m_entity3 = new(m_entityAllocator.Alloc(sizeof(Entity), false)) Entity(XMFLOAT3(0, 0, -10), XMFLOAT3(1, 1, 1), LoD);
+	m_entity3 = new(m_stackAllocator.Alloc(sizeof(Entity), true)) Entity(XMFLOAT3(0, 0, -10), XMFLOAT3(1, 1, 1), LoD);
 	m_entityList.push_back(m_entity3);
-	m_entity4 = new(m_entityAllocator.Alloc(sizeof(Entity), false)) Entity(XMFLOAT3(-10, 0, 0), XMFLOAT3(1, 1, 1), LoD);
+	m_entity4 = new(m_stackAllocator.Alloc(sizeof(Entity), true)) Entity(XMFLOAT3(-10, 0, 0), XMFLOAT3(1, 1, 1), LoD);
 	m_entityList.push_back(m_entity4);
 
 	//Set the renderer
@@ -72,11 +72,12 @@ void EntityManager::Initialize(ID3D11Device* device, ID3D11DeviceContext* device
 				(m_camPos.z - m_entityList[j]->GetPosition().z) * (m_camPos.z - m_entityList[j]->GetPosition().z));
 
 			LoD = max(min(int(distance / 1), 10), 0);
-			m_objAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".lod" + to_string(min(max(LoD + (i % 3) - 1, 0), 9)) + ".obj");
+			m_objAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".obj");
+			Loader::instance().Pin("zip.asset" + to_string(j) + ".obj");
 			m_mtlAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".lod" + to_string(min(max(LoD + (i % 3) - 1, 0), 9)) + ".mtl");
 			m_modelHandlers[j][i] = new ModelHandler();
 			m_modelHandlers[j][i]->LoadOBJData(m_objAsset, m_mtlAsset, m_device, m_deviceContext);
-			Loader::instance().Free("zip.asset" + to_string(j) + ".lod" + to_string(min(max(LoD + (i % 3) - 1, 0), 9)) + ".obj");
+			Loader::instance().Free("zip.asset" + to_string(j) + ".obj");
 			Loader::instance().Free("zip.asset" + to_string(j) + ".lod" + to_string(min(max(LoD + (i % 3) - 1, 0), 9)) + ".mtl");
 			m_modelHandlers[j][i]->CreateBuffers(m_device);
 		}
@@ -123,11 +124,11 @@ void EntityManager::Update(double time)
 				*m_modelHandlers[j][1] = *m_modelHandlers[j][0];
 				if (LoD != 0)
 				{
-					m_objAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".lod" + to_string(LoD - 1) + ".obj");
+					m_objAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".obj");
 					m_mtlAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".lod" + to_string(LoD - 1) + ".mtl");
 					//unsure if need to call on ~ModelHandler() and then new Modelhandler for [j][0] or if below is fine
 					m_modelHandlers[j][0]->LoadOBJData(m_objAsset, m_mtlAsset, m_device, m_deviceContext);
-					Loader::instance().Free("zip.asset" + to_string(j) + ".lod" + to_string(LoD - 1) + ".obj");
+					Loader::instance().Free("zip.asset" + to_string(j) + ".obj");
 					Loader::instance().Free("zip.asset" + to_string(j) + ".lod" + to_string(LoD - 1) + ".mtl");
 					m_modelHandlers[j][0]->CreateBuffers(m_device);
 				}
@@ -138,11 +139,11 @@ void EntityManager::Update(double time)
 				*m_modelHandlers[j][1] = *m_modelHandlers[j][2];
 				if (LoD != 9)
 				{
-					m_objAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".lod" + to_string(LoD + 1) + ".obj");
+					m_objAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".obj");
 					m_mtlAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".lod" + to_string(LoD + 1) + ".mtl");
 					//unsure if need to call on ~ModelHandler() and then new Modelhandler for [j][2] or if below is fine
 					m_modelHandlers[j][2]->LoadOBJData(m_objAsset, m_mtlAsset, m_device, m_deviceContext);
-					Loader::instance().Free("zip.asset" + to_string(j) + ".lod" + to_string(LoD + 1) + ".obj");
+					Loader::instance().Free("zip.asset" + to_string(j) + ".obj");
 					Loader::instance().Free("zip.asset" + to_string(j) + ".lod" + to_string(LoD + 1) + ".mtl");
 					m_modelHandlers[j][2]->CreateBuffers(m_device);
 				}
