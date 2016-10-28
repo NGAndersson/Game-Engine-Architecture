@@ -51,7 +51,7 @@ private:
 	ID3D11Device* m_device;
 	ID3D11DeviceContext* m_deviceContext;
 	XMMATRIX m_xmrot;
-	StackAllocator m_entityAllocator;
+	StackAllocator m_stackAllocator;
 public:
 	Entity* m_entity1;
 	Entity* m_entity2;
