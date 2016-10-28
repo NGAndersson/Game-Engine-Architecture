@@ -12,6 +12,7 @@ OBJLoader::~OBJLoader()
 
 VertexInputType* OBJLoader::LoadObj(int& vertexCount, int& textureCount, int& normalCount, int& faceCount, void* file)
 {
+	mtex.lock();
 	cout << "Loading Object" << endl;
 	faceCount = 0;
 	normalCount = 0; textureCount = 0; vertexCount = 0;
@@ -116,13 +117,13 @@ VertexInputType* OBJLoader::LoadObj(int& vertexCount, int& textureCount, int& no
 		vector<UINT>().swap(indPos);
 		vector<UINT>().swap(indNor);
 		vector<UINT>().swap(indTex);
-
+		mtex.unlock();
 		return vertexInput;
 }
 
 bool OBJLoader::ReadColourCounts(int& kdCount, int& kaCount, int& tfCount, int& niCount, void* fileName)
 {
-
+	mtex.lock();
 	istringstream _file(reinterpret_cast<char*>(fileName));
 	char _input;
 	// Initialize the counts.
@@ -174,13 +175,14 @@ bool OBJLoader::ReadColourCounts(int& kdCount, int& kaCount, int& tfCount, int& 
 		// Start reading the beginning of the next line.
 		_file.get(_input);
 	}
+	mtex.unlock();
 	return true;
 }
 
 //loading color and tex
 void OBJLoader::LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceContext, void* file, XMFLOAT3 *RGBDeffuse, XMFLOAT3 *RGBAL, XMFLOAT3 *Tf, XMFLOAT3 *Ni, ID3D11ShaderResourceView** ObjTex)
 {
-
+	mtex.lock();
 	cout << "Loading Mtl File" << endl;
 
 	istringstream _fin(reinterpret_cast<char*>(file));
@@ -274,5 +276,6 @@ void OBJLoader::LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceCont
 
 		_fin.get(_input);
 	}
+	mtex.unlock();
 	return;
 }

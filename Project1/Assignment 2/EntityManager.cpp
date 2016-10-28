@@ -119,6 +119,9 @@ void EntityManager::Update(double time)
 
 		if (m_entityList[j]->GetLoD() != LoD)
 		{
+			std::clock_t c_start, c_end, c_time, c_TotTime;
+			c_start = std::clock();
+			auto t_start = std::chrono::high_resolution_clock::now();
 			if (m_entityList[j]->GetLoD() > LoD) //Move forward to the next LoD
 			{
 				
@@ -154,6 +157,15 @@ void EntityManager::Update(double time)
 				}
 			}
 			m_entityList[j]->SetLoD(LoD); //Sets the current LoD to the entity so that it's updated for the next calculation
+			
+			c_end = std::clock();
+			auto t_end = std::chrono::high_resolution_clock::now();
+
+			std::cout << std::fixed << std::setprecision(2) << "CPU time used: "
+				<< 1000.0 * (c_end - c_start) / CLOCKS_PER_SEC << " ms\n"
+				<< "Wall clock time passed: "
+				<< std::chrono::duration<double, std::milli>(t_end - t_start).count()
+				<< " ms\n";
 		}
 		m_entityList[j]->Update(time);
 	}
