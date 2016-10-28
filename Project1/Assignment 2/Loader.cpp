@@ -5,12 +5,13 @@
 
 Loader::Loader()
 {
-	maxMemory = 200000000;
+	maxMemory = 100000000;
 	usedMemory = 0;
 }
 
 void * Loader::Get(std::string guid)
 {
+
 	void* retPtr = nullptr;
 	std::string filePath;
 	int losByteOffset = 0, losByteSize = 0;

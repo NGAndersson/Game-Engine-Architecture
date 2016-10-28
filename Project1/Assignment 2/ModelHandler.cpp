@@ -7,15 +7,16 @@ ModelHandler::ModelHandler()
 
 ModelHandler::~ModelHandler()
 {
+	/*
 	delete[] m_vertices;
 	delete[] m_normals;
 	delete[] m_texcoords;
-	delete[] m_RGBDeffuse;
+	//delete[] m_RGBDeffuse;
 	delete[] m_RGBAL;
 	delete[] m_Tf;
 	delete[] m_Ni;
 	delete[] m_faces;
-	delete[] m_vertexInput;
+	delete[] m_vertexInput;*/
 	if (m_vertexBuffer != nullptr)
 	{
 		m_vertexBuffer->Release();
@@ -27,6 +28,85 @@ ModelHandler::~ModelHandler()
 	if (m_ObjTex != nullptr)
 	{
 		m_ObjTex->Release();
+	}
+}
+
+ModelHandler& ModelHandler::operator=(const ModelHandler & other)
+{
+	if (this != &other)
+	{
+
+		m_vertices = other.m_vertices;
+		m_normals = other.m_normals;
+		m_texcoords = other.m_texcoords;
+		m_RGBDeffuse = other.m_RGBDeffuse;
+		m_RGBAL = other.m_RGBAL;
+		m_Tf = other.m_Tf;
+		m_Ni = other.m_Ni;
+		m_faces = other.m_faces;
+		m_vertexInput = other.m_vertexInput;
+		
+		m_vertexBuffer = other.m_vertexBuffer;
+		m_vertexBuffer->AddRef();
+		m_OBJColourBuffer = other.m_OBJColourBuffer;
+		m_OBJColourBuffer->AddRef();
+		m_ObjTex = other.m_ObjTex;
+		m_ObjTex->AddRef();
+		/*
+		m_vertexCount = 0;
+		m_textureCount = 0;
+		m_normalCount = 0;
+		m_faceCount = 0;
+		m_kdCount = 0;
+		m_kaCount = 0;
+		m_tfCount = 0;
+		m_niCount = 0;*/
+
+		
+		m_vertexCount = other.m_vertexCount;
+		m_textureCount = other.m_textureCount;
+		m_normalCount = other.m_normalCount;
+		m_faceCount = other.m_faceCount;
+		m_kdCount = other.m_kdCount;
+		m_kaCount = other.m_kaCount;
+		m_tfCount = other.m_tfCount;
+		m_niCount = other.m_niCount;
+				
+	}
+	return *this;
+}
+
+ModelHandler::ModelHandler(const ModelHandler & other)
+{
+	if (this != &other)
+	{
+
+		m_vertices = other.m_vertices;
+		m_normals = other.m_normals;
+		m_texcoords = other.m_texcoords;
+		m_RGBDeffuse = other.m_RGBDeffuse;
+		m_RGBAL = other.m_RGBAL;
+		m_Tf = other.m_Tf;
+		m_Ni = other.m_Ni;
+		m_faces = other.m_faces;
+		m_vertexInput = other.m_vertexInput;
+
+		m_vertexBuffer = other.m_vertexBuffer;
+		m_vertexBuffer->AddRef();
+		m_OBJColourBuffer = other.m_OBJColourBuffer;
+		m_OBJColourBuffer->AddRef();
+		m_ObjTex = other.m_ObjTex;
+		m_ObjTex->AddRef();
+
+		m_vertexCount = other.m_vertexCount;
+		m_textureCount = other.m_textureCount;
+		m_normalCount = other.m_normalCount;
+		m_faceCount = other.m_faceCount;
+		m_kdCount = other.m_kdCount;
+		m_kaCount = other.m_kaCount;
+		m_tfCount = other.m_tfCount;
+		m_niCount = other.m_niCount;
+
 	}
 }
 
@@ -69,7 +149,9 @@ bool ModelHandler::LoadOBJData(void* file, void* colourFileName, ID3D11Device* d
 	}
 
 	//Loads the colour data from file
-	
+	if (m_ObjTex != nullptr) { 
+		m_ObjTex->Release(); 
+		m_ObjTex = nullptr; }
 	m_OBJLoad.LoadColour(device, deviceContext, colourFileName, m_RGBDeffuse, m_RGBAL, m_Tf, m_Ni, &m_ObjTex);
 	return true;
 }

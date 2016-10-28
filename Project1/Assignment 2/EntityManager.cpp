@@ -71,7 +71,7 @@ void EntityManager::Initialize(ID3D11Device* device, ID3D11DeviceContext* device
 				(m_camPos.y - m_entityList[j]->GetPosition().y) * (m_camPos.y - m_entityList[j]->GetPosition().y) +
 				(m_camPos.z - m_entityList[j]->GetPosition().z) * (m_camPos.z - m_entityList[j]->GetPosition().z));
 
-			LoD = max(min(int(distance / 1), 10), 0);
+			LoD = max(min(int(distance / 1), 9), 0);
 			m_objAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".obj");
 			Loader::instance().Pin("zip.asset" + to_string(j) + ".obj");
 			m_mtlAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".lod" + to_string(min(max(LoD + (i % 3) - 1, 0), 9)) + ".mtl");
@@ -80,6 +80,7 @@ void EntityManager::Initialize(ID3D11Device* device, ID3D11DeviceContext* device
 			Loader::instance().Free("zip.asset" + to_string(j) + ".obj");
 			Loader::instance().Free("zip.asset" + to_string(j) + ".lod" + to_string(min(max(LoD + (i % 3) - 1, 0), 9)) + ".mtl");
 			m_modelHandlers[j][i]->CreateBuffers(m_device);
+			m_entityList[j]->SetLoD(LoD);
 		}
 	}
 	//Create Shaders
@@ -114,13 +115,15 @@ void EntityManager::Update(double time)
 						(m_camPos.y - m_entityList[j]->GetPosition().y) * (m_camPos.y - m_entityList[j]->GetPosition().y) + 
 						(m_camPos.z - m_entityList[j]->GetPosition().z) * (m_camPos.z - m_entityList[j]->GetPosition().z));
 
-		LoD = max(min(int(distance/ 1), 9), 0);
+		int LoD = max(min(int(distance/ 1), 9), 0);
 
 		if (m_entityList[j]->GetLoD() != LoD)
 		{
 			if (m_entityList[j]->GetLoD() > LoD) //Move forward to the next LoD
 			{
-				*m_modelHandlers[j][2] = *m_modelHandlers[j][1];
+				
+				delete m_modelHandlers[j][2];
+				m_modelHandlers[j][2] = new ModelHandler(*m_modelHandlers[j][1]);
 				*m_modelHandlers[j][1] = *m_modelHandlers[j][0];
 				if (LoD != 0)
 				{
@@ -135,7 +138,9 @@ void EntityManager::Update(double time)
 			}
 			else if (m_entityList[j]->GetLoD() < LoD) //Move backward to the previous LoD
 			{
-				*m_modelHandlers[j][0] = *m_modelHandlers[j][1];
+				
+				delete m_modelHandlers[j][0];
+				m_modelHandlers[j][0] = new ModelHandler(*m_modelHandlers[j][1]);
 				*m_modelHandlers[j][1] = *m_modelHandlers[j][2];
 				if (LoD != 9)
 				{

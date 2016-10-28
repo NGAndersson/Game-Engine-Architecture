@@ -261,8 +261,8 @@ void OBJLoader::LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceCont
 					char* texture = reinterpret_cast<char*>(Loader::instance().Get(_TexName));
 					int size = Loader::instance().GetSize(_TexName);
 
-					HRESULT _hr = CreateWICTextureFromMemory(device, deviceContext, reinterpret_cast<uint8_t*>(Loader::instance().Get(_TexName)), (size_t)size, nullptr, ObjTex, NULL);
-					
+					HRESULT _hr = CreateWICTextureFromMemory(device, deviceContext, reinterpret_cast<uint8_t*>(texture), (size_t)size, nullptr, ObjTex, NULL);
+					Loader::instance().Free(_TexName);
 				}
 			}
 		}
