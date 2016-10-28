@@ -63,15 +63,18 @@ void * Loader::Get(std::string guid)
 
 void Loader::Free(std::string guid)
 {
+	mtxLock.lock();
 	if (registry.find(guid) != registry.end())
 	{
 		registry[guid].referenceCount--;
 		cout << "Lowering reference count of " + guid + ". New reference count = " + to_string(registry[guid].referenceCount) << endl;
 	}
+	mtxLock.unlock();
 }
 
 void Loader::Free()
 {
+	mtxLock.lock();
 	while (usedMemory > maxMemory)
 	{
 		for (auto i : registry)
@@ -82,10 +85,12 @@ void Loader::Free()
 				delete[] i.second.data;
 				usedMemory -= i.second.size;
 				registry.erase(i.first);
+				mtxLock.unlock();
 				break; //Break the for loop so we can get another iterator, as the unordered_map has been altered
 			}
 		}
 	}
+	mtxLock.unlock();
 }
 
 void Loader::Pin(std::string guid)
