@@ -1,3 +1,32 @@
-﻿  Main.cpp
-  Assignment 2.vcxproj -> C:\Users\GiS-2\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\Assignment 2.exe
-  Assignment 2.vcxproj -> C:\Users\GiS-2\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\Assignment 2.pdb (Partial PDB)
+﻿  Timer.cpp
+c:\users\jens\documents\github\game-engine-architecture\project1\assignment 2\timer.cpp(51): warning C4244: '=': conversion from 'float' to '__int64', possible loss of data
+  StackAllocator.cpp
+c:\users\jens\documents\github\game-engine-architecture\project1\assignment 2\stackallocator.cpp(64): warning C4312: 'type cast': conversion from 'Marker' to 'void *' of greater size
+c:\users\jens\documents\github\game-engine-architecture\project1\assignment 2\stackallocator.cpp(67): warning C4312: 'type cast': conversion from 'Marker' to 'void *' of greater size
+c:\users\jens\documents\github\game-engine-architecture\project1\assignment 2\stackallocator.cpp(73): warning C4311: 'type cast': pointer truncation from 'void *' to 'Marker'
+c:\users\jens\documents\github\game-engine-architecture\project1\assignment 2\stackallocator.cpp(73): warning C4302: 'type cast': truncation from 'void *' to 'Marker'
+c:\users\jens\documents\github\game-engine-architecture\project1\assignment 2\stackallocator.cpp(76): warning C4311: 'type cast': pointer truncation from 'void *' to 'Marker'
+c:\users\jens\documents\github\game-engine-architecture\project1\assignment 2\stackallocator.cpp(76): warning C4302: 'type cast': truncation from 'void *' to 'Marker'
+  ShaderHandler.cpp
+  Renderer.cpp
+  PoolAllocator.cpp
+  OBJloader.cpp
+  ModelHandler.cpp
+  MemoryManager.cpp
+  Main.cpp
+  LOSReader.cpp
+  Loader.cpp
+  Game.cpp
+  EntityManager.cpp
+  Entity.cpp
+c:\users\jens\documents\github\game-engine-architecture\project1\assignment 2\entity.cpp(24): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Display.cpp
+  Decompressor.cpp
+  Camera.cpp
+  Generating Code...
+  LINK : C:\Users\Jens\Documents\GitHub\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\Assignment 2.exe not found or not built by the last incremental link; performing full link
+DirectXTK.lib(pch.obj) : warning LNK4099: PDB 'DirectXTK.pdb' was not found with 'DirectXTK.lib(pch.obj)' or at 'C:\Users\Jens\Documents\GitHub\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\DirectXTK.pdb'; linking object as if no debug info
+DirectXTK.lib(WICTextureLoader.obj) : warning LNK4099: PDB 'DirectXTK.pdb' was not found with 'DirectXTK.lib(WICTextureLoader.obj)' or at 'C:\Users\Jens\Documents\GitHub\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\DirectXTK.pdb'; linking object as if no debug info
+  Assignment 2.vcxproj -> C:\Users\Jens\Documents\GitHub\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\Assignment 2.exe
+  Assignment 2.vcxproj -> C:\Users\Jens\Documents\GitHub\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\Assignment 2.pdb (Partial PDB)
+C:\Program Files (x86)\MSBuild\14.0\bin\Microsoft.Common.CurrentVersion.targets(3963,5): error MSB3030: Could not copy the file "C:\Users\Jens\Documents\GitHub\Game-Engine-Architecture\Project1\Assignment 2\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\..\..\lib\native\v140\windesktop\msvcstl\dyn\rt-dyn\x64\Debug\zlibd.pdb" because it was not found.
