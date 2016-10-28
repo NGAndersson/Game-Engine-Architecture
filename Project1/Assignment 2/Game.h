@@ -37,7 +37,7 @@ public:
 	WPARAM MainLoop(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow);
 
 private:
-	int m_width = 720, m_height = 680;
+	int m_width = 558, m_height = 331;
 	Display* m_display;
 	EntityManager* m_entitymanager;
 	MSG m_winMSG;
