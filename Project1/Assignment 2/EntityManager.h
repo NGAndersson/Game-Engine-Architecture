@@ -13,6 +13,14 @@
 #include "MemoryManager.h"
 #include "StackAllocator.h"
 
+#include <iomanip>
+#include <chrono>
+#include <ctime>
+#include <thread>
+#include <stdlib.h>
+#include <stdio.h>
+#include <time.h> 
+
 #pragma comment (lib, "d3d11.lib")
 #pragma comment (lib, "d3dcompiler.lib")
 
