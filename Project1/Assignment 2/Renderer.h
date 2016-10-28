@@ -25,7 +25,7 @@ class Renderer
 		XMFLOAT4X4 worldRotation[100];
 	};
 
-//Functions
+	//Functions
 private:
 
 public:
@@ -34,14 +34,14 @@ public:
 	void Render(ModelHandler* model, XMFLOAT3 position, XMMATRIX &rotation, XMFLOAT3 scale);
 	void RenderInstanced(ModelHandler * model, vector<XMFLOAT3> position, vector<XMMATRIX> &rotation, int amountOfBullets, vector<XMFLOAT3> scale);
 	Renderer(ID3D11DeviceContext* deviceContext, ID3D11Device* device);
+	void CamUpdate(ID3D11DeviceContext* deviceContext, XMVECTOR direction);
+	Camera* GetCamera(){ return &m_cam;}
 
 //Variables
 private:
 	ID3D11DeviceContext* m_deviceContext = nullptr;
 	ID3D11Device* m_device = nullptr;
 
-	CamStruct m_camStruct;
-	ID3D11Buffer* m_camBuffer = nullptr;
 	WorldStruct m_worldStruct;
 	WorldStructInstanced m_worldStructInstanced;
 	ID3D11Buffer* m_worldBuffer = nullptr, *m_worldBufferInstance = nullptr;

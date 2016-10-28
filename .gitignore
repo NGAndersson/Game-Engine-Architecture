@@ -4,7 +4,6 @@ Project1/Project1/Project1.vcxproj.user
 *.db
 *.opendb
 *.tlog
-*.pdb
 *.obj
 *.tlog
 *.pdb
@@ -12,5 +11,4 @@ Project1/Project1/Project1.vcxproj.user
 *.obj
 *.idb
 *.suo
-Debug/
-/Project1/Assignment 2/Debug
+/Project1/Compressor/x64/Debug

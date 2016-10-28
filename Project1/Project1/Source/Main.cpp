@@ -99,11 +99,11 @@ int main()
 		auto t_start = std::chrono::high_resolution_clock::now();
 		for (int i = 0; i < TestSize; i++)
 		{
-			FirstValue[i] = new(_SAllocator1->Alloc(sizeof(FirstInt)))FirstInt;
-			SecondValue[i] = new(_SAllocator2->Alloc(sizeof(SecondInt)))SecondInt;
+			FirstValue[i] = new(_SAllocator1->Alloc(sizeof(FirstInt), true))FirstInt;
+			SecondValue[i] = new(_SAllocator2->Alloc(sizeof(SecondInt), true))SecondInt;
 		}
-		_SAllocator1->ClearStack();
-		_SAllocator2->ClearStack();
+		_SAllocator1->ClearStack(true);
+		_SAllocator2->ClearStack(true);
 		c_end = std::clock();
 		auto t_end = std::chrono::high_resolution_clock::now();
 

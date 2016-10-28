@@ -16,9 +16,6 @@ struct Vertex    //Overloaded Vertex Structure
 
 Renderer::~Renderer()
 {
-	if (m_camBuffer != nullptr)
-		m_camBuffer->Release();
-
 	if (m_worldBuffer != nullptr)
 		m_worldBuffer->Release();
 
@@ -26,7 +23,13 @@ Renderer::~Renderer()
 		m_worldBufferInstance->Release();
 }
 
-void Renderer::Render(ModelHandler* model, XMFLOAT3 position, XMMATRIX &rotation, XMFLOAT3 scale)
+void Renderer::CamUpdate(ID3D11DeviceContext * deviceContext, XMVECTOR direction)
+{
+	m_cam.MoveCamera(direction);
+	m_cam.SetConstantBuffer(deviceContext);
+}
+
+void Renderer::Render(ModelHandler * model, XMFLOAT3 position, XMMATRIX &rotation, XMFLOAT3 scale)
 {
 	//Set vertexbuffer, pixel material constant buffer and set the correct shaders
 	model->SetBuffers(m_deviceContext);
@@ -40,21 +43,11 @@ void Renderer::Render(ModelHandler* model, XMFLOAT3 position, XMMATRIX &rotation
 	m_deviceContext->UpdateSubresource(m_worldBuffer, 0, NULL, &m_worldStruct, 0, 0);
 	m_deviceContext->VSSetConstantBuffers(0, 1, &m_worldBuffer);
 
-	XMFLOAT3 camPos = XMFLOAT3(m_camStruct.camPos.x, m_camStruct.camPos.y, m_camStruct.camPos.z);
-	float distance = sqrt((camPos.x - position.x)*(camPos.x - position.x) + (camPos.y - position.y)*(camPos.y - position.y) + (camPos.z - position.z)*(camPos.z - position.z));
-	int LoD = 0;
-	//Checks for distance for level of detail
-	for (int i = 1; i < 11; i++)
-	{
-		if (distance <= i * 10)
-			LoD++;
-		else
-			break;
-	}
 
 	//Draw call
 	m_deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	m_deviceContext->Draw(model->GetVertexCount(), 0);
+
 }
 
 void Renderer::RenderInstanced(ModelHandler * model, vector<XMFLOAT3> position, vector<XMMATRIX> &rotation, int amountOfBullets, vector<XMFLOAT3> scale)

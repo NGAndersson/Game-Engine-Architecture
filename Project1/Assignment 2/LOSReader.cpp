@@ -18,8 +18,8 @@ char* LOSReader::read(std::string filePath, int byteOffset, int size)
 	}
 
 	file.seekg(byteOffset, file.cur);	//Sets peeker at the correct byte, offseted from end of header
+	
 	file.read(data, size);				//reads size amount of characters
-	data[size] = '\0';
-	std::cout << data;
+	//data[size] = '\0';
 	return data;
 }

@@ -12,6 +12,9 @@ OBJLoader::~OBJLoader()
 
 VertexInputType* OBJLoader::LoadObj(int& vertexCount, int& textureCount, int& normalCount, int& faceCount, void* file)
 {
+	cout << "Loading Object" << endl;
+	faceCount = 0;
+	normalCount = 0; textureCount = 0; vertexCount = 0;
 	istringstream fileIn(reinterpret_cast<char*>(file));
 	VertexInputType* vertexInput;
 
@@ -117,25 +120,16 @@ VertexInputType* OBJLoader::LoadObj(int& vertexCount, int& textureCount, int& no
 		return vertexInput;
 }
 
-bool OBJLoader::ReadColourCounts(int& kdCount, int& kaCount, int& tfCount, int& niCount, string fileName)
+bool OBJLoader::ReadColourCounts(int& kdCount, int& kaCount, int& tfCount, int& niCount, void* fileName)
 {
-	ifstream _file;
-	char _input;
 
+	istringstream _file(reinterpret_cast<char*>(fileName));
+	char _input;
 	// Initialize the counts.
 	kdCount = 0;
 	kaCount = 0;
 	tfCount = 0;
 	niCount = 0;
-
-	// Open the file.
-	_file.open(fileName);
-
-	// Check if it was successful in opening the file.
-	if (_file.fail() == true)
-	{
-		return false;
-	}
 
 	// Read from the file and continue to read until the end of the file is reached.
 	_file.get(_input);
@@ -180,19 +174,21 @@ bool OBJLoader::ReadColourCounts(int& kdCount, int& kaCount, int& tfCount, int& 
 		// Start reading the beginning of the next line.
 		_file.get(_input);
 	}
-
-	// Close the file.
-	_file.close();
-
 	return true;
 }
 
 //loading color and tex
-ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceContext, string fileName, XMFLOAT3 *RGBDeffuse, XMFLOAT3 *RGBAL, XMFLOAT3 *Tf, XMFLOAT3 *Ni, ID3D11ShaderResourceView** ObjTex)
+void OBJLoader::LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceContext, void* file, XMFLOAT3 *RGBDeffuse, XMFLOAT3 *RGBAL, XMFLOAT3 *Tf, XMFLOAT3 *Ni, ID3D11ShaderResourceView** ObjTex)
 {
-	ifstream _fin;
+
+	cout << "Loading Mtl File" << endl;
+
+	istringstream _fin(reinterpret_cast<char*>(file));
 	char _input;
-	wstring _TexName;
+
+	string test(reinterpret_cast<char*>(file));
+
+	string _TexName;
 	int _kdIndex, _kaIndex, _tfIndex, _niIndex;
 
 	// Starts the index at 0
@@ -200,18 +196,10 @@ ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11Devi
 	_kaIndex = 0;
 	_tfIndex = 0;
 	_niIndex = 0;
-	
-	_fin.open(fileName);
-
-	// Check if it was successful in opening the file.
-	if (_fin.fail() == true)
-	{
-		return false;
-	}
 
 	_fin.get(_input);
 
-	while (!_fin.eof())
+	while (!_fin.eof()) 
 	{
 		if (_input == 'K')
 		{
@@ -267,11 +255,14 @@ ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11Devi
 						_TexName += _input;
 						_fin.get(_input);
 					}
+					//Use the global class to send in the Guid and loadshit
+					if (_TexName.back() == '\r')
+						_TexName.pop_back();
+					char* texture = reinterpret_cast<char*>(Loader::instance().Get(_TexName));
+					int size = Loader::instance().GetSize(_TexName);
 
-					const wchar_t* _name = _TexName.c_str();
-
-					CreateWICTextureFromFile(device, deviceContext, _name, nullptr, ObjTex);
-					_TexName = L"";
+					HRESULT _hr = CreateWICTextureFromMemory(device, deviceContext, reinterpret_cast<uint8_t*>(Loader::instance().Get(_TexName)), (size_t)size, nullptr, ObjTex, NULL);
+					
 				}
 			}
 		}
@@ -283,5 +274,5 @@ ID3D11ShaderResourceView* OBJLoader::LoadColour(ID3D11Device* device, ID3D11Devi
 
 		_fin.get(_input);
 	}
-	return nullptr;
+	return;
 }

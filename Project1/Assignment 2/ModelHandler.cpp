@@ -30,11 +30,11 @@ ModelHandler::~ModelHandler()
 	}
 }
 
-bool ModelHandler::LoadOBJData(string OBJFileName, string colourFileName, ID3D11Device* device, ID3D11DeviceContext* deviceContext)
+bool ModelHandler::LoadOBJData(void* file, void* colourFileName, ID3D11Device* device, ID3D11DeviceContext* deviceContext)
 {
 	bool _ifOK;
 
-	m_vertexInput = m_OBJLoad.LoadObj(m_vertexCount, m_textureCount, m_normalCount, m_faceCount, OBJFileName);
+	m_vertexInput = m_OBJLoad.LoadObj(m_vertexCount, m_textureCount, m_normalCount, m_faceCount, file);
 
 	//Sets amount of kd, ka, tf and ni counts for the file
 	_ifOK = m_OBJLoad.ReadColourCounts(m_kdCount, m_kaCount, m_tfCount, m_niCount, colourFileName);
@@ -69,6 +69,7 @@ bool ModelHandler::LoadOBJData(string OBJFileName, string colourFileName, ID3D11
 	}
 
 	//Loads the colour data from file
+	
 	m_OBJLoad.LoadColour(device, deviceContext, colourFileName, m_RGBDeffuse, m_RGBAL, m_Tf, m_Ni, &m_ObjTex);
 	return true;
 }

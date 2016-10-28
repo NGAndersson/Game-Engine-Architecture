@@ -45,7 +45,7 @@ std::wstring s2ws(const std::string& s)
 	return r;
 }
 
-bool ShaderHandler::CreateShaders(ID3D11Device* device, string vertexFile, string geometryFile, string pixelFile)
+bool ShaderHandler::CreateShaders(ID3D11Device* device, char* vertexFile, char* geometryFile, char* pixelFile)
 {
 	wstring vertexVSTemp = s2ws(vertexFile);
 	wstring vertexGSTemp = s2ws(geometryFile);
@@ -53,9 +53,9 @@ bool ShaderHandler::CreateShaders(ID3D11Device* device, string vertexFile, strin
 
 	//create vertex shader
 	ID3DBlob* _vs = nullptr;
-	D3DCompileFromFile(vertexVSTemp.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, "VS_main", "vs_5_0", 0, NULL, &_vs, nullptr);
-
-	HRESULT _hr = device->CreateVertexShader(_vs->GetBufferPointer(), _vs->GetBufferSize(), nullptr, &m_vertexShader);
+	//D3DCompileFromFile(vertexVSTemp.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, "VS_main", "vs_5_0", 0, NULL, &_vs, nullptr);
+	HRESULT _hr = D3DCompile(vertexFile, strlen(vertexFile), NULL, nullptr, NULL, "VS_main", "vs_5_0", 0, NULL, &_vs, nullptr);
+	_hr = device->CreateVertexShader(_vs->GetBufferPointer(), _vs->GetBufferSize(), nullptr, &m_vertexShader);
 	if (_hr != S_OK)
 	{
 		_vs->Release();
@@ -80,7 +80,8 @@ bool ShaderHandler::CreateShaders(ID3D11Device* device, string vertexFile, strin
 	{
 		//create geometry shader
 		ID3DBlob* _gs = nullptr;
-		D3DCompileFromFile(vertexGSTemp.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, "GS_main", "gs_5_0", 0, NULL, &_gs, nullptr);
+		//D3DCompileFromFile(vertexGSTemp.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, "GS_main", "gs_5_0", 0, NULL, &_gs, nullptr);
+		_hr = D3DCompile(geometryFile, strlen(geometryFile), NULL, nullptr, NULL, "GS_main", "gs_5_0", 0, NULL, &_gs, nullptr);
 		_hr = device->CreateGeometryShader(_gs->GetBufferPointer(), _gs->GetBufferSize(), nullptr, &m_geometryShader);
 		_gs->Release();
 		if (_hr != S_OK)
@@ -91,7 +92,8 @@ bool ShaderHandler::CreateShaders(ID3D11Device* device, string vertexFile, strin
 
 	//create pixel shader
 	ID3DBlob* _ps = nullptr;
-	_hr = D3DCompileFromFile(vertexPSTemp.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, "PS_main", "ps_5_0", 0, NULL, &_ps, nullptr);
+	//_hr = D3DCompileFromFile(vertexPSTemp.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, "PS_main", "ps_5_0", 0, NULL, &_ps, nullptr);
+	_hr = D3DCompile(pixelFile, strlen(pixelFile), NULL, nullptr, NULL, "PS_main", "ps_5_0", 0, NULL, &_ps, nullptr);
 	_hr = device->CreatePixelShader(_ps->GetBufferPointer(), _ps->GetBufferSize(), nullptr, &m_pixelShader);
 	_ps->Release();
 	if (_hr != S_OK)

@@ -10,6 +10,8 @@
 #include <random>
 #include <memory>
 #include "Camera.h"
+#include "MemoryManager.h"
+#include "StackAllocator.h"
 
 #pragma comment (lib, "d3d11.lib")
 #pragma comment (lib, "d3dcompiler.lib")
@@ -26,33 +28,30 @@ public:
 	void Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext);
 	void Render();
 	void Update(double time);
+	void CamUpd(ID3D11DeviceContext* m_deviceContext, XMVECTOR move);
 
 	//Variables
 private:
 	//Vectors with all the different types of entities
 	ShaderHandler* m_shaderLoad;
 	ModelHandler* m_modelHandlers [4][3];
-	ModelHandler* m_modelHandlers1[3];
-	ModelHandler* m_modelHandlers2[3];
-	ModelHandler* m_modelHandlers3[3];
-	ModelHandler* m_modelHandlers4[3];
 
 	vector<Entity*> m_entityList;
-	Loader Loader::instance();
 	void* m_objAsset; //should be a pointer of type ModelHandler or OBJ or whatever depending on what format we choose to do it in
 	void* m_mtlAsset;
-	void* m_vAsset;
-	void* m_gAsset;
-	void* m_pAsset;
+	char* m_vAsset;
+	char* m_gAsset;
+	char* m_pAsset;
 	int LoD = 5;
 	float distance;
 	XMFLOAT3 m_camPos;
 	XMFLOAT3 m_entityPos;
-	Camera m_cam;
+	//Camera m_cam;
 	Renderer* m_renderer;
 	ID3D11Device* m_device;
 	ID3D11DeviceContext* m_deviceContext;
 	XMMATRIX m_xmrot;
+	StackAllocator m_entityAllocator;
 public:
 	Entity* m_entity1;
 	Entity* m_entity2;
