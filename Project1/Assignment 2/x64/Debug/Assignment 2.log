@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  Timer.cpp
 c:\users\jens\documents\github\game-engine-architecture\project1\assignment 2\timer.cpp(51): warning C4244: '=': conversion from 'float' to '__int64', possible loss of data
   StackAllocator.cpp
@@ -30,3 +31,8 @@ DirectXTK.lib(WICTextureLoader.obj) : warning LNK4099: PDB 'DirectXTK.pdb' was n
   Assignment 2.vcxproj -> C:\Users\Jens\Documents\GitHub\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\Assignment 2.exe
   Assignment 2.vcxproj -> C:\Users\Jens\Documents\GitHub\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\Assignment 2.pdb (Partial PDB)
 C:\Program Files (x86)\MSBuild\14.0\bin\Microsoft.Common.CurrentVersion.targets(3963,5): error MSB3030: Could not copy the file "C:\Users\Jens\Documents\GitHub\Game-Engine-Architecture\Project1\Assignment 2\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\build\native\..\..\lib\native\v140\windesktop\msvcstl\dyn\rt-dyn\x64\Debug\zlibd.pdb" because it was not found.
+=======
+﻿  Main.cpp
+  Assignment 2.vcxproj -> C:\Users\GiS-2\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\Assignment 2.exe
+  Assignment 2.vcxproj -> C:\Users\GiS-2\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\Assignment 2.pdb (Partial PDB)
+>>>>>>> parent of fc2322e... ok
