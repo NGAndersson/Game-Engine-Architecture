@@ -5,7 +5,7 @@
 
 Loader::Loader()
 {
-	maxMemory = 100000000;
+	maxMemory = 60000000;
 	usedMemory = 0;
 }
 
@@ -16,18 +16,18 @@ void * Loader::Get(std::string guid)
 	std::string filePath;
 	int losByteOffset = 0, losByteSize = 0;
 
-	mtxLock.lock();
+	loadLock.lock();
 	if (registry.find(guid) != registry.end())	//guid already exists in registry
 	{
 		if (registry[guid].data == nullptr)	//Already being worked on by another thread and will be inserted soon
 		{
-			mtxLock.unlock();
+			loadLock.unlock();
 			return nullptr;
 		}
 		else
 		{
 			registry[guid].referenceCount++;
-			mtxLock.unlock();
+			loadLock.unlock();
 			return reinterpret_cast<void*>(registry[guid].data);		//Asset already exists in registry and has a proper pointer. Return the address
 		}
 	}
@@ -45,7 +45,7 @@ void * Loader::Get(std::string guid)
 
 		registry[guid].data = nullptr;		//If the asset exists but hasn't been loaded set it as nullptr temporarily so other threads can see that it's being loaded
 	}
-	mtxLock.unlock();
+	loadLock.unlock();
 
 
 	//If we've gotten this far, we can begin decompressing and processing the file
@@ -64,20 +64,21 @@ void * Loader::Get(std::string guid)
 
 void Loader::Free(std::string guid)
 {
-	mtxLock.lock();
+	freeLock.lock();
 	if (registry.find(guid) != registry.end())
 	{
 		registry[guid].referenceCount--;
 		cout << "Lowering reference count of " + guid + ". New reference count = " + to_string(registry[guid].referenceCount) << endl;
 	}
-	mtxLock.unlock();
+	freeLock.unlock();
 }
 
 void Loader::Free()
 {
-	mtxLock.lock();
+	freeLock.lock();
 	while (usedMemory > maxMemory)
 	{
+		bool found = false;
 		for (auto i : registry)
 		{
 			if (!i.second.pinned && i.second.referenceCount <= 0)
@@ -86,12 +87,18 @@ void Loader::Free()
 				delete[] i.second.data;
 				usedMemory -= i.second.size;
 				registry.erase(i.first);
-				mtxLock.unlock();
+				found = true;
 				break; //Break the for loop so we can get another iterator, as the unordered_map has been altered
 			}
 		}
+		if (!found)
+		{
+			cout << "Couldn't free enough memory. Shutting down." << endl;
+			getchar();
+			exit(0);
+		}
 	}
-	mtxLock.unlock();
+	freeLock.unlock();
 }
 
 void Loader::Pin(std::string guid)

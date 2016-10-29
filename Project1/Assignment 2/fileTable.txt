@@ -42,6 +42,7 @@ zip.asset3.lod6.mtl mtls/cube7.mtl 124
 zip.asset3.lod7.mtl mtls/cube8.mtl 124
 zip.asset3.lod8.mtl mtls/cube9.mtl 124
 zip.asset3.lod9.mtl mtls/cube10.mtl 125
+zip.dummy.mtl mtls/dummymtl.mtl 128
 zip.vertexshader.hlsl Shaders/PlayerVS.hlsl 498
 zip.geometryshader.hlsl Shaders/PlayerGS.hlsl 1016
 zip.pixelshader.hlsl Shaders/PlayerPS.hlsl 542

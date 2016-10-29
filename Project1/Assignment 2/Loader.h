@@ -38,7 +38,8 @@ private:
 	std::unordered_map<std::string, int> sizeRegistry;
 	int maxMemory;
 	int usedMemory;
-	std::mutex mtxLock;
+	std::mutex loadLock;
+	std::mutex freeLock;
 	Decompressor decompressor;
 	LOSReader losReader;
 };

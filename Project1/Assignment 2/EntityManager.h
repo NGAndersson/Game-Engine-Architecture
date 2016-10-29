@@ -43,6 +43,7 @@ private:
 	//Vectors with all the different types of entities
 	ShaderHandler* m_shaderLoad;
 	ModelHandler* m_modelHandlers [4][3];
+	ModelHandler* m_modelHandlerDummy;
 
 	vector<Entity*> m_entityList;
 	void* m_objAsset; //should be a pointer of type ModelHandler or OBJ or whatever depending on what format we choose to do it in
