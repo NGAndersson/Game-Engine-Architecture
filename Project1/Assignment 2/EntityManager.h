@@ -20,6 +20,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h> 
+#include <thread>
+#include <future>
 
 #pragma comment (lib, "d3d11.lib")
 #pragma comment (lib, "d3dcompiler.lib")
@@ -37,9 +39,15 @@ public:
 	void Render();
 	void Update(double time);
 	void CamUpd(ID3D11DeviceContext* m_deviceContext, XMVECTOR move);
-
+	void testet1(int j,int LoD);
+	void testet2(int j, int LoD);
+	void testet3();
 	//Variables
 private:
+
+	//TEST
+	thread asLoad[4];
+	int nrAs;
 	//Vectors with all the different types of entities
 	ShaderHandler* m_shaderLoad;
 	ModelHandler* m_modelHandlers [4][3];

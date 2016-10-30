@@ -25,6 +25,7 @@ public:
 	XMFLOAT3 GetDeffuse();
 
 private:
+	mutex bufferLock;
 	XMFLOAT3* m_vertices,* m_normals, *m_RGBDeffuse, *m_RGBAL, *m_Tf, *m_Ni;
 	XMFLOAT2* m_texcoords;
 	int m_vertexCount = 0, m_textureCount = 0, m_normalCount = 0, m_faceCount = 0, m_kdCount = 0, m_kaCount = 0, m_tfCount = 0, m_niCount = 0;

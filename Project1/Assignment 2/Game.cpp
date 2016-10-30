@@ -99,7 +99,7 @@ WPARAM Game::MainLoop(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 		{
 			move += XMVectorSet(0.0001f, 0, 0, 0);
 		}
-		//Finns inte ??
+	
 		m_entitymanager->CamUpd(m_deviceContext, move);
 
 		// If the message is WM_QUIT, exit the while loop
@@ -113,13 +113,16 @@ WPARAM Game::MainLoop(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 		Update(time, hInstance, hPrevInstance, lpCmdLine, nCmdShow);
 
 
-
 		//Call Render Functions
 		if (_frameTime*1000.f >= 16.6f) {
 			Render();
 			m_swapChain->Present(0, 0);
 			_frameTime = 0.f;
+		
 		}
+
+		m_entitymanager->testet3();
+		
 	}
 
 }

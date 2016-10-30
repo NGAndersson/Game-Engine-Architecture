@@ -148,6 +148,7 @@ bool ModelHandler::LoadOBJData(void* file, void* colourFileName, ID3D11Device* d
 
 bool ModelHandler::CreateBuffers(ID3D11Device* device)
 {
+	bufferLock.lock();
 	D3D11_BUFFER_DESC _OBJvertexBufferDesc, _OBJColDesc;
 	D3D11_SUBRESOURCE_DATA _OBJvertexData;
 
@@ -180,6 +181,7 @@ bool ModelHandler::CreateBuffers(ID3D11Device* device)
 	//skapar constant buffer
 	device->CreateBuffer(&_OBJColDesc, NULL, &m_OBJColourBuffer);
 
+	bufferLock.unlock();
 	return true;
 }
 
