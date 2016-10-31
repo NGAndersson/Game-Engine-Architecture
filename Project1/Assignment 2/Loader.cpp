@@ -5,7 +5,7 @@
 
 Loader::Loader()
 {
-	maxMemory = 60000000;
+	maxMemory = 80000000;
 	usedMemory = 0;
 }
 
@@ -53,7 +53,7 @@ void * Loader::Get(std::string guid)
 	
 	//Send filepath to correct package handler here
 	if (readerType == "zip")
-		registry[guid].data = decompressor.decompress("test.zip", filePath);
+		registry[guid].data = decompressor.decompress("obj.zip", filePath);
 
 	if (readerType == "los")
 		registry[guid].data = losReader.read("textures.los", losByteOffset, losByteSize);
