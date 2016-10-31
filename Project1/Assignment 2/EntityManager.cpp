@@ -60,6 +60,7 @@ void EntityManager::Initialize(ID3D11Device* device, ID3D11DeviceContext* device
 
 	//Set the renderer
 	m_renderer = new Renderer(m_deviceContext, m_device);
+
 	//j are the differend models, i are the 3 modelhandlers belonging to each j. i = 1 is the current LoD distance, i = 0 is the LoD level for going forward and i = 2 is the LoD level for going backward
 	for (int i = 0; i < 3; i++)
 	{
@@ -76,7 +77,7 @@ void EntityManager::Initialize(ID3D11Device* device, ID3D11DeviceContext* device
 			Loader::instance().Pin("zip.asset" + to_string(j) + ".obj");
 			m_mtlAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".lod" + to_string(min(max(LoD + (i % 3) - 1, 0), 9)) + ".mtl");
 			m_modelHandlers[j][i] = new ModelHandler();
-			m_modelHandlers[j][i]->LoadOBJData(m_objAsset, m_mtlAsset, m_device, m_deviceContext);
+			m_modelHandlers[j][i]->LoadOBJData(m_objAsset, m_mtlAsset, m_device);
 			Loader::instance().Free("zip.asset" + to_string(j) + ".obj");
 			Loader::instance().Free("zip.asset" + to_string(j) + ".lod" + to_string(min(max(LoD + (i % 3) - 1, 0), 9)) + ".mtl");
 			m_modelHandlers[j][i]->CreateBuffers(m_device);
@@ -86,13 +87,13 @@ void EntityManager::Initialize(ID3D11Device* device, ID3D11DeviceContext* device
 
 	//Create a dummy model handler, for edge LoDs and not-yet-loaded models
 	m_modelHandlerDummy = new ModelHandler;
-	m_modelHandlerDummy->LoadOBJData(Loader::instance().Get("zip.asset0.obj"), Loader::instance().Get("zip.dummy.mtl"), m_device, m_deviceContext);
+	m_modelHandlerDummy->LoadOBJData(Loader::instance().Get("zip.asset0.obj"), Loader::instance().Get("zip.dummy.mtl"), m_device);
 	Loader::instance().Free("zip.asset0.obj"); Loader::instance().Free("zip.dummy.mtl");
 	m_modelHandlerDummy->CreateBuffers(m_device);
 
 	//Create Shaders
 	m_shaderLoad = new ShaderHandler();
-	m_shaderLoad->CreateShaders(m_device, m_vAsset, m_gAsset, m_pAsset); //<--- Detta är vad det ska bli efter att CreateShaders är omskriven
+	m_shaderLoad->CreateShaders(m_device, m_vAsset, m_gAsset, m_pAsset);
 	
 
 	XMVECTOR _rotatAxis{ 0, 1, 0, 0 };
@@ -113,7 +114,7 @@ void EntityManager::Render()
 
 void EntityManager::Update(double time)
 {
-	nrAs= 0;
+
 	XMStoreFloat3(&m_camPos, m_renderer->GetCamera()->GetCameraPos());
 	for (int j = 0; j < m_entityList.size(); j++)
 	{
@@ -138,19 +139,9 @@ void EntityManager::Update(double time)
 				m_modelHandlers[j][1] = m_modelHandlers[j][0];
 				if (LoD != 0)
 				{
-					nrAs++;
-					m_modelHandlers[j][0] = new ModelHandler;
-					//		m_objAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".obj");
-					//		m_mtlAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".lod" + to_string(LoD + 1) + ".mtl");
-					//		cout << "Creating thread" <<j<< endl;
-					asLoad[j] = thread(&EntityManager::testet2, this, j, LoD);
-					//m_objAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".obj");
-					//m_mtlAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".lod" + to_string(LoD - 1) + ".mtl");
-					////unsure if need to call on ~ModelHandler() and then new Modelhandler for [j][0] or if below is fine
-					//m_modelHandlers[j][0]->LoadOBJData(m_objAsset, m_mtlAsset, m_device, m_deviceContext);
-					//Loader::instance().Free("zip.asset" + to_string(j) + ".obj");
-					//Loader::instance().Free("zip.asset" + to_string(j) + ".lod" + to_string(LoD - 1) + ".mtl");
-					//m_modelHandlers[j][0]->CreateBuffers(m_device);
+					string guidpart = "zip.asset" + to_string(j);
+					thread t = thread(&EntityManager::modelHandler_aload, this, guidpart, LoD-1, &m_modelHandlers[j][0]);
+					t.detach();
 				}
 				else
 				{
@@ -164,16 +155,9 @@ void EntityManager::Update(double time)
 				m_modelHandlers[j][1] = m_modelHandlers[j][2];
 				if (LoD != 9)
 				{
-					nrAs++;
-					m_modelHandlers[j][2] = new ModelHandler;
-					asLoad[j] = thread(&EntityManager::testet1, this, j, LoD);
-					//	m_objAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".obj");
-					//	m_mtlAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".lod" + to_string(LoD + 1) + ".mtl");
-					//	//unsure if need to call on ~ModelHandler() and then new Modelhandler for [j][2] or if below is fine
-					//	m_modelHandlers[j][2]->LoadOBJData(m_objAsset, m_mtlAsset, m_device, m_deviceContext);
-					//	Loader::instance().Free("zip.asset" + to_string(j) + ".obj");
-					//	Loader::instance().Free("zip.asset" + to_string(j) + ".lod" + to_string(LoD + 1) + ".mtl");
-					//	m_modelHandlers[j][2]->CreateBuffers(m_device);
+					string guidpart = "zip.asset" + to_string(j);
+					thread t = thread(&EntityManager::modelHandler_aload, this, guidpart, LoD + 1, &m_modelHandlers[j][2]);
+					t.detach();
 				}
 				else
 				{
@@ -195,12 +179,7 @@ void EntityManager::Update(double time)
 
 		m_entityList[j]->Update(time);
 	}
-	//for (int i = 0; i < nrAs; i++)
-	//{
-	//	cout << "Joining Thread " << i << endl;
-	//	asLoad[i].join();
-	//	nrAs = 0;
-	//}
+
 }
 
 void EntityManager::CamUpd(ID3D11DeviceContext* m_deviceContext, XMVECTOR move)
@@ -208,36 +187,18 @@ void EntityManager::CamUpd(ID3D11DeviceContext* m_deviceContext, XMVECTOR move)
 	m_renderer->CamUpdate(m_deviceContext, move);
 }
 
-void EntityManager::testet3()
+void EntityManager::modelHandler_aload(string guidpart, int LoD, ModelHandler** mh_LoadTo)
 {
-	for (int i = 0; i < nrAs; i++)
-	{
-		cout << "Joining Thread " << i << endl;
-		asLoad[i].join();
-		nrAs = 0;
-	}
-}
+	cout << "Creating thread to load." << endl;
+	*mh_LoadTo = m_modelHandlerDummy;
+	ModelHandler* mh_tempLoad = new ModelHandler;
+	m_objAsset = Loader::instance().Get(guidpart + ".obj");
+	m_mtlAsset = Loader::instance().Get(guidpart + ".lod" + to_string(LoD) + ".mtl");
+	mh_tempLoad->LoadOBJData(m_objAsset, m_mtlAsset, m_device);
+	Loader::instance().Free(guidpart + ".obj");
+	Loader::instance().Free(guidpart + ".lod" + to_string(LoD) + ".mtl");
+	mh_tempLoad->CreateBuffers(m_device);
 
-void EntityManager::testet2(int j, int LoD)
-{
-	m_objAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".obj");
-	m_mtlAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".lod" + to_string(LoD + 1) + ".mtl");
-	cout << "Creating thread" << j << endl;
-	//unsure if need to call on ~ModelHandler() and then new Modelhandler for [j][2] or if below is fine
-	m_modelHandlers[j][0]->LoadOBJData(m_objAsset, m_mtlAsset, m_device, m_deviceContext);
-	Loader::instance().Free("zip.asset" + to_string(j) + ".obj");
-	Loader::instance().Free("zip.asset" + to_string(j) + ".lod" + to_string(LoD + 1) + ".mtl");
-	m_modelHandlers[j][0]->CreateBuffers(m_device);
-}
-
-void EntityManager::testet1(int j,int LoD)
-{
-	m_objAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".obj");
-	m_mtlAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".lod" + to_string(LoD + 1) + ".mtl");
-	cout << "Creating thread" << j << endl;
-	//unsure if need to call on ~ModelHandler() and then new Modelhandler for [j][2] or if below is fine
-	m_modelHandlers[j][2]->LoadOBJData(m_objAsset, m_mtlAsset, m_device, m_deviceContext);
-	Loader::instance().Free("zip.asset" + to_string(j) + ".obj");
-	Loader::instance().Free("zip.asset" + to_string(j) + ".lod" + to_string(LoD + 1) + ".mtl");
-	m_modelHandlers[j][2]->CreateBuffers(m_device);
+	*mh_LoadTo = mh_tempLoad;
+	return;
 }

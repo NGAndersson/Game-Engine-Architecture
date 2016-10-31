@@ -180,7 +180,7 @@ bool OBJLoader::ReadColourCounts(int& kdCount, int& kaCount, int& tfCount, int& 
 }
 
 //loading color and tex
-void OBJLoader::LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceContext, void* file, XMFLOAT3 *RGBDeffuse, XMFLOAT3 *RGBAL, XMFLOAT3 *Tf, XMFLOAT3 *Ni, ID3D11ShaderResourceView** ObjTex)
+void OBJLoader::LoadColour(ID3D11Device* device, void* file, XMFLOAT3 *RGBDeffuse, XMFLOAT3 *RGBAL, XMFLOAT3 *Tf, XMFLOAT3 *Ni, ID3D11ShaderResourceView** ObjTex)
 {
 	mtex.lock();
 	cout << "Loading Mtl File" << endl;
@@ -263,7 +263,7 @@ void OBJLoader::LoadColour(ID3D11Device* device, ID3D11DeviceContext* deviceCont
 					char* texture = reinterpret_cast<char*>(Loader::instance().Get(_TexName));
 					int size = Loader::instance().GetSize(_TexName);
 
-					HRESULT _hr = CreateWICTextureFromMemory(device, deviceContext, reinterpret_cast<uint8_t*>(texture), (size_t)size, nullptr, ObjTex, NULL);
+					HRESULT _hr = CreateWICTextureFromMemory(device, reinterpret_cast<uint8_t*>(texture), (size_t)size, nullptr, ObjTex, NULL);
 					Loader::instance().Free(_TexName);
 				}
 			}

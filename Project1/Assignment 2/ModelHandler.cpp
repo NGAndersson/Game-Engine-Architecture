@@ -100,7 +100,7 @@ ModelHandler::ModelHandler(const ModelHandler & other)
 	}
 }
 
-bool ModelHandler::LoadOBJData(void* file, void* colourFileName, ID3D11Device* device, ID3D11DeviceContext* deviceContext)
+bool ModelHandler::LoadOBJData(void* file, void* colourFileName, ID3D11Device* device)
 {
 	bool _ifOK;
 
@@ -142,7 +142,7 @@ bool ModelHandler::LoadOBJData(void* file, void* colourFileName, ID3D11Device* d
 	if (m_ObjTex != nullptr) { 
 		m_ObjTex->Release(); 
 		m_ObjTex = nullptr; }
-	m_OBJLoad.LoadColour(device, deviceContext, colourFileName, m_RGBDeffuse, m_RGBAL, m_Tf, m_Ni, &m_ObjTex);
+	m_OBJLoad.LoadColour(device, colourFileName, m_RGBDeffuse, m_RGBAL, m_Tf, m_Ni, &m_ObjTex);
 	return true;
 }
 

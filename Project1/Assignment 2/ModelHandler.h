@@ -18,7 +18,7 @@ public:
 	~ModelHandler();
 	ModelHandler& operator=(const ModelHandler& other);
 	ModelHandler(const ModelHandler& other);
-	bool LoadOBJData(void* file, void* colourFileName, ID3D11Device* device, ID3D11DeviceContext* deviceContext);
+	bool LoadOBJData(void* file, void* colourFileName, ID3D11Device* device);
 	bool CreateBuffers(ID3D11Device* device);
 	bool SetBuffers(ID3D11DeviceContext* deviceContext);
 	int GetVertexCount();

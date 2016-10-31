@@ -1,2 +1,5 @@
-﻿  Assignment 2.vcxproj -> C:\Users\BTH\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\Assignment 2.exe
-  Assignment 2.vcxproj -> C:\Users\BTH\Source\Repos\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\Assignment 2.pdb (Partial PDB)
+﻿  EntityManager.cpp
+i:\programming\repos\game-engine-architecture\project1\assignment 2\entitymanager.cpp(131): warning C4101: 'c_TotTime': unreferenced local variable
+i:\programming\repos\game-engine-architecture\project1\assignment 2\entitymanager.cpp(131): warning C4101: 'c_time': unreferenced local variable
+  Assignment 2.vcxproj -> I:\Programming\Repos\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\Assignment 2.exe
+  Assignment 2.vcxproj -> I:\Programming\Repos\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\Assignment 2.pdb (Partial PDB)

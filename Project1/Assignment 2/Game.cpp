@@ -121,7 +121,6 @@ WPARAM Game::MainLoop(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 		
 		}
 
-		m_entitymanager->testet3();
 		
 	}
 
