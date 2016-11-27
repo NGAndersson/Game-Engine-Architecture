@@ -45,7 +45,7 @@ private:
 	std::thread test;
 	//Vectors with all the different types of entities
 	ShaderHandler* m_shaderLoad;
-	ModelHandler* m_modelHandlers [4][3];
+	ModelHandler** m_modelHandlers[4][3];
 	ModelHandler* m_modelHandlerDummy;
 
 	vector<Entity*> m_entityList;

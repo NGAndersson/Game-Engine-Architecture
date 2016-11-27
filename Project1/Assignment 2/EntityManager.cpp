@@ -19,7 +19,7 @@ EntityManager::~EntityManager()
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			if(m_modelHandlers[j][i] != m_modelHandlerDummy)
+			if(*m_modelHandlers[j][i] != m_modelHandlerDummy)
 				delete m_modelHandlers[j][i];
 		}		
 	}
@@ -67,12 +67,14 @@ void EntityManager::Initialize(ID3D11Device* device, ID3D11DeviceContext* device
 			m_objAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".obj");
 			Loader::instance().Pin("zip.asset" + to_string(j) + ".obj");
 			m_mtlAsset = Loader::instance().Get("zip.asset" + to_string(j) + ".lod" + to_string(min(max(LoD + (i % 3) - 1, 0), 9)) + ".mtl");
-			m_modelHandlers[j][i] = new ModelHandler();
-			m_modelHandlers[j][i]->LoadOBJData(m_objAsset, m_mtlAsset, m_device);
+			m_modelHandlers[j][i] = new ModelHandler*;
+			*m_modelHandlers[j][i] = new ModelHandler();
+			(*m_modelHandlers[j][i])->LoadOBJData(m_objAsset, m_mtlAsset, m_device);
 			Loader::instance().Free("zip.asset" + to_string(j) + ".obj");
 			Loader::instance().Free("zip.asset" + to_string(j) + ".lod" + to_string(min(max(LoD + (i % 3) - 1, 0), 9)) + ".mtl");
-			m_modelHandlers[j][i]->CreateBuffers(m_device);
+			(*m_modelHandlers[j][i])->CreateBuffers(m_device);
 			m_entityList[j]->SetLoD(LoD);
+
 		}
 	}
 
@@ -97,9 +99,9 @@ void EntityManager::Render()
 	//m_modelHandlers1[1]->SetBuffers(m_deviceContext);
 	for (int i = 0; i < 4; i++)
 	{
-		m_modelHandlers[i][1]->SetBuffers(m_deviceContext);
+		(*m_modelHandlers[i][1])->SetBuffers(m_deviceContext);
 		//Always render [i][1] as the [1] refers to the middle LoD level for each model i, which is the one we're always actively seeing
-		m_renderer->Render(m_modelHandlers[i][1], m_entityList[i]->GetPosition(), m_entityList[i]->GetRotation(), m_entityList[i]->GetScale());
+		m_renderer->Render(*m_modelHandlers[i][1], m_entityList[i]->GetPosition(), m_entityList[i]->GetRotation(), m_entityList[i]->GetScale());
 	}
 }
 
@@ -125,34 +127,38 @@ void EntityManager::Update(double time)
 			if (m_entityList[j]->GetLoD() > LoD) //Move forward to the next LoD
 			{
 
-				if (m_modelHandlers[j][2] != m_modelHandlerDummy) delete m_modelHandlers[j][2];
+				if (*m_modelHandlers[j][2] != m_modelHandlerDummy) delete *m_modelHandlers[j][2];
 				m_modelHandlers[j][2] = m_modelHandlers[j][1];
 				m_modelHandlers[j][1] = m_modelHandlers[j][0];
+				m_modelHandlers[j][0] = new ModelHandler*;
+				*m_modelHandlers[j][0] = m_modelHandlerDummy;
 				if (LoD != 0)
 				{
 					string guidpart = "zip.asset" + to_string(j);
-					thread t = thread(&EntityManager::modelHandler_aload, this, guidpart, LoD-1, &m_modelHandlers[j][0]);
+					thread t = thread(&EntityManager::modelHandler_aload, this, guidpart, LoD-1, m_modelHandlers[j][0]);
 					t.detach();
 				}
 				else
 				{
-					m_modelHandlers[j][0] = m_modelHandlerDummy;
+					*m_modelHandlers[j][0] = m_modelHandlerDummy;
 				}
 			}
 			else if (m_entityList[j]->GetLoD() < LoD) //Move backward to the previous LoD
 			{
-				if (m_modelHandlers[j][0] != m_modelHandlerDummy) delete m_modelHandlers[j][0];
+				if (*m_modelHandlers[j][0] != m_modelHandlerDummy) delete *m_modelHandlers[j][0];
 				m_modelHandlers[j][0] = m_modelHandlers[j][1];
 				m_modelHandlers[j][1] = m_modelHandlers[j][2];
+				m_modelHandlers[j][2] = new ModelHandler*;
+				*m_modelHandlers[j][2] = m_modelHandlerDummy;
 				if (LoD != 9)
 				{
 					string guidpart = "zip.asset" + to_string(j);
-					thread t = thread(&EntityManager::modelHandler_aload, this, guidpart, LoD + 1, &m_modelHandlers[j][2]);
+					thread t = thread(&EntityManager::modelHandler_aload, this, guidpart, LoD + 1, m_modelHandlers[j][2]);
 					t.detach();
 				}
 				else
 				{
-					m_modelHandlers[j][2] = m_modelHandlerDummy;
+					*m_modelHandlers[j][2] = m_modelHandlerDummy;
 				}
 			}
 
@@ -183,7 +189,6 @@ void EntityManager::modelHandler_aload(string guidpart, int LoD, ModelHandler** 
 {
 	loadlock.lock();
 	cout << "Creating thread to load." << endl;
-	*mh_LoadTo = m_modelHandlerDummy;
 	ModelHandler* mh_tempLoad = new ModelHandler;
 	m_objAsset = Loader::instance().Get(guidpart + ".obj");
 	m_mtlAsset = Loader::instance().Get(guidpart + ".lod" + to_string(LoD) + ".mtl");
@@ -191,7 +196,7 @@ void EntityManager::modelHandler_aload(string guidpart, int LoD, ModelHandler** 
 	Loader::instance().Free(guidpart + ".obj");
 	Loader::instance().Free(guidpart + ".lod" + to_string(LoD) + ".mtl");
 	mh_tempLoad->CreateBuffers(m_device);
-
+	
 	*mh_LoadTo = mh_tempLoad;
 	loadlock.unlock();
 	return;

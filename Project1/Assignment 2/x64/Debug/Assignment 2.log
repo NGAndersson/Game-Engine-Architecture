@@ -1,11 +1,3 @@
-﻿  Main.cpp
-  Loader.cpp
-  Game.cpp
-  EntityManager.cpp
-i:\programming\repos\game-engine-architecture\project1\assignment 2\entitymanager.cpp(122): warning C4101: 'c_TotTime': unreferenced local variable
-i:\programming\repos\game-engine-architecture\project1\assignment 2\entitymanager.cpp(122): warning C4101: 'c_time': unreferenced local variable
-  Generating Code...
-DirectXTK.lib(pch.obj) : warning LNK4099: PDB 'DirectXTK.pdb' was not found with 'DirectXTK.lib(pch.obj)' or at 'I:\Programming\Repos\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\DirectXTK.pdb'; linking object as if no debug info
-DirectXTK.lib(WICTextureLoader.obj) : warning LNK4099: PDB 'DirectXTK.pdb' was not found with 'DirectXTK.lib(WICTextureLoader.obj)' or at 'I:\Programming\Repos\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\DirectXTK.pdb'; linking object as if no debug info
+﻿  ModelHandler.cpp
   Assignment 2.vcxproj -> I:\Programming\Repos\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\Assignment 2.exe
   Assignment 2.vcxproj -> I:\Programming\Repos\Game-Engine-Architecture\Project1\Assignment 2\x64\Debug\Assignment 2.pdb (Partial PDB)
